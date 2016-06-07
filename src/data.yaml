@@ -1,13 +1,21 @@
 corporations:
   # Name:
-  #   shortName: Name shortened to 4 charactors or less
-  #   ownership: Public, Private, or Corporation
+  #   shortName: Name shortened to 4 charactors or less, only if recognizable, if not defined defaults to a level higher in the higharchy.
+  #   ownership: Public, Private (if a top level company)
   #   commercial: boolean of if the corp is commercial
   #   description: >
   #     Long description taken from their website
   #   headquarters: City, State
   #   wikipedia: Wiki Link
   #   url: Link to their website
+  #   subsidiaries: A list of corporations that are subsidiaries of that one
+  #   brands: A list of brands the corporation owns, in this format:
+  #     Name:
+  #       owner: Owner (name)
+  #       description: >
+  #         description from their site
+  #       url: url to their site
+  #       wikipedia: wikipedia link
   Comcast Corporation:
     shortName: Com
     ownership: Public
@@ -17,15 +25,19 @@ corporations:
     wikipedia: https://en.wikipedia.org/wiki/Comcast
     headquarters: Philadelphia, Pennsylvania
     commercial: true
-  NBCUniversal:
-    shortName: NBC
-    description: >
-      NBCUniversal owns and operates a valuable portfolio of news and entertainment television networks, a premier motion picture company, significant television production operations, a leading television stations group, world-renowned theme parks, and a suite of leading Internet-based businesses. NBCUniversal is a subsidiary of Comcast Corporation
-    ownership: Comcast Corporation
-    headquarters: New York City, NY
-    wikipedia: https://en.wikipedia.org/wiki/NBCUniversal
-    url: http://www.nbcuniversal.com/
-    commercial: true
+    subsidiaries:
+      NBCUniversal:
+        shortName: NBC
+        description: >
+          NBCUniversal owns and operates a valuable portfolio of news and entertainment television networks, a premier motion picture company, significant television production operations, a leading television stations group, world-renowned theme parks, and a suite of leading Internet-based businesses. NBCUniversal is a subsidiary of Comcast Corporation
+        headquarters: New York City, NY
+        wikipedia: https://en.wikipedia.org/wiki/NBCUniversal
+        url: http://www.nbcuniversal.com/
+        commercial: true
+        subsidiaries:
+          NBC Broadcasting:
+            wikipedia: https://en.wikipedia.org/wiki/NBCUniversal_Television_Group#NBC_Broadcasting
+            url: http://www.nbc.com/
   Vox Media:
     shortName: Vox
     description: >
@@ -43,22 +55,16 @@ corporations:
       - Accel Partners
       - khosla ventures
       - General Atlantic
-brands:
-  # Name:
-  #   owner: Owner (name)
-  #   description: >
-  #     description from their site
-  #   url: url to their site
-  #   wikipedia: wikipedia link
-  Vox:
-    owner: Vox Media
-    description: >
-      Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.
-    url: http://www.vox.com/
-    wikipedia: https://en.wikipedia.org/wiki/Vox_(website)
-  The Verge:
-    owner: Vox Media
-    description: >
-      The Verge is the global authority on the most innovative parts of our modern culture, covering technology, science, entertainment, transportation—and the experiences of the future.
-    url: http://www.theverge.com/
-    wikipedia: https://en.wikipedia.org/wiki/The_Verge
+    brands:
+      Vox:
+        owner: Vox Media
+        description: >
+          Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.
+        url: http://www.vox.com/
+        wikipedia: https://en.wikipedia.org/wiki/Vox_(website)
+      The Verge:
+        owner: Vox Media
+        description: >
+          The Verge is the global authority on the most innovative parts of our modern culture, covering technology, science, entertainment, transportation—and the experiences of the future.
+        url: http://www.theverge.com/
+        wikipedia: https://en.wikipedia.org/wiki/The_Verge
