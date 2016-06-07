@@ -15,6 +15,7 @@ corporations:
     url: http://corporate.comcast.com/
     wikipedia: https://en.wikipedia.org/wiki/Comcast
     headquarters: Philadelphia, Pennsylvania
+    commercial: true
   NBCUniversal:
     shortName: NBC
     description: >
@@ -23,6 +24,7 @@ corporations:
     headquarters: New York City, NY
     wikipedia: https://en.wikipedia.org/wiki/NBCUniversal
     url: http://www.nbcuniversal.com/
+    commercial: true
   Vox Media:
     shortName: Vox
     description: >
@@ -33,6 +35,7 @@ corporations:
     url: http://www.voxmedia.com/
     wikipedia: https://en.wikipedia.org/wiki/Vox_Media
     headquarters: New York City, NY
+    commercial: true
     investors:
       - NBCUniversal
       - Comcast Ventures
@@ -40,17 +43,19 @@ corporations:
       - khosla ventures
       - General Atlantic
 brands:
+  # Name:
+  #   owner: Owner (name)
+  #   description: >
+  #     description from their site
+  #   url: url to their site
+  #   wikipedia: wikipedia link
   Vox:
-    name: Vox
-    commercial: true
     owner: Vox Media
     description: >
       Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.
     url: http://www.vox.com/
     wikipedia: https://en.wikipedia.org/wiki/Vox_(website)
   The Verge:
-    name: The Verge
-    commercial: true
     owner: Vox Media
     description: >
       The Verge is the global authority on the most innovative parts of our modern culture, covering technology, science, entertainment, transportation—and the experiences of the future.
