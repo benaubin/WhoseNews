@@ -1,0 +1,58 @@
+corporations:
+  # Name:
+  #   shortName: Name shortened to 4 charactors or less
+  #   ownership: Public, Private, or Corporation
+  #   description: >
+  #     Long description taken from their website
+  #   headquarters: City, State
+  #   wikipedia: Wiki Link
+  #   url: Link to their website
+  Comcast Corporation:
+    shortName: Com
+    ownership: Public
+    description: >
+      Inspired by a rich heritage, Comcast NBCUniversal has the experience, creativity and leadership to shape the future of media and technology.
+    url: http://corporate.comcast.com/
+    wikipedia: https://en.wikipedia.org/wiki/Comcast
+    headquarters: Philadelphia, Pennsylvania
+  NBCUniversal:
+    shortName: NBC
+    description: >
+      NBCUniversal owns and operates a valuable portfolio of news and entertainment television networks, a premier motion picture company, significant television production operations, a leading television stations group, world-renowned theme parks, and a suite of leading Internet-based businesses. NBCUniversal is a subsidiary of Comcast Corporation
+    ownership: Comcast Corporation
+    headquarters: New York City, NY
+    wikipedia: https://en.wikipedia.org/wiki/NBCUniversal
+    url: http://www.nbcuniversal.com/
+  Vox Media:
+    shortName: Vox
+    description: >
+      Smart Media Brands for a New Generation
+
+      Vox Media builds smart brands that people love in big categories they’re passionate about. We create products to empower the most talented voices and engage hundreds of millions of people with high quality content and experiences.
+    ownership: Private
+    url: http://www.voxmedia.com/
+    wikipedia: https://en.wikipedia.org/wiki/Vox_Media
+    headquarters: New York City, NY
+    investors:
+      - NBCUniversal
+      - Comcast Ventures
+      - Accel Partners
+      - khosla ventures
+      - General Atlantic
+brands:
+  Vox:
+    name: Vox
+    commercial: true
+    owner: Vox Media
+    description: >
+      Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.
+    url: http://www.vox.com/
+    wikipedia: https://en.wikipedia.org/wiki/Vox_(website)
+  The Verge:
+    name: The Verge
+    commercial: true
+    owner: Vox Media
+    description: >
+      The Verge is the global authority on the most innovative parts of our modern culture, covering technology, science, entertainment, transportation—and the experiences of the future.
+    url: http://www.theverge.com/
+    wikipedia: https://en.wikipedia.org/wiki/The_Verge
