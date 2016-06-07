@@ -2,6 +2,7 @@ corporations:
   # Name:
   #   shortName: Name shortened to 4 charactors or less
   #   ownership: Public, Private, or Corporation
+  #   commercial: boolean of if the corp is commercial
   #   description: >
   #     Long description taken from their website
   #   headquarters: City, State
