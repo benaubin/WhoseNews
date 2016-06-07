@@ -1,0 +1,41 @@
+{
+  "name": "WhoseNews",
+  "version": "0.0.0",
+  "description": "A Chrome Extension to tell you where your news comes from",
+  "main": "src/javascripts/app.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/penne12/WhoseNews"
+  },
+  "keywords": [
+    "news"
+  ],
+  "author": "penne12",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/penne12/WhoseNews/issues"
+  },
+  "homepage": "https://github.com/penne12/WhoseNews",
+  "devDependencies": {
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.10.0",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.17.0",
+    "image-webpack-loader": "^1.8.0",
+    "json-loader": "^0.5.4",
+    "markdown-loader": "^0.1.7",
+    "node-sass": "^3.7.0",
+    "sass-loader": "^3.2.0",
+    "slm-loader": "^0.1.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-load-plugins": "^0.1.2",
+    "yaml-loader": "^0.2.0"
+  }
+}
