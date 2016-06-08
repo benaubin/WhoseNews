@@ -16,6 +16,8 @@ corporations:
   #         description from their site
   #       url: url to their site
   #       wikipedia: wikipedia link
+  #       domains: A list of domains the news outlet runs:
+  #         - domainname.tld
   Comcast Corporation:
     shortName: Com
     type: Public
@@ -52,11 +54,15 @@ corporations:
                           Your #1 source for everything happening in Southern California.
                         url: http://www.nbclosangeles.com/
                         wikipedia: https://en.wikipedia.org/wiki/KNBC
+                        domains:
+                          - nbclosangeles.com
                       KNSD:
                         description: >
                           Breaking news, exclusive stories, weather & conversation.
                         url: http://www.nbcsandiego.com/
                         wikipedia: https://en.wikipedia.org/wiki/KNSD
+                        domains:
+                          - nbcsandiego.com
                       KNTV:
                         description: >
                           KNTV, channel 11 (branded on-air as NBC Bay Area),
@@ -66,6 +72,8 @@ corporations:
                           - Wikipedia
                         url: http://www.nbcbayarea.com/
                         wikipedia: https://en.wikipedia.org/wiki/KNTV
+                        domains:
+                          - nbcbayarea.com
                       WVIT:
                         description: >
                           WVIT, channel 30 (branded on-air as NBC Connecticut),
@@ -79,6 +87,8 @@ corporations:
                           - Wikipedia
                         url: http://www.nbcconnecticut.com/
                         wikipedia: https://en.wikipedia.org/wiki/WVIT
+                        domains:
+                          - nbcconnecticut.com
                       # TODO: Add the rest of the stations.
                       # List: https://en.wikipedia.org/wiki/NBC_Owned_Television_Stations
               #NBC Entertainment:
@@ -106,8 +116,12 @@ corporations:
           Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.
         url: http://www.vox.com/
         wikipedia: https://en.wikipedia.org/wiki/Vox_(website)
+        domains:
+          - vox.com
       The Verge:
         description: >
           The Verge is the global authority on the most innovative parts of our modern culture, covering technology, science, entertainment, transportation—and the experiences of the future.
         url: http://www.theverge.com/
+        domains:
+          - theverge.com
         wikipedia: https://en.wikipedia.org/wiki/The_Verge
