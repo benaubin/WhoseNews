@@ -2,6 +2,8 @@ yaml = require 'js-yaml'
 fs = require 'fs'
 jsontoxml = require 'jsontoxml'
 
+console.log "Building data from yaml..."
+
 data = yaml.safeLoad fs.readFileSync './src/data.yaml', 'utf8'
 
 fs.writeFile './build/data.json', JSON.stringify data
@@ -12,3 +14,5 @@ fs.writeFile('./build/data.yaml', """
 #
 #{yaml.safeDump data}
 """)
+
+console.log "Done."
