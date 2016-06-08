@@ -1,6 +1,15 @@
 corporations:
+  Accel Partners:
+    shortname: Accl
+    type: Private
+    headquarters: Palo Alto, California, U.S.
+    description: >
+    wikipedia: https://en.wikipedia.org/wiki/Accel_Partners
+    commercial: true
+    url: http://www.accel.com/
+    crunchbase: https://www.crunchbase.com/organization/accel-partners
   # Name:
-  #   shortName: Name shortened to 4 charactors or less, only if recognizable, if not defined defaults to a level higher in the higharchy.
+  #   shortName: Name shortened to 4 charactors or less, only if recognizable, if not defined defaults to a level higher in the higharchy. Upto 4 charactors
   #   type: Public, Private
   #   commercial: boolean of if the corp is commercial
   #   description: >
@@ -10,6 +19,7 @@ corporations:
   #   url: Link to their website
   #   subsidiaries: A list of corporations that are subsidiaries of this one
   #   divisions: A list of corporations that are subsidiaries of this one
+  #   crunchbase: A link to their crunchbase profile, esp for investment firms
   #   brands: A list of brands the corporation owns, in this format:
   #     Name:
   #       description: >
@@ -92,6 +102,16 @@ corporations:
                       # TODO: Add the rest of the stations.
                       # List: https://en.wikipedia.org/wiki/NBC_Owned_Television_Stations
               #NBC Entertainment:
+      subsidiaries:
+        Comcast Ventures:
+          description: >
+            We invest in innovative technologies with big business potential
+            At Comcast Ventures, we love working with entrepreneurs who have ideas that will shift industries and impact the way people interact with their worlds. And we thrive on helping take those ideas big.
+
+            By combining the best characteristics of traditional venture funds with the technical insight, scale and experience of a strategic investor, CV offers a best-in-class value proposition for entrepreneurs, portfolio companies, partnering investors, and the Comcast family of companies.
+          headquarters: San Francisco, CA
+          wikipedia: https://en.wikipedia.org/wiki/Comcast#Venture_capital
+          url: http://www.comcastventures.com/
     subsidiaries:
   Vox Media:
     shortName: Vox
