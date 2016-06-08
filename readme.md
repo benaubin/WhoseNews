@@ -25,14 +25,10 @@ invests in.
 So - Comcast is investing in a company that is writing about Google Fiber.
 
 You should at least know about this, right? Yeah, if you are willing to do
-**a lot** of Googling, and Vox Media makes it a lot easier then most:
+**a lot** of Googling (or exploration using CrunchBase).
 
-1. The Verge ownership
-2. Vox Media
-3. Read to the button of their site, and look at their investors
-
-That's 3 steps, and not something you are going to do every time you read
-an article. That's triples the time you spend reading!! You aren't going
+That's a lot and not something you are going to do every time you read
+an article. That multiplies the time you spend reading! You aren't going
 to do that. So this extension comes in! We'll let you know who owns the
 site you are reading (on The Verge? We'll let you know it's Vox), highlight
 potential conflicts of interest (like a competing businesses mentioned), and
