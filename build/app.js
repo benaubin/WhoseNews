@@ -48,8 +48,6 @@
 
 	corporations = __webpack_require__(1);
 
-	debugger;
-
 	console.log(corporations);
 
 
@@ -309,6 +307,8 @@
 	var Brand;
 
 	module.exports = Brand = (function() {
+	  Brand.brands = [];
+
 	  Brand.extractFromObject = function(parent, data) {
 	    return Object.keys(data).map(function(name) {
 	      return new Brand(parent, name, data[name]);
@@ -321,6 +321,7 @@
 	    this.name = name1;
 	    this.data = data1;
 	    ref = this.data, this.wikipedia = ref.wikipedia, this.url = ref.url, this.description = ref.description;
+	    Brand.brands.push(this);
 	  }
 
 	  return Brand;

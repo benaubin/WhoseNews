@@ -11,4 +11,4 @@ module.exports = class Brand
       new Brand parent, name, data[name]
   constructor: (@parent, @name, @data) ->
     {@wikipedia, @url, @description} = @data
-    @brands.push @
+    Brand.brands.push @
