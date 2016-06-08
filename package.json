@@ -6,7 +6,7 @@
   "scripts": {
     "run": "webpack && node build/app.js",
     "debug": "webpack --debug && node debug build/app.js",
-    "build": "webpack"
+    "build": "webpack && coffee buildyaml.coffee"
   },
   "repository": {
     "type": "git",
