@@ -1,0 +1,121 @@
+#
+# This is a read only copy - see ./src/data.yaml for the source of this file
+#
+corporations:
+  Comcast Corporation:
+    shortName: Com
+    type: Public
+    description: >
+      Inspired by a rich heritage, Comcast NBCUniversal has the experience,
+      creativity and leadership to shape the future of media and technology.
+    url: 'http://corporate.comcast.com/'
+    wikipedia: 'https://en.wikipedia.org/wiki/Comcast'
+    headquarters: 'Philadelphia, Pennsylvania'
+    commercial: true
+    divisions:
+      NBCUniversal:
+        shortName: NBC
+        description: >
+          NBCUniversal owns and operates a valuable portfolio of news and
+          entertainment television networks, a premier motion picture company,
+          significant television production operations, a leading television
+          stations group, world-renowned theme parks, and a suite of leading
+          Internet-based businesses. NBCUniversal is a subsidiary of Comcast
+          Corporation
+        headquarters: 'New York City, NY'
+        wikipedia: 'https://en.wikipedia.org/wiki/NBCUniversal'
+        url: 'http://www.nbcuniversal.com/'
+        divisions:
+          NBC Broadcasting:
+            type: division
+            wikipedia: 'https://en.wikipedia.org/wiki/NBCUniversal_Television_Group#NBC_Broadcasting'
+            divisions:
+              NBC Owned TV Stations:
+                divisions:
+                  NBC Owned Television Stations:
+                    type: division
+                    wikipedia: 'https://en.wikipedia.org/wiki/NBC_Owned_Television_Stations'
+                    description: >
+                      NBCUniversal Owned Television Stations is the division of
+                      NBCUniversal that includes 28 NBC and Telemundo local
+                      television stations, a regional news network and their
+                      associated websites and digital platforms, as well as
+                      a group of out-of-home properties, a production company, an
+                      in-house marketing and promotions company and two national
+                      multicast networks, COZI TV and TeleXitos. The local
+                      stations, which can be viewed in 36 percent of U.S. homes
+                      and Puerto Rico, produce and deliver compelling and unique
+                      local news, information and entertainment programming to
+                      viewers in the communities they serve, with a goal of
+                      connecting to their English and Spanish-speaking audiences
+                      anytime and anywhere.
+                    url: 'http://www.nbcstations.com/'
+                    brands:
+                      KNBC:
+                        description: >
+                          Your #1 source for everything happening in Southern
+                          California.
+                        url: 'http://www.nbclosangeles.com/'
+                        wikipedia: 'https://en.wikipedia.org/wiki/KNBC'
+                      KNSD:
+                        description: >
+                          Breaking news, exclusive stories, weather
+                          & conversation.
+                        url: 'http://www.nbcsandiego.com/'
+                        wikipedia: 'https://en.wikipedia.org/wiki/KNSD'
+                      KNTV:
+                        description: >
+                          KNTV, channel 11 (branded on-air as NBC Bay Area), is
+                          an NBC owned-and-operated television station licensed
+                          to San Jose, California, USA and serving the San
+                          Francisco Bay Area region. - Wikipedia
+                        url: 'http://www.nbcbayarea.com/'
+                        wikipedia: 'https://en.wikipedia.org/wiki/KNTV'
+                      WVIT:
+                        description: >
+                          WVIT, channel 30 (branded on-air as NBC Connecticut),
+                          is an NBC owned-and-operated station licensed to New
+                          Britain, Connecticut, United States and serving the
+                          Hartford-New Haven television market. WVIT's offices
+                          and main studios are located on New Britain Avenue in
+                          West Hartford, and its transmitter is located on
+                          Rattlesnake Mountain in Farmington, Connecticut.
+                          - Wikipedia
+                        url: 'http://www.nbcconnecticut.com/'
+                        wikipedia: 'https://en.wikipedia.org/wiki/WVIT'
+    subsidiaries: null
+  Vox Media:
+    shortName: Vox
+    description: >
+      Smart Media Brands for a New Generation
+
+      Vox Media builds smart brands that people love in big categories they’re
+      passionate about. We create products to empower the most talented voices
+      and engage hundreds of millions of people with high quality content and
+      experiences.
+    type: Private
+    url: 'http://www.voxmedia.com/'
+    wikipedia: 'https://en.wikipedia.org/wiki/Vox_Media'
+    headquarters: 'New York City, NY'
+    commercial: true
+    investors:
+      - NBCUniversal
+      - Comcast Ventures
+      - Accel Partners
+      - khosla ventures
+      - General Atlantic
+    brands:
+      Vox:
+        description: >
+          Vox is a general interest news site for the 21st century. Its mission
+          is simple: Explain the News. Vox is where you go to understand the news
+          and the world around you.
+        url: 'http://www.vox.com/'
+        wikipedia: 'https://en.wikipedia.org/wiki/Vox_(website)'
+      The Verge:
+        description: >
+          The Verge is the global authority on the most innovative parts of our
+          modern culture, covering technology, science, entertainment,
+          transportation—and the experiences of the future.
+        url: 'http://www.theverge.com/'
+        wikipedia: 'https://en.wikipedia.org/wiki/The_Verge'
