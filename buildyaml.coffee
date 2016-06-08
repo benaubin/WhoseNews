@@ -1,6 +1,5 @@
 yaml = require 'js-yaml'
 fs = require 'fs'
-jsontoxml = require 'jsontoxml'
 
 console.log "Building data from yaml..."
 
