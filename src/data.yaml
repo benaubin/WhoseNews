@@ -18,7 +18,7 @@ corporations:
   #       wikipedia: wikipedia link
   Comcast Corporation:
     shortName: Com
-    ownership: Public
+    type: Public
     description: >
       Inspired by a rich heritage, Comcast NBCUniversal has the experience, creativity and leadership to shape the future of media and technology.
     url: http://corporate.comcast.com/
@@ -89,7 +89,7 @@ corporations:
       Smart Media Brands for a New Generation
 
       Vox Media builds smart brands that people love in big categories they’re passionate about. We create products to empower the most talented voices and engage hundreds of millions of people with high quality content and experiences.
-    ownership: Private
+    type: Private
     url: http://www.voxmedia.com/
     wikipedia: https://en.wikipedia.org/wiki/Vox_Media
     headquarters: New York City, NY
