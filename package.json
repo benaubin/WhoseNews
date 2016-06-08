@@ -1,8 +1,8 @@
 {
-  "name": "WhoseNews",
+  "name": "whose-news",
   "version": "0.0.0",
   "description": "A Chrome Extension to tell you where your news comes from",
-  "main": "src/javascripts/app.coffee",
+  "main": "src/javascripts/node.coffee",
   "scripts": {
     "run": "webpack && node build/app.js",
     "debug": "webpack --debug && node debug build/app.js",
@@ -30,7 +30,6 @@
     "html-webpack-plugin": "^2.17.0",
     "image-webpack-loader": "^1.8.0",
     "json-loader": "^0.5.4",
-    "jsontoxml": "0.0.11",
     "markdown-loader": "^0.1.7",
     "node-sass": "^3.7.0",
     "sass-loader": "^3.2.0",
@@ -38,10 +37,10 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-load-plugins": "^0.1.2",
-    "yaml-loader": "^0.2.0"
+    "webpack-load-plugins": "^0.1.2"
   },
   "dependencies": {
-    "object-assign": "^4.1.0"
+    "object-assign": "^4.1.0",
+    "yaml-loader": "^0.2.0"
   }
 }
