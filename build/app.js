@@ -105,22 +105,34 @@
 													"KNBC": {
 														"description": "Your #1 source for everything happening in Southern California.\n",
 														"url": "http://www.nbclosangeles.com/",
-														"wikipedia": "https://en.wikipedia.org/wiki/KNBC"
+														"wikipedia": "https://en.wikipedia.org/wiki/KNBC",
+														"domains": [
+															"nbclosangeles.com"
+														]
 													},
 													"KNSD": {
 														"description": "Breaking news, exclusive stories, weather & conversation.\n",
 														"url": "http://www.nbcsandiego.com/",
-														"wikipedia": "https://en.wikipedia.org/wiki/KNSD"
+														"wikipedia": "https://en.wikipedia.org/wiki/KNSD",
+														"domains": [
+															"nbcsandiego.com"
+														]
 													},
 													"KNTV": {
 														"description": "KNTV, channel 11 (branded on-air as NBC Bay Area), is an NBC owned-and-operated television station licensed to San Jose, California, USA and serving the San Francisco Bay Area region. - Wikipedia\n",
 														"url": "http://www.nbcbayarea.com/",
-														"wikipedia": "https://en.wikipedia.org/wiki/KNTV"
+														"wikipedia": "https://en.wikipedia.org/wiki/KNTV",
+														"domains": [
+															"nbcbayarea.com"
+														]
 													},
 													"WVIT": {
 														"description": "WVIT, channel 30 (branded on-air as NBC Connecticut), is an NBC owned-and-operated station licensed to New Britain, Connecticut, United States and serving the Hartford-New Haven television market. WVIT's offices and main studios are located on New Britain Avenue in West Hartford, and its transmitter is located on Rattlesnake Mountain in Farmington, Connecticut. - Wikipedia\n",
 														"url": "http://www.nbcconnecticut.com/",
-														"wikipedia": "https://en.wikipedia.org/wiki/WVIT"
+														"wikipedia": "https://en.wikipedia.org/wiki/WVIT",
+														"domains": [
+															"nbcconnecticut.com"
+														]
 													}
 												}
 											}
@@ -152,11 +164,17 @@
 					"Vox": {
 						"description": "Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.\n",
 						"url": "http://www.vox.com/",
-						"wikipedia": "https://en.wikipedia.org/wiki/Vox_(website)"
+						"wikipedia": "https://en.wikipedia.org/wiki/Vox_(website)",
+						"domains": [
+							"vox.com"
+						]
 					},
 					"The Verge": {
 						"description": "The Verge is the global authority on the most innovative parts of our modern culture, covering technology, science, entertainment, transportation—and the experiences of the future.\n",
 						"url": "http://www.theverge.com/",
+						"domains": [
+							"theverge.com"
+						],
 						"wikipedia": "https://en.wikipedia.org/wiki/The_Verge"
 					}
 				}
@@ -174,7 +192,7 @@
 
 	Brand = __webpack_require__(5);
 
-	assert = __webpack_require__(6);
+	assert = __webpack_require__(7);
 
 	module.exports = Corporation = (function() {
 	  Corporation.extractFromObject = function(data, parent, type) {
@@ -302,9 +320,11 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	var Brand;
+	var Brand, regExpEscape;
+
+	regExpEscape = __webpack_require__(6);
 
 	module.exports = Brand = (function() {
 	  Brand.brands = [];
@@ -320,9 +340,22 @@
 	    this.parent = parent1;
 	    this.name = name1;
 	    this.data = data1;
-	    ref = this.data, this.wikipedia = ref.wikipedia, this.url = ref.url, this.description = ref.description;
+	    ref = this.data, this.wikipedia = ref.wikipedia, this.url = ref.url, this.description = ref.description, this.domains = ref.domains;
+	    this.regexp = new RegExp("(" + (this.domains.map(function(d) {
+	      return regExpEscape(d);
+	    }).join("|")) + ")$", 'i');
 	    Brand.brands.push(this);
 	  }
+
+	  Brand.prototype.ownsDomain = function(hostname) {
+	    return hostname.match(this.regexp);
+	  };
+
+	  Brand.fromDomain = function(hostname) {
+	    return Brand.brands.find(function(brand) {
+	      return brand.ownsDomain(hostname);
+	    });
+	  };
 
 	  return Brand;
 
@@ -331,6 +364,15 @@
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	module.exports = function(s) {
+	  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+	};
+
+
+/***/ },
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -401,7 +443,7 @@
 	// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 	// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var util = __webpack_require__(7);
+	var util = __webpack_require__(8);
 	var hasOwn = Object.prototype.hasOwnProperty;
 	var pSlice = Array.prototype.slice;
 	var functionsHaveNames = (function () {
@@ -827,7 +869,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -1355,7 +1397,7 @@
 	}
 	exports.isPrimitive = isPrimitive;
 
-	exports.isBuffer = __webpack_require__(9);
+	exports.isBuffer = __webpack_require__(10);
 
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -1399,7 +1441,7 @@
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(10);
+	exports.inherits = __webpack_require__(11);
 
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -1417,10 +1459,10 @@
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(8)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(9)))
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -1520,7 +1562,7 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -1531,7 +1573,7 @@
 	}
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {

@@ -31,22 +31,34 @@
                         "KNBC": {
                           "description": "Your #1 source for everything happening in Southern California.\n",
                           "url": "http://www.nbclosangeles.com/",
-                          "wikipedia": "https://en.wikipedia.org/wiki/KNBC"
+                          "wikipedia": "https://en.wikipedia.org/wiki/KNBC",
+                          "domains": [
+                            "nbclosangeles.com"
+                          ]
                         },
                         "KNSD": {
                           "description": "Breaking news, exclusive stories, weather & conversation.\n",
                           "url": "http://www.nbcsandiego.com/",
-                          "wikipedia": "https://en.wikipedia.org/wiki/KNSD"
+                          "wikipedia": "https://en.wikipedia.org/wiki/KNSD",
+                          "domains": [
+                            "nbcsandiego.com"
+                          ]
                         },
                         "KNTV": {
                           "description": "KNTV, channel 11 (branded on-air as NBC Bay Area), is an NBC owned-and-operated television station licensed to San Jose, California, USA and serving the San Francisco Bay Area region. - Wikipedia\n",
                           "url": "http://www.nbcbayarea.com/",
-                          "wikipedia": "https://en.wikipedia.org/wiki/KNTV"
+                          "wikipedia": "https://en.wikipedia.org/wiki/KNTV",
+                          "domains": [
+                            "nbcbayarea.com"
+                          ]
                         },
                         "WVIT": {
                           "description": "WVIT, channel 30 (branded on-air as NBC Connecticut), is an NBC owned-and-operated station licensed to New Britain, Connecticut, United States and serving the Hartford-New Haven television market. WVIT's offices and main studios are located on New Britain Avenue in West Hartford, and its transmitter is located on Rattlesnake Mountain in Farmington, Connecticut. - Wikipedia\n",
                           "url": "http://www.nbcconnecticut.com/",
-                          "wikipedia": "https://en.wikipedia.org/wiki/WVIT"
+                          "wikipedia": "https://en.wikipedia.org/wiki/WVIT",
+                          "domains": [
+                            "nbcconnecticut.com"
+                          ]
                         }
                       }
                     }
@@ -78,11 +90,17 @@
         "Vox": {
           "description": "Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.\n",
           "url": "http://www.vox.com/",
-          "wikipedia": "https://en.wikipedia.org/wiki/Vox_(website)"
+          "wikipedia": "https://en.wikipedia.org/wiki/Vox_(website)",
+          "domains": [
+            "vox.com"
+          ]
         },
         "The Verge": {
           "description": "The Verge is the global authority on the most innovative parts of our modern culture, covering technology, science, entertainment, transportation—and the experiences of the future.\n",
           "url": "http://www.theverge.com/",
+          "domains": [
+            "theverge.com"
+          ],
           "wikipedia": "https://en.wikipedia.org/wiki/The_Verge"
         }
       }
