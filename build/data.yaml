@@ -57,12 +57,16 @@ corporations:
                           California.
                         url: 'http://www.nbclosangeles.com/'
                         wikipedia: 'https://en.wikipedia.org/wiki/KNBC'
+                        domains:
+                          - nbclosangeles.com
                       KNSD:
                         description: >
                           Breaking news, exclusive stories, weather
                           & conversation.
                         url: 'http://www.nbcsandiego.com/'
                         wikipedia: 'https://en.wikipedia.org/wiki/KNSD'
+                        domains:
+                          - nbcsandiego.com
                       KNTV:
                         description: >
                           KNTV, channel 11 (branded on-air as NBC Bay Area), is
@@ -71,6 +75,8 @@ corporations:
                           Francisco Bay Area region. - Wikipedia
                         url: 'http://www.nbcbayarea.com/'
                         wikipedia: 'https://en.wikipedia.org/wiki/KNTV'
+                        domains:
+                          - nbcbayarea.com
                       WVIT:
                         description: >
                           WVIT, channel 30 (branded on-air as NBC Connecticut),
@@ -83,6 +89,8 @@ corporations:
                           - Wikipedia
                         url: 'http://www.nbcconnecticut.com/'
                         wikipedia: 'https://en.wikipedia.org/wiki/WVIT'
+                        domains:
+                          - nbcconnecticut.com
     subsidiaries: null
   Vox Media:
     shortName: Vox
@@ -112,10 +120,14 @@ corporations:
           and the world around you.
         url: 'http://www.vox.com/'
         wikipedia: 'https://en.wikipedia.org/wiki/Vox_(website)'
+        domains:
+          - vox.com
       The Verge:
         description: >
           The Verge is the global authority on the most innovative parts of our
           modern culture, covering technology, science, entertainment,
           transportation—and the experiences of the future.
         url: 'http://www.theverge.com/'
+        domains:
+          - theverge.com
         wikipedia: 'https://en.wikipedia.org/wiki/The_Verge'
