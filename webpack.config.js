@@ -47,11 +47,11 @@ module.exports = {
         loaders: ["style", "css", "resolve-url"]
       },
       {
-        test: /\.json&/,
+        test: /\.json$/,
         loaders: ["json"]
       },
       {
-        text: /\.yaml/,
+        test: /\.yaml$/,
         loaders: ["json", "yaml"]
       }
     ]
