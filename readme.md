@@ -55,6 +55,18 @@ we're excited to see what happens.
 
 -------
 
+# Contributing
+
+WhoseNews is built with webpack:
+
+Make sure to run `npm run build` before releasing, not just `webpack`
+
+**To Build:** `npm run build`, runs `webpack && coffee buildyaml.coffee`
+**To Debug:** `npm run debug`, runs `webpack --debug && node debug build/app.js`
+**To Run:** `npm run run`, runs `webpack && node build/app.js`
+
+-------
+
 Based off of an idea from [Reddit][idea].
 
 
