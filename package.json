@@ -4,7 +4,9 @@
   "description": "A Chrome Extension to tell you where your news comes from",
   "main": "src/javascripts/app.coffee",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "webpack && node build/app.js",
+    "debug": "webpack --debug && node debug build/app.js",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
