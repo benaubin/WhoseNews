@@ -1,5 +1,6 @@
 regExpEscape = require('./regexpEscape')
 arrayFind = require('./arrayFind')
+Corporation = require('./corporation')
 
 module.exports = class Brand
   @brands: []
@@ -20,6 +21,16 @@ module.exports = class Brand
     Brand.brands.push @
   ownsHostname: (hostname) ->
     hostname.match @regexp
+  toJSON: ->
+    # Create a json object with everything needed to reinitalize this object
+    {
+      @parent,
+      @name,
+      @data
+    }
+  @fromJSON: ({parent, name, data}) ->
+    # Reinitalize this object from the JSON created above
+    new Brand Corporation.fromJSON(parent), name, data
   @fromHostname: (hostname) ->
     arrayFind Brand.brands, (brand) ->
       brand.ownsHostname hostname
