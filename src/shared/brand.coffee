@@ -1,4 +1,5 @@
 regExpEscape = require('./regexpescape.coffee')
+arrayFind = require('./arrayFind')
 
 module.exports = class Brand
   @brands: []
@@ -19,20 +20,6 @@ module.exports = class Brand
     Brand.brands.push @
   ownsHostname: (hostname) ->
     hostname.match @regexp
-
-Array::find ||= (predicate) ->
-  throw new TypeError('Array.prototype.find called on null or undefined') unless @?
-  if typeof predicate != 'function'
-    throw new TypeError('predicate must be a function')
-  list = Object @
-  length = list.length >>> 0
-  thisArg = arguments[1]
-  value = undefined
-  i = 0
-  while i < length
-    value = list[i]
-    return value if predicate.call(thisArg, value, i, list)
-    i++
   @fromHostname: (hostname) ->
     arrayFind Brand.brands, (brand) ->
       brand.ownsHostname hostname
