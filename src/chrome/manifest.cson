@@ -32,3 +32,10 @@ background:
     "{{entry?name=background.js!./background}}"
   ]
   persistent: false
+
+content_scripts: [
+  {
+    matches: ["<all_urls>"],
+    js: ["{{entry?name=content.js!./content}}"]
+  }
+]
