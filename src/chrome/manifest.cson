@@ -1,0 +1,32 @@
+manifest_version: 2
+name: "Whose News"
+description: "An extension to tell you where your news comes from"
+version: "0.0.0"
+default_locale: "en"
+
+icons:
+  16: "{{../shared/img/Whose-News-Icon16.png}}"
+  19: "{{../shared/img/Whose-News-Icon19.png}}"
+  32: "{{../shared/img/Whose-News-Icon32.png}}"
+  38: "{{../shared/img/Whose-News-Icon38.png}}"
+  48: "{{../shared/img/Whose-News-Icon48.png}}"
+  64: "{{../shared/img/Whose-News-Icon64.png}}"
+  128: "{{../shared/img/Whose-News-Icon128.png}}"
+  250: "{{../shared/img/Whose-News-Icon250.png}}"
+
+browser_action:
+  default_icon:
+    16: "{{../shared/img/Whose-News-Icon16.png}}"
+    19: "{{../shared/img/Whose-News-Icon19.png}}"
+    32: "{{../shared/img/Whose-News-Icon32.png}}"
+    38: "{{../shared/img/Whose-News-Icon38.png}}"
+    48: "{{../shared/img/Whose-News-Icon48.png}}"
+    64: "{{../shared/img/Whose-News-Icon64.png}}"
+    128: "{{../shared/img/Whose-News-Icon128.png}}"
+    250: "{{../shared/img/Whose-News-Icon250.png}}"
+  default_popup: "{{../shared/views/popup}}"
+
+permissions: [
+  "activeTab"
+  "tabs"
+]
