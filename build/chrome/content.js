@@ -257,15 +257,18 @@
 	    }
 	  }
 
+	  Corporation.prototype.getShortName = function() {
+	    return this.shortName || this.parent.getShortName();
+	  };
+
 	  Corporation.prototype.children = function() {
 	    return (this.subsidiaries || []).concat(this.divisions || []);
 	  };
 
 	  Corporation.prototype.allChildren = function() {
 	    return this.children().reduce(function(a, child) {
-	      a.concat(child.allChildren());
-	      return a.concat(child);
-	    }, []);
+	      return (a.concat(child.allChildren())).concat(child);
+	    }, [this]);
 	  };
 
 	  Corporation.prototype.allBrands = function() {
@@ -1749,7 +1752,7 @@
 	  };
 
 	  Brand.prototype.badgeInfo = function() {
-	    return this.parent.shortName;
+	    return this.parent.getShortName();
 	  };
 
 	  Brand.prototype.toJSON = function() {

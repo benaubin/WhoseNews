@@ -21,7 +21,7 @@ module.exports = class Brand
   ownsHostname: (hostname) ->
     hostname.match @regexp
   badgeInfo: ->
-    @parent.shortName
+    @parent.getShortName()
   toJSON: ->
     # Create a json object with everything needed to reinitalize this object
     {

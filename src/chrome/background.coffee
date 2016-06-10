@@ -5,7 +5,10 @@ chrome.runtime.onMessage.addListener (message, sender, sendResponse) ->
   try
     if message.title == "brand"
       brand = Brand.fromJSON message.brand
-      chrome.browserAction.setBadgeText text: brand.badgeInfo(), tabId: sender.tab.id
+      chrome.browserAction.setBadgeText {
+        text: brand.badgeInfo()
+        tabId: sender.tab.id
+      }
       sendResponse status: "success", message: "Got Brand", brand: brand
   catch e
     throw e
