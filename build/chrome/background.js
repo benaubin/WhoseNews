@@ -44,15 +44,36 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Brand, brand, corporations, objectAssign, refreshAction, refreshBadge, refreshTitle, title;
+	var Brand, objectAssign, refreshTitle, title;
 
 	Brand = __webpack_require__(1);
 
-	corporations = __webpack_require__(13);
-
 	objectAssign = __webpack_require__(5);
 
-	brand = null;
+	chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+	  var brand, e, error;
+	  try {
+	    if (message.title === "brand") {
+	      brand = Brand.fromJSON(message.brand);
+	      chrome.browserAction.setBadgeText({
+	        text: brand.badgeInfo(),
+	        tabId: sender.tab.id
+	      });
+	      return sendResponse({
+	        status: "success",
+	        message: "Got Brand",
+	        brand: brand
+	      });
+	    }
+	  } catch (error) {
+	    e = error;
+	    throw e;
+	    return sendResponse({
+	      status: "failed",
+	      error: e
+	    });
+	  }
+	});
 
 	title = function() {
 	  return "Whose News: " + (brand || 'No news detected');
@@ -60,17 +81,6 @@
 
 	refreshTitle = function() {
 	  return browserAction.setTitle(title());
-	};
-
-	refreshBadge = function() {
-	  return bewrowserAction.setBadgeText({
-	    title: brand != null ? brand.badgeInfo : void 0,
-	    tabId: null
-	  });
-	};
-
-	refreshAction = function() {
-	  return refreshTitle();
 	};
 
 
@@ -108,6 +118,10 @@
 
 	  Brand.prototype.ownsHostname = function(hostname) {
 	    return hostname.match(this.regexp);
+	  };
+
+	  Brand.prototype.badgeInfo = function() {
+	    return this.parent.shortName;
 	  };
 
 	  Brand.prototype.toJSON = function() {
@@ -1641,155 +1655,6 @@
 	  return list;
 	};
 
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Corporation, corporations, corporationsData, data;
-
-	data = __webpack_require__(14);
-
-	Corporation = __webpack_require__(4);
-
-	corporationsData = data.corporations;
-
-	corporations = Corporation.extractFromObject(corporationsData);
-
-	module.exports = corporations;
-
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"corporations": {
-			"Accel Partners": {
-				"shortname": "Accl",
-				"type": "Private",
-				"headquarters": "Palo Alto, California, U.S.",
-				"description": "",
-				"wikipedia": "https://en.wikipedia.org/wiki/Accel_Partners",
-				"commercial": true,
-				"url": "http://www.accel.com/",
-				"crunchbase": "https://www.crunchbase.com/organization/accel-partners"
-			},
-			"Comcast Corporation": {
-				"shortName": "Com",
-				"type": "Public",
-				"description": "Inspired by a rich heritage, Comcast NBCUniversal has the experience, creativity and leadership to shape the future of media and technology.\n",
-				"url": "http://corporate.comcast.com/",
-				"wikipedia": "https://en.wikipedia.org/wiki/Comcast",
-				"headquarters": "Philadelphia, Pennsylvania",
-				"commercial": true,
-				"divisions": {
-					"NBCUniversal": {
-						"shortName": "NBC",
-						"description": "NBCUniversal owns and operates a valuable portfolio of news and entertainment television networks, a premier motion picture company, significant television production operations, a leading television stations group, world-renowned theme parks, and a suite of leading Internet-based businesses. NBCUniversal is a subsidiary of Comcast Corporation\n",
-						"headquarters": "New York City, NY",
-						"wikipedia": "https://en.wikipedia.org/wiki/NBCUniversal",
-						"url": "http://www.nbcuniversal.com/",
-						"divisions": {
-							"NBC Broadcasting": {
-								"type": "division",
-								"wikipedia": "https://en.wikipedia.org/wiki/NBCUniversal_Television_Group#NBC_Broadcasting",
-								"divisions": {
-									"NBC Owned TV Stations": {
-										"divisions": {
-											"NBC Owned Television Stations": {
-												"type": "division",
-												"wikipedia": "https://en.wikipedia.org/wiki/NBC_Owned_Television_Stations",
-												"description": "NBCUniversal Owned Television Stations is the division of NBCUniversal that includes 28 NBC and Telemundo local television stations, a regional news network and their associated websites and digital platforms, as well as a group of out-of-home properties, a production company, an in-house marketing and promotions company and two national multicast networks, COZI TV and TeleXitos. The local stations, which can be viewed in 36 percent of U.S. homes and Puerto Rico, produce and deliver compelling and unique local news, information and entertainment programming to viewers in the communities they serve, with a goal of connecting to their English and Spanish-speaking audiences anytime and anywhere.\n",
-												"url": "http://www.nbcstations.com/",
-												"brands": {
-													"KNBC": {
-														"description": "Your #1 source for everything happening in Southern California.\n",
-														"url": "http://www.nbclosangeles.com/",
-														"wikipedia": "https://en.wikipedia.org/wiki/KNBC",
-														"domains": [
-															"nbclosangeles.com"
-														]
-													},
-													"KNSD": {
-														"description": "Breaking news, exclusive stories, weather & conversation.\n",
-														"url": "http://www.nbcsandiego.com/",
-														"wikipedia": "https://en.wikipedia.org/wiki/KNSD",
-														"domains": [
-															"nbcsandiego.com"
-														]
-													},
-													"KNTV": {
-														"description": "KNTV, channel 11 (branded on-air as NBC Bay Area), is an NBC owned-and-operated television station licensed to San Jose, California, USA and serving the San Francisco Bay Area region. - Wikipedia\n",
-														"url": "http://www.nbcbayarea.com/",
-														"wikipedia": "https://en.wikipedia.org/wiki/KNTV",
-														"domains": [
-															"nbcbayarea.com"
-														]
-													},
-													"WVIT": {
-														"description": "WVIT, channel 30 (branded on-air as NBC Connecticut), is an NBC owned-and-operated station licensed to New Britain, Connecticut, United States and serving the Hartford-New Haven television market. WVIT's offices and main studios are located on New Britain Avenue in West Hartford, and its transmitter is located on Rattlesnake Mountain in Farmington, Connecticut. - Wikipedia\n",
-														"url": "http://www.nbcconnecticut.com/",
-														"wikipedia": "https://en.wikipedia.org/wiki/WVIT",
-														"domains": [
-															"nbcconnecticut.com"
-														]
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					},
-					"subsidiaries": {
-						"Comcast Ventures": {
-							"description": "We invest in innovative technologies with big business potential At Comcast Ventures, we love working with entrepreneurs who have ideas that will shift industries and impact the way people interact with their worlds. And we thrive on helping take those ideas big.\nBy combining the best characteristics of traditional venture funds with the technical insight, scale and experience of a strategic investor, CV offers a best-in-class value proposition for entrepreneurs, portfolio companies, partnering investors, and the Comcast family of companies.\n",
-							"headquarters": "San Francisco, CA",
-							"wikipedia": "https://en.wikipedia.org/wiki/Comcast#Venture_capital",
-							"url": "http://www.comcastventures.com/"
-						}
-					}
-				},
-				"subsidiaries": null
-			},
-			"Vox Media": {
-				"shortName": "Vox",
-				"description": "Smart Media Brands for a New Generation\nVox Media builds smart brands that people love in big categories they’re passionate about. We create products to empower the most talented voices and engage hundreds of millions of people with high quality content and experiences.\n",
-				"type": "Private",
-				"url": "http://www.voxmedia.com/",
-				"wikipedia": "https://en.wikipedia.org/wiki/Vox_Media",
-				"headquarters": "New York City, NY",
-				"commercial": true,
-				"investors": [
-					"NBCUniversal",
-					"Comcast Ventures",
-					"Accel Partners",
-					"khosla ventures",
-					"General Atlantic"
-				],
-				"brands": {
-					"Vox": {
-						"description": "Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.\n",
-						"url": "http://www.vox.com/",
-						"wikipedia": "https://en.wikipedia.org/wiki/Vox_(website)",
-						"domains": [
-							"vox.com"
-						]
-					},
-					"The Verge": {
-						"description": "The Verge is the global authority on the most innovative parts of our modern culture, covering technology, science, entertainment, transportation—and the experiences of the future.\n",
-						"url": "http://www.theverge.com/",
-						"domains": [
-							"theverge.com"
-						],
-						"wikipedia": "https://en.wikipedia.org/wiki/The_Verge"
-					}
-				}
-			}
-		}
-	};
 
 /***/ }
 /******/ ]);

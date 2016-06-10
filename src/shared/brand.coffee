@@ -20,6 +20,8 @@ module.exports = class Brand
     @regexp = new RegExp "(#{@domains.map((d) -> regExpEscape(d)).join "|"})$", 'i'
   ownsHostname: (hostname) ->
     hostname.match @regexp
+  badgeInfo: ->
+    @parent.shortName
   toJSON: ->
     # Create a json object with everything needed to reinitalize this object
     {

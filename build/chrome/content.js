@@ -44,13 +44,19 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var corporations;
+	var brand, corporations, message;
 
 	corporations = __webpack_require__(1);
 
-	window.onload = function() {
-	  return console.log(corporations.brands().fromHostname(location.hostname));
-	};
+	if (brand = corporations.brands().fromHostname(location.hostname)) {
+	  message = {
+	    title: "brand",
+	    brand: brand
+	  };
+	  chrome.runtime.sendMessage(message, function(response) {
+	    return console.log("Got response", response);
+	  });
+	}
 
 
 /***/ },
@@ -1740,6 +1746,10 @@
 
 	  Brand.prototype.ownsHostname = function(hostname) {
 	    return hostname.match(this.regexp);
+	  };
+
+	  Brand.prototype.badgeInfo = function() {
+	    return this.parent.shortName;
 	  };
 
 	  Brand.prototype.toJSON = function() {
