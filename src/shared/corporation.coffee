@@ -46,9 +46,8 @@ module.exports = class Corporation
     (@subsidiaries || []).concat(@divisions || [])
   allChildren: ->
     @children().reduce (a, child) ->
-      a.concat child.allChildren()
-      a.concat child
-    , []
+      (a.concat child.allChildren()).concat child
+    , [@]
   allBrands: ->
     @allChildren().concat(@).reduce (arr, child) ->
       arr.concat child.brands || []
