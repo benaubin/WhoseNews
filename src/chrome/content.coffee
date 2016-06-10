@@ -1,7 +1,6 @@
 corporations = require '../shared/corporations'
 
-window.onload = ->
-  console.log corporations.brands().fromHostname location.hostname
+console.log corporations.brands().fromHostname location.hostname
 
 # chrome.runtime.onMessage.addListener (message, sender, sendResponse) ->
 #   try
