@@ -18,6 +18,7 @@ browser_action:
     19: "{{../shared/img/Whose-News-Icon19.png}}"
     38: "{{../shared/img/Whose-News-Icon38.png}}"
   default_popup: "{{../shared/views/popup}}"
+  default_title: "Whose News: No news detected"
 
 permissions: [
   "activeTab"
