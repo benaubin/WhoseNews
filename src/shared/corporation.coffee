@@ -1,6 +1,6 @@
 objectAssign = require 'object-assign'
-Brand = require './brand.coffee'
 assert = require 'assert'
+CorporationList = require './corporationList'
 
 ownershipTypes =
   subsidiary: 'subsidiaries',
@@ -22,7 +22,7 @@ module.exports = class Corporation
   #   divisions: A list of corporations that are subsidiaries of this one
   #   brands: A list of brands the corporation owns
   @extractFromObject: (data, parent, type) ->
-    Object.keys(data).map (name) ->
+    CorporationList Object.keys(data).map (name) ->
       corpData = data[name]
       new Corporation name, corpData, parent, type
   constructor: (@name, @data, @parent, @ownershipType) ->
@@ -41,7 +41,18 @@ module.exports = class Corporation
     assert @ownershipType, "ownershipType must be given with parent" if @parent
     @subsidiaries = Corporation.extractFromObject subsidiaries, @, "subsidiary" if subsidiaries
     @divisions = Corporation.extractFromObject divisions, @, "division" if divisions
-    @brands = Brand.extractFromObject @, brands if brands
+    @brands = require('./brand').extractFromObject @, brands if brands
+  children: ->
+    (@subsidiaries || []).concat(@divisions || [])
+  allChildren: ->
+    @children().reduce (a, child) ->
+      a.concat child.allChildren()
+      a.concat child
+    , []
+  allBrands: ->
+    @allChildren().concat(@).reduce (arr, child) ->
+      arr.concat child.brands || []
+    , []
   toJSON: (path = []) ->
     # If the corporation has a parent
     if @parent?
@@ -64,5 +75,5 @@ module.exports = class Corporation
     # Create the parent corporation
     c = new Corporation name, data
     # Follow path down to the original object
-    c = c[seg] for seg in path
+    c = c[seg] for seg in path if path
     c

@@ -1,5 +1,5 @@
 data = require '../data.yaml'
-Corporation = require './corporation.coffee'
+Corporation = require './corporation'
 
 corporationsData = data.corporations
 corporations = Corporation.extractFromObject corporationsData
