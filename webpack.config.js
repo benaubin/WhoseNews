@@ -1,4 +1,17 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+// When it's ready, the webpage will use:
+//
+// plugins: [
+//   new HtmlWebpackPlugin({
+//     title: 'Whose News',
+//     filename: 'index.html',
+//     template: './src/views/index',
+//     inject: 'head',
+//     hash: true,
+//     cache: true,
+//     showErrors: true
+//   })
+// ],
 
 var fileLoader = function(extension, name){
   if(!name) name = '[name]'
@@ -59,17 +72,6 @@ var resolve = {
 
 module.exports = [
   {
-    plugins: [
-      new HtmlWebpackPlugin({
-        title: 'Whose News',
-        filename: 'index.html',
-        template: './src/views/index.slim',
-        inject: 'head',
-        hash: true,
-        cache: true,
-        showErrors: true
-      })
-    ],
     entry: './src/chrome/manifest',
     resolve: resolve,
     module: {
