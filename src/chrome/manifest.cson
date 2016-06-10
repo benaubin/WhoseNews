@@ -26,3 +26,9 @@ permissions: [
 ]
 
 author: "Ben from BenSites.com, ess090502, and contributors"
+
+background:
+  scripts: [
+    "{{entry?name=background.js!./background}}"
+  ]
+  persistent: false
