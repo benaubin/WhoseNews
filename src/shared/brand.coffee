@@ -17,11 +17,8 @@ module.exports = class Brand
     {@wikipedia, @url, @description, @domains} = @data
     @regexp = new RegExp "(#{@domains.map((d) -> regExpEscape(d)).join "|"})$", 'i'
     Brand.brands.push @
-  ownsDomain: (hostname) ->
+  ownsHostname: (hostname) ->
     hostname.match @regexp
-  @fromDomain: (hostname) ->
-    Brand.brands.find (brand) ->
-      brand.ownsDomain hostname
 
 Array::find ||= (predicate) ->
   throw new TypeError('Array.prototype.find called on null or undefined') unless @?
@@ -36,3 +33,6 @@ Array::find ||= (predicate) ->
     value = list[i]
     return value if predicate.call(thisArg, value, i, list)
     i++
+  @fromHostname: (hostname) ->
+    arrayFind Brand.brands, (brand) ->
+      brand.ownsHostname hostname
