@@ -1,8 +1,8 @@
 {
   "name": "whose-news",
   "version": "0.0.0",
-  "description": "A Chrome Extension to tell you where your news comes from",
-  "main": "src/javascripts/node.coffee",
+  "description": "An extension to tell you where your news comes from",
+  "main": "src/node/node.js",
   "scripts": {
     "run": "webpack && node build/app.js",
     "debug": "webpack --debug && node debug build/app.js",
@@ -24,11 +24,14 @@
   "devDependencies": {
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.10.0",
+    "cson-loader": "git://github.com/bleech/cson-loader#3a62ea4",
     "css-loader": "^0.23.1",
+    "extricate-loader": "0.0.2",
     "file-loader": "^0.8.5",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.17.0",
     "image-webpack-loader": "^1.8.0",
+    "interpolate-loader": "0.0.6",
     "json-loader": "^0.5.4",
     "markdown-loader": "^0.1.7",
     "node-sass": "^3.7.0",
@@ -37,10 +40,10 @@
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-load-plugins": "^0.1.2"
+    "webpack-load-plugins": "^0.1.2",
+    "yaml-loader": "^0.2.0"
   },
   "dependencies": {
-    "object-assign": "^4.1.0",
-    "yaml-loader": "^0.2.0"
+    "object-assign": "^4.1.0"
   }
 }
