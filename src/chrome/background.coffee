@@ -11,8 +11,8 @@ chrome.runtime.onMessage.addListener (message, sender, sendResponse) ->
       }
       sendResponse status: "success", message: "Got Brand", brand: brand
   catch e
-    throw e
     sendResponse status: "failed", error: e
+    throw e
 
 
 
