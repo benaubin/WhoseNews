@@ -1,4 +1,6 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var WebpackShellPlugin = require('./webpackShellPlugin')
+
 // When it's ready, the webpage will use:
 //
 // plugins: [
@@ -74,6 +76,11 @@ module.exports = [
   {
     entry: './src/chrome/manifest',
     resolve: resolve,
+    plugins: [
+      new WebpackShellPlugin({
+        onBuildEnd: ['cd "' + __dirname + '/build" && zip -r -X -1 -q chrome.zip chrome && echo zipped || echo not zipped']
+      })
+    ],
     module: {
       loaders: loaders.concat(slimRawLoader)
     },
