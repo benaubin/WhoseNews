@@ -1,4 +1,4 @@
-regExpEscape = require('./regexpescape.coffee')
+regExpEscape = require('./regexpEscape')
 arrayFind = require('./arrayFind')
 
 module.exports = class Brand
