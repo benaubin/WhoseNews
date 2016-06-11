@@ -51,9 +51,8 @@ corporations:
             wikipedia: https://en.wikipedia.org/wiki/NBCUniversal_Television_Group#NBC_Broadcasting
             divisions:
               NBC Owned TV Stations:
-                divisions:
+                subsidiaries:
                   NBC Owned Television Stations:
-                    type: division
                     wikipedia: https://en.wikipedia.org/wiki/NBC_Owned_Television_Stations
                     description: >
                       NBCUniversal Owned Television Stations is the division of NBCUniversal that includes 28 NBC and Telemundo local television stations, a regional news network and their associated websites and digital platforms, as well as a group of out-of-home properties, a production company, an in-house marketing and promotions company and two national multicast networks, COZI TV and TeleXitos. The local stations, which can be viewed in 36 percent of U.S. homes and Puerto Rico, produce and deliver compelling and unique local news, information and entertainment programming to viewers in the communities they serve, with a goal of connecting to their English and Spanish-speaking audiences anytime and anywhere.
@@ -99,6 +98,21 @@ corporations:
                         wikipedia: https://en.wikipedia.org/wiki/WVIT
                         domains:
                           - nbcconnecticut.com
+                      WRC-TV:
+                        description: >
+                          WRC-TV, channel 4, is an NBC owned-and-operated
+                          television station located in the American capital
+                          city of Washington, District of Columbia.
+                          The station is owned by the NBC Owned Television
+                          Stations subsidiary of NBCUniversal. WRC-TV's
+                          studios and transmitter are co-located on 4001
+                          Nebraska Avenue NW in the Tenleytown neighborhood
+                          in the northwest quadrant of Washington.
+                        url: http://www.nbcwashington.com/
+                        wikipedia: https://en.wikipedia.org/wiki/WRC-TV
+                        domains:
+                          - nbcwashington.com
+
                       # TODO: Add the rest of the stations.
                       # List: https://en.wikipedia.org/wiki/NBC_Owned_Television_Stations
               #NBC Entertainment:
