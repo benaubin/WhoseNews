@@ -45,6 +45,7 @@
     "yaml-loader": "^0.2.0"
   },
   "dependencies": {
+    "materialize-css": "^0.97.6",
     "object-assign": "^4.1.0"
   }
 }
