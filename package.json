@@ -4,9 +4,10 @@
   "description": "An extension to tell you where your news comes from",
   "main": "src/node/node.js",
   "scripts": {
-    "run": "webpack && node build/app.js",
-    "debug": "webpack --debug && node debug build/app.js",
-    "build": "webpack && coffee buildyaml.coffee"
+    "node-dev": "webpack -d && node debug build/app.js",
+    "build-dev": "webpack -d",
+    "watch-dev": "webpack --watch -d",
+    "build": "webpack -p && coffee buildyaml.coffee && cd build && zip -r -X -1 -q chrome.zip chrome && echo zipped || echo not zipped"
   },
   "repository": {
     "type": "git",
@@ -27,25 +28,39 @@
     "cson-loader": "git://github.com/bleech/cson-loader#3a62ea4",
     "css-loader": "^0.23.1",
     "entry-loader": "^0.1.0",
+    "expose-loader": "^0.7.1",
     "extricate-loader": "0.0.2",
     "file-loader": "^0.8.5",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-vinyl-zip": "^1.2.2",
+    "gulp-yaml": "^1.0.1",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.17.0",
     "image-webpack-loader": "^1.8.0",
+    "imports-loader": "^0.6.5",
     "interpolate-loader": "0.0.6",
     "json-loader": "^0.5.4",
     "markdown-loader": "^0.1.7",
     "node-sass": "^3.7.0",
+    "resolve-url-loader": "^1.4.3",
     "sass-loader": "^3.2.0",
     "slm-loader": "^0.1.1",
     "style-loader": "^0.13.1",
+    "vinyl-named": "^1.1.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-load-plugins": "^0.1.2",
+    "webpack-stream": "^3.2.0",
     "yaml-loader": "^0.2.0"
   },
   "dependencies": {
+    "hammerjs": "^2.0.8",
+    "jquery": "^3.0.0",
     "materialize-css": "^0.97.6",
-    "object-assign": "^4.1.0"
+    "object-assign": "^4.1.0",
+    "velocity": "^0.7.2"
   }
 }
