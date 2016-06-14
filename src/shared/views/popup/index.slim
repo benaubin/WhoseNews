@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    script src="{{file!jquery/dist/jquery.js}}"
+    script src="{{file!materialize-css/bin/materialize.js}}"
+    script src="{{entry?name=popup-[hash].js!./scripts/popup}}"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+  body
+    nav
+      div.nav-wrapper
+        a.brand-logo href="#" Whose News
+        a.button-collapse.hoverable data-activates="popup-main-nav"
+          i.material-icons menu
+        ul#popup-main-nav.side-nav
+          li
+            a href="#/" Home
+          li
+            a href="#/about" About
+          li
+            a href="#/settings" Settings
+    h1 Whose News

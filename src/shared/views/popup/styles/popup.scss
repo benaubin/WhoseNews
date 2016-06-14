@@ -1,0 +1,10 @@
+@import url("http://fonts.googleapis.com/icon?family=Material+Icons");
+@import "~materialize-css/sass/materialize";
+
+html {
+  height: 500px;
+  width: 400px;
+}
+.hoverable {
+  cursor: pointer;
+}

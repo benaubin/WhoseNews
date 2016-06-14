@@ -17,7 +17,7 @@ browser_action:
   default_icon:
     19: "{{../shared/img/Whose-News-Icon-Small19.png}}"
     38: "{{../shared/img/Whose-News-Icon38.png}}"
-  default_popup: "{{../shared/views/popup}}"
+  default_popup: "{{../shared/views/popup/index.slim}}"
   default_title: "Whose News: No news detected"
 
 permissions: []
