@@ -15,6 +15,8 @@ zip = require 'gulp-vinyl-zip'
   loaders
 } = require('./webpack.config.helpers')
 
+gulp.task "default", ["clean-build", "data", "bookmarklet", "chrome-build"]
+
 gulp.task 'clean-build', ->
   gulp.src('build/*', read: false).pipe clean()
 
@@ -22,7 +24,7 @@ gulp.task 'clean-chrome', ->
   gulp.src('build/chrome/*', read: false).pipe clean()
   gulp.src('build/chrome.zip', read: false).pipe clean()
 
-gulp.task 'chrome', ['clean-chrome'], ->
+gulp.task 'chrome-build', ->
   gulp.src 'src/chrome/manifest.cson'
     .pipe plumber()
     .pipe gulpWebpack
@@ -34,6 +36,8 @@ gulp.task 'chrome', ['clean-chrome'], ->
         fs: 'empty'
     .pipe gulp.dest 'build/chrome'
     .pipe zip.dest 'build/chrome.zip'
+
+gulp.task 'chrome', ['clean-chrome', 'chrome-build']
 
 gulp.task 'watch-chrome', ['clean-chrome'], ->
   gulp.src 'src/chrome/manifest.cson'
