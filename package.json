@@ -59,6 +59,7 @@
   "dependencies": {
     "hammerjs": "^2.0.8",
     "jquery": "^3.0.0",
+    "knockout": "^3.4.0",
     "materialize-css": "^0.97.6",
     "object-assign": "^4.1.0",
     "velocity": "^0.7.2"

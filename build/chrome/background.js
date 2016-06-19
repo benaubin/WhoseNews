@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Brand, objectAssign, refreshTitle, title;
+	var Brand, getCurrentTabBrandInfo, objectAssign, refreshTitle, title;
 	
 	Brand = __webpack_require__(1);
 	
@@ -52,8 +52,8 @@
 	
 	chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 	  var brand, e, error;
-	  try {
-	    if (message.title === "brand") {
+	  if (message.title === "brand") {
+	    try {
 	      brand = Brand.fromJSON(message.brand);
 	      chrome.browserAction.setBadgeText({
 	        text: brand.badgeInfo(),
@@ -64,16 +64,35 @@
 	        message: "Got Brand",
 	        brand: brand
 	      });
+	    } catch (error) {
+	      e = error;
+	      sendResponse({
+	        status: "failed",
+	        error: e
+	      });
+	      throw e;
 	    }
-	  } catch (error) {
-	    e = error;
-	    sendResponse({
-	      status: "failed",
-	      error: e
-	    });
-	    throw e;
+	  } else if (message.title === 'brand-request') {
+	    console.log("got brand request");
+	    getCurrentTabBrandInfo(sendResponse);
+	    return true;
 	  }
 	});
+	
+	getCurrentTabBrandInfo = function(callback) {
+	  return chrome.tabs.query({
+	    lastFocusedWindow: true,
+	    active: true
+	  }, function(tabs) {
+	    return chrome.tabs.sendMessage(tabs[0].id, {
+	      title: "brand-request"
+	    }, function(res) {
+	      return callback({
+	        brand: res.brand
+	      });
+	    });
+	  });
+	};
 	
 	title = function() {
 	  return "Whose News: " + (brand || 'No news detected');
@@ -122,6 +141,16 @@
 	
 	  Brand.prototype.badgeInfo = function() {
 	    return this.parent.getShortName();
+	  };
+	
+	  Brand.prototype.parents = function() {
+	    var p, parents;
+	    parents = [];
+	    p = this;
+	    while (p = p.parent) {
+	      parents.concat(p.parent);
+	    }
+	    return parents;
 	  };
 	
 	  Brand.prototype.toJSON = function() {

@@ -57,6 +57,15 @@
 	    return console.log("Got response", response);
 	  });
 	}
+	
+	chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+	  if (message.title = "brand-request") {
+	    brand = corporations.brands().fromHostname(location.hostname);
+	    return sendResponse({
+	      brand: brand
+	    });
+	  }
+	});
 
 
 /***/ },
@@ -1760,6 +1769,16 @@
 	
 	  Brand.prototype.badgeInfo = function() {
 	    return this.parent.getShortName();
+	  };
+	
+	  Brand.prototype.parents = function() {
+	    var p, parents;
+	    parents = [];
+	    p = this;
+	    while (p = p.parent) {
+	      parents.concat(p.parent);
+	    }
+	    return parents;
 	  };
 	
 	  Brand.prototype.toJSON = function() {

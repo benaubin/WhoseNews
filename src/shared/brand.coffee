@@ -22,6 +22,11 @@ module.exports = class Brand
     hostname.match @regexp
   badgeInfo: ->
     @parent.getShortName()
+  parents: ->
+    parents = []
+    p = @
+    parents.concat p.parent while p = p.parent
+    parents
   toJSON: ->
     # Create a json object with everything needed to reinitalize this object
     {

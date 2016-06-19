@@ -18,4 +18,28 @@ html
             a href="#/about" About
           li
             a href="#/settings" Settings
-    h1 Whose News
+    .container
+      .loading
+        p Loading.
+      .none
+        p
+          b No media brand detected on this page.
+      .business-info
+        ul class="collapsible popout" data-collapsible="accordion"
+          li
+            .collapsible-header.active
+              i.material-icons web
+              span data-bind="text: brand.name"
+            div class="collapsible-body"
+              p data-bind="text: brand.description"
+          li
+            .collapsible-header
+              i.material-icons business
+              | Unknown Co.
+            .collapsible-body
+              p Lorem ipsum dolor sit amet.
+          ul.tabs
+            li.tab.col.s3
+              a.action Investor 1
+            li.tab.col.s3
+              a.action Investor 2
