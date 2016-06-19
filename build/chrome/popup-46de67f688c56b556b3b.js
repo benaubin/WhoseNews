@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -45,13 +45,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Brand, ko, popupStyles;
-	
+
 	Brand = __webpack_require__(1);
-	
+
 	popupStyles = __webpack_require__(13);
-	
+
 	ko = __webpack_require__(37);
-	
+
 	$(function() {
 	  if (!Materialize) {
 	    throw "Something's not right";
@@ -74,9 +74,9 @@
 	            this.brand = brand;
 	            this.parents = brand.parents();
 	          }
-	
+
 	          return BrandViewModel;
-	
+
 	        })();
 	        return ko.applyBindings(new BrandViewModel());
 	      } else {
@@ -95,22 +95,22 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Brand, BrandsList, Corporation, arrayFind, regExpEscape;
-	
+
 	regExpEscape = __webpack_require__(2);
-	
+
 	arrayFind = __webpack_require__(3);
-	
+
 	Corporation = __webpack_require__(4);
-	
+
 	BrandsList = __webpack_require__(12);
-	
+
 	module.exports = Brand = (function() {
 	  Brand.extractFromObject = function(parent, data) {
 	    return BrandsList(Object.keys(data).map(function(name) {
 	      return new Brand(parent, name, data[name]);
 	    }));
 	  };
-	
+
 	  function Brand(parent1, name1, data1) {
 	    var ref;
 	    this.parent = parent1;
@@ -121,15 +121,15 @@
 	      return regExpEscape(d);
 	    }).join("|")) + ")$", 'i');
 	  }
-	
+
 	  Brand.prototype.ownsHostname = function(hostname) {
 	    return hostname.match(this.regexp);
 	  };
-	
+
 	  Brand.prototype.badgeInfo = function() {
 	    return this.parent.getShortName();
 	  };
-	
+
 	  Brand.prototype.parents = function() {
 	    var p, parents;
 	    parents = [];
@@ -139,7 +139,7 @@
 	    }
 	    return parents;
 	  };
-	
+
 	  Brand.prototype.toJSON = function() {
 	    return {
 	      parent: this.parent.toJSON(),
@@ -147,13 +147,13 @@
 	      data: this.data
 	    };
 	  };
-	
+
 	  Brand.fromJSON = function(arg) {
 	    var data, name, parent;
 	    parent = arg.parent, name = arg.name, data = arg.data;
 	    return new Brand(Corporation.fromJSON(parent), name, data);
 	  };
-	
+
 	  return Brand;
 
 	})();
@@ -173,7 +173,7 @@
 /***/ function(module, exports) {
 
 	var polyfill;
-	
+
 	polyfill = function(predicate) {
 	  var i, length, list, thisArg, value;
 	  if (typeof this === "undefined" || this === null) {
@@ -195,7 +195,7 @@
 	    i++;
 	  }
 	};
-	
+
 	if (Array.prototype.find) {
 	  module.exports = function(array, predicate) {
 	    return array.find(predicate);
@@ -212,20 +212,20 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Corporation, CorporationList, assert, objectAssign, ownershipTypes;
-	
+
 	objectAssign = __webpack_require__(5);
-	
+
 	assert = __webpack_require__(6);
-	
+
 	CorporationList = __webpack_require__(11);
-	
+
 	ownershipTypes = {
 	  subsidiary: 'subsidiaries',
 	  subsidiaries: 'subsidiary',
 	  division: 'divisions',
 	  divisions: 'division'
 	};
-	
+
 	module.exports = Corporation = (function() {
 	  Corporation.extractFromObject = function(data, parent, type) {
 	    return CorporationList(Object.keys(data).map(function(name) {
@@ -234,7 +234,7 @@
 	      return new Corporation(name, corpData, parent, type);
 	    }));
 	  };
-	
+
 	  function Corporation(name1, data1, parent1, ownershipType) {
 	    var brands, divisions, ref, subsidiaries;
 	    this.name = name1;
@@ -255,27 +255,27 @@
 	      this.brands = __webpack_require__(1).extractFromObject(this, brands);
 	    }
 	  }
-	
+
 	  Corporation.prototype.getShortName = function() {
 	    return this.shortName || this.parent.getShortName();
 	  };
-	
+
 	  Corporation.prototype.children = function() {
 	    return (this.subsidiaries || []).concat(this.divisions || []);
 	  };
-	
+
 	  Corporation.prototype.allChildren = function() {
 	    return this.children().reduce(function(a, child) {
 	      return (a.concat(child.allChildren())).concat(child);
 	    }, [this]);
 	  };
-	
+
 	  Corporation.prototype.allBrands = function() {
 	    return this.allChildren().concat(this).reduce(function(arr, child) {
 	      return arr.concat(child.brands || []);
 	    }, []);
 	  };
-	
+
 	  Corporation.prototype.toJSON = function(path) {
 	    var json, pluralOwnershipType;
 	    if (path == null) {
@@ -297,7 +297,7 @@
 	      return json;
 	    }
 	  };
-	
+
 	  Corporation.fromJSON = function(arg) {
 	    var c, data, i, len, name, path, seg;
 	    name = arg.name, data = arg.data, path = arg.path;
@@ -310,7 +310,7 @@
 	    }
 	    return c;
 	  };
-	
+
 	  return Corporation;
 
 	})();
@@ -324,30 +324,30 @@
 	/* eslint-disable no-unused-vars */
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-	
+
 	function toObject(val) {
 		if (val === null || val === undefined) {
 			throw new TypeError('Object.assign cannot be called with null or undefined');
 		}
-	
+
 		return Object(val);
 	}
-	
+
 	function shouldUseNative() {
 		try {
 			if (!Object.assign) {
 				return false;
 			}
-	
+
 			// Detect buggy property enumeration order in older V8 versions.
-	
+
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
 			var test1 = new String('abc');  // eslint-disable-line
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
 			}
-	
+
 			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
 			var test2 = {};
 			for (var i = 0; i < 10; i++) {
@@ -359,7 +359,7 @@
 			if (order2.join('') !== '0123456789') {
 				return false;
 			}
-	
+
 			// https://bugs.chromium.org/p/v8/issues/detail?id=3056
 			var test3 = {};
 			'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
@@ -369,28 +369,28 @@
 					'abcdefghijklmnopqrst') {
 				return false;
 			}
-	
+
 			return true;
 		} catch (e) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
 	}
-	
+
 	module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 		var from;
 		var to = toObject(target);
 		var symbols;
-	
+
 		for (var s = 1; s < arguments.length; s++) {
 			from = Object(arguments[s]);
-	
+
 			for (var key in from) {
 				if (hasOwnProperty.call(from, key)) {
 					to[key] = from[key];
 				}
 			}
-	
+
 			if (Object.getOwnPropertySymbols) {
 				symbols = Object.getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
@@ -400,7 +400,7 @@
 				}
 			}
 		}
-	
+
 		return to;
 	};
 
@@ -410,10 +410,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-	
+
 	// compare and isBuffer taken from https://github.com/feross/buffer/blob/680e9e5e488f22aac27599a57dc844a6315928dd/index.js
 	// original notice:
-	
+
 	/*!
 	 * The buffer module from node.js, for the browser.
 	 *
@@ -424,10 +424,10 @@
 	  if (a === b) {
 	    return 0;
 	  }
-	
+
 	  var x = a.length;
 	  var y = b.length;
-	
+
 	  for (var i = 0, len = Math.min(x, y); i < len; ++i) {
 	    if (a[i] !== b[i]) {
 	      x = a[i];
@@ -435,7 +435,7 @@
 	      break;
 	    }
 	  }
-	
+
 	  if (x < y) {
 	    return -1;
 	  }
@@ -450,9 +450,9 @@
 	  }
 	  return !!(b != null && b._isBuffer);
 	}
-	
+
 	// based on node assert, original notice:
-	
+
 	// http://wiki.commonjs.org/wiki/Unit_Testing/1.0
 	//
 	// THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
@@ -476,7 +476,7 @@
 	// AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
 	// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 	// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
+
 	var util = __webpack_require__(7);
 	var hasOwn = Object.prototype.hasOwnProperty;
 	var pSlice = Array.prototype.slice;
@@ -510,14 +510,14 @@
 	// 1. The assert module provides functions that throw
 	// AssertionError's when particular conditions are not met. The
 	// assert module must conform to the following interface.
-	
+
 	var assert = module.exports = ok;
-	
+
 	// 2. The AssertionError is defined in assert.
 	// new assert.AssertionError({ message: message,
 	//                             actual: actual,
 	//                             expected: expected })
-	
+
 	var regex = /\s*function\s+([^\(\s]*)\s*/;
 	// based on https://github.com/ljharb/function.prototype.name/blob/adeeeec8bfcc6068b187d7d9fb3d5bb1d3a30899/implementation.js
 	function getName(func) {
@@ -551,7 +551,7 @@
 	    var err = new Error();
 	    if (err.stack) {
 	      var out = err.stack;
-	
+
 	      // try to strip useless frames
 	      var fn_name = getName(stackStartFunction);
 	      var idx = out.indexOf('\n' + fn_name);
@@ -561,15 +561,15 @@
 	        var next_line = out.indexOf('\n', idx + 1);
 	        out = out.substring(next_line + 1);
 	      }
-	
+
 	      this.stack = out;
 	    }
 	  }
 	};
-	
+
 	// assert.AssertionError instanceof Error
 	util.inherits(assert.AssertionError, Error);
-	
+
 	function truncate(s, n) {
 	  if (typeof s === 'string') {
 	    return s.length < n ? s : s.slice(0, n);
@@ -590,18 +590,18 @@
 	         self.operator + ' ' +
 	         truncate(inspect(self.expected), 128);
 	}
-	
+
 	// At present only the three keys mentioned above are used and
 	// understood by the spec. Implementations or sub modules can pass
 	// other keys to the AssertionError's constructor - they will be
 	// ignored.
-	
+
 	// 3. All of the following functions must throw an AssertionError
 	// when a corresponding condition is not met, with a message that
 	// may be undefined if not provided.  All assertion methods provide
 	// both the actual and expected values to the assertion error for
 	// display purposes.
-	
+
 	function fail(actual, expected, message, operator, stackStartFunction) {
 	  throw new assert.AssertionError({
 	    message: message,
@@ -611,66 +611,66 @@
 	    stackStartFunction: stackStartFunction
 	  });
 	}
-	
+
 	// EXTENSION! allows for well behaved errors defined elsewhere.
 	assert.fail = fail;
-	
+
 	// 4. Pure assertion tests whether a value is truthy, as determined
 	// by !!guard.
 	// assert.ok(guard, message_opt);
 	// This statement is equivalent to assert.equal(true, !!guard,
 	// message_opt);. To test strictly for the value true, use
 	// assert.strictEqual(true, guard, message_opt);.
-	
+
 	function ok(value, message) {
 	  if (!value) fail(value, true, message, '==', assert.ok);
 	}
 	assert.ok = ok;
-	
+
 	// 5. The equality assertion tests shallow, coercive equality with
 	// ==.
 	// assert.equal(actual, expected, message_opt);
-	
+
 	assert.equal = function equal(actual, expected, message) {
 	  if (actual != expected) fail(actual, expected, message, '==', assert.equal);
 	};
-	
+
 	// 6. The non-equality assertion tests for whether two objects are not equal
 	// with != assert.notEqual(actual, expected, message_opt);
-	
+
 	assert.notEqual = function notEqual(actual, expected, message) {
 	  if (actual == expected) {
 	    fail(actual, expected, message, '!=', assert.notEqual);
 	  }
 	};
-	
+
 	// 7. The equivalence assertion tests a deep equality relation.
 	// assert.deepEqual(actual, expected, message_opt);
-	
+
 	assert.deepEqual = function deepEqual(actual, expected, message) {
 	  if (!_deepEqual(actual, expected, false)) {
 	    fail(actual, expected, message, 'deepEqual', assert.deepEqual);
 	  }
 	};
-	
+
 	assert.deepStrictEqual = function deepStrictEqual(actual, expected, message) {
 	  if (!_deepEqual(actual, expected, true)) {
 	    fail(actual, expected, message, 'deepStrictEqual', assert.deepStrictEqual);
 	  }
 	};
-	
+
 	function _deepEqual(actual, expected, strict, memos) {
 	  // 7.1. All identical values are equivalent, as determined by ===.
 	  if (actual === expected) {
 	    return true;
 	  } else if (isBuffer(actual) && isBuffer(expected)) {
 	    return compare(actual, expected) === 0;
-	
+
 	  // 7.2. If the expected value is a Date object, the actual value is
 	  // equivalent if it is also a Date object that refers to the same time.
 	  } else if (util.isDate(actual) && util.isDate(expected)) {
 	    return actual.getTime() === expected.getTime();
-	
+
 	  // 7.3 If the expected value is a RegExp object, the actual value is
 	  // equivalent if it is also a RegExp object with the same source and
 	  // properties (`global`, `multiline`, `lastIndex`, `ignoreCase`).
@@ -680,13 +680,13 @@
 	           actual.multiline === expected.multiline &&
 	           actual.lastIndex === expected.lastIndex &&
 	           actual.ignoreCase === expected.ignoreCase;
-	
+
 	  // 7.4. Other pairs that do not both pass typeof value == 'object',
 	  // equivalence is determined by ==.
 	  } else if ((actual === null || typeof actual !== 'object') &&
 	             (expected === null || typeof expected !== 'object')) {
 	    return strict ? actual === expected : actual == expected;
-	
+
 	  // If both values are instances of typed arrays, wrap their underlying
 	  // ArrayBuffers in a Buffer each to increase performance
 	  // This optimization requires the arrays to have the same type as checked by
@@ -699,7 +699,7 @@
 	               actual instanceof Float64Array)) {
 	    return compare(new Uint8Array(actual.buffer),
 	                   new Uint8Array(expected.buffer)) === 0;
-	
+
 	  // 7.5 For all other Object pairs, including Array objects, equivalence is
 	  // determined by having the same number of owned properties (as verified
 	  // with Object.prototype.hasOwnProperty.call), the same set of keys
@@ -710,25 +710,25 @@
 	    return false;
 	  } else {
 	    memos = memos || {actual: [], expected: []};
-	
+
 	    var actualIndex = memos.actual.indexOf(actual);
 	    if (actualIndex !== -1) {
 	      if (actualIndex === memos.expected.indexOf(expected)) {
 	        return true;
 	      }
 	    }
-	
+
 	    memos.actual.push(actual);
 	    memos.expected.push(expected);
-	
+
 	    return objEquiv(actual, expected, strict, memos);
 	  }
 	}
-	
+
 	function isArguments(object) {
 	  return Object.prototype.toString.call(object) == '[object Arguments]';
 	}
-	
+
 	function objEquiv(a, b, strict, actualVisitedObjects) {
 	  if (a === null || a === undefined || b === null || b === undefined)
 	    return false;
@@ -770,51 +770,51 @@
 	  }
 	  return true;
 	}
-	
+
 	// 8. The non-equivalence assertion tests for any deep inequality.
 	// assert.notDeepEqual(actual, expected, message_opt);
-	
+
 	assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
 	  if (_deepEqual(actual, expected, false)) {
 	    fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
 	  }
 	};
-	
+
 	assert.notDeepStrictEqual = notDeepStrictEqual;
 	function notDeepStrictEqual(actual, expected, message) {
 	  if (_deepEqual(actual, expected, true)) {
 	    fail(actual, expected, message, 'notDeepStrictEqual', notDeepStrictEqual);
 	  }
 	}
-	
-	
+
+
 	// 9. The strict equality assertion tests strict equality, as determined by ===.
 	// assert.strictEqual(actual, expected, message_opt);
-	
+
 	assert.strictEqual = function strictEqual(actual, expected, message) {
 	  if (actual !== expected) {
 	    fail(actual, expected, message, '===', assert.strictEqual);
 	  }
 	};
-	
+
 	// 10. The strict non-equality assertion tests for strict inequality, as
 	// determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
-	
+
 	assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
 	  if (actual === expected) {
 	    fail(actual, expected, message, '!==', assert.notStrictEqual);
 	  }
 	};
-	
+
 	function expectedException(actual, expected) {
 	  if (!actual || !expected) {
 	    return false;
 	  }
-	
+
 	  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
 	    return expected.test(actual);
 	  }
-	
+
 	  try {
 	    if (actual instanceof expected) {
 	      return true;
@@ -822,14 +822,14 @@
 	  } catch (e) {
 	    // Ignore.  The instanceof check doesn't work for arrow functions.
 	  }
-	
+
 	  if (Error.isPrototypeOf(expected)) {
 	    return false;
 	  }
-	
+
 	  return expected.call({}, actual) === true;
 	}
-	
+
 	function _tryBlock(block) {
 	  var error;
 	  try {
@@ -839,59 +839,59 @@
 	  }
 	  return error;
 	}
-	
+
 	function _throws(shouldThrow, block, expected, message) {
 	  var actual;
-	
+
 	  if (typeof block !== 'function') {
 	    throw new TypeError('"block" argument must be a function');
 	  }
-	
+
 	  if (typeof expected === 'string') {
 	    message = expected;
 	    expected = null;
 	  }
-	
+
 	  actual = _tryBlock(block);
-	
+
 	  message = (expected && expected.name ? ' (' + expected.name + ').' : '.') +
 	            (message ? ' ' + message : '.');
-	
+
 	  if (shouldThrow && !actual) {
 	    fail(actual, expected, 'Missing expected exception' + message);
 	  }
-	
+
 	  var userProvidedMessage = typeof message === 'string';
 	  var isUnwantedException = !shouldThrow && util.isError(actual);
 	  var isUnexpectedException = !shouldThrow && actual && !expected;
-	
+
 	  if ((isUnwantedException &&
 	      userProvidedMessage &&
 	      expectedException(actual, expected)) ||
 	      isUnexpectedException) {
 	    fail(actual, expected, 'Got unwanted exception' + message);
 	  }
-	
+
 	  if ((shouldThrow && actual && expected &&
 	      !expectedException(actual, expected)) || (!shouldThrow && actual)) {
 	    throw actual;
 	  }
 	}
-	
+
 	// 11. Expected to throw an error:
 	// assert.throws(block, Error_opt, message_opt);
-	
+
 	assert.throws = function(block, /*optional*/error, /*optional*/message) {
 	  _throws(true, block, error, message);
 	};
-	
+
 	// EXTENSION! This is annoying to write outside this module.
 	assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
 	  _throws(false, block, error, message);
 	};
-	
+
 	assert.ifError = function(err) { if (err) throw err; };
-	
+
 	var objectKeys = Object.keys || function (obj) {
 	  var keys = [];
 	  for (var key in obj) {
@@ -899,7 +899,7 @@
 	  }
 	  return keys;
 	};
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
@@ -926,7 +926,7 @@
 	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
+
 	var formatRegExp = /%[sdj%]/g;
 	exports.format = function(f) {
 	  if (!isString(f)) {
@@ -936,7 +936,7 @@
 	    }
 	    return objects.join(' ');
 	  }
-	
+
 	  var i = 1;
 	  var args = arguments;
 	  var len = args.length;
@@ -965,8 +965,8 @@
 	  }
 	  return str;
 	};
-	
-	
+
+
 	// Mark that a method should not be used.
 	// Returns a modified function which warns once by default.
 	// If --no-deprecation is set, then it is a no-op.
@@ -977,11 +977,11 @@
 	      return exports.deprecate(fn, msg).apply(this, arguments);
 	    };
 	  }
-	
+
 	  if (process.noDeprecation === true) {
 	    return fn;
 	  }
-	
+
 	  var warned = false;
 	  function deprecated() {
 	    if (!warned) {
@@ -996,11 +996,11 @@
 	    }
 	    return fn.apply(this, arguments);
 	  }
-	
+
 	  return deprecated;
 	};
-	
-	
+
+
 	var debugs = {};
 	var debugEnviron;
 	exports.debuglog = function(set) {
@@ -1020,8 +1020,8 @@
 	  }
 	  return debugs[set];
 	};
-	
-	
+
+
 	/**
 	 * Echos the value of a value. Trys to print the value out
 	 * in the best way possible given the different types.
@@ -1055,8 +1055,8 @@
 	  return formatValue(ctx, obj, ctx.depth);
 	}
 	exports.inspect = inspect;
-	
-	
+
+
 	// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
 	inspect.colors = {
 	  'bold' : [1, 22],
@@ -1073,7 +1073,7 @@
 	  'red' : [31, 39],
 	  'yellow' : [33, 39]
 	};
-	
+
 	// Don't use 'blue' not visible on cmd.exe
 	inspect.styles = {
 	  'special': 'cyan',
@@ -1086,11 +1086,11 @@
 	  // "name": intentionally not styling
 	  'regexp': 'red'
 	};
-	
-	
+
+
 	function stylizeWithColor(str, styleType) {
 	  var style = inspect.styles[styleType];
-	
+
 	  if (style) {
 	    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
 	           '\u001b[' + inspect.colors[style][1] + 'm';
@@ -1098,24 +1098,24 @@
 	    return str;
 	  }
 	}
-	
-	
+
+
 	function stylizeNoColor(str, styleType) {
 	  return str;
 	}
-	
-	
+
+
 	function arrayToHash(array) {
 	  var hash = {};
-	
+
 	  array.forEach(function(val, idx) {
 	    hash[val] = true;
 	  });
-	
+
 	  return hash;
 	}
-	
-	
+
+
 	function formatValue(ctx, value, recurseTimes) {
 	  // Provide a hook for user-specified inspect functions.
 	  // Check that value is an object with an inspect function on it
@@ -1132,28 +1132,28 @@
 	    }
 	    return ret;
 	  }
-	
+
 	  // Primitive types cannot have properties
 	  var primitive = formatPrimitive(ctx, value);
 	  if (primitive) {
 	    return primitive;
 	  }
-	
+
 	  // Look up the keys of the object.
 	  var keys = Object.keys(value);
 	  var visibleKeys = arrayToHash(keys);
-	
+
 	  if (ctx.showHidden) {
 	    keys = Object.getOwnPropertyNames(value);
 	  }
-	
+
 	  // IE doesn't make error fields non-enumerable
 	  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
 	  if (isError(value)
 	      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
 	    return formatError(value);
 	  }
-	
+
 	  // Some type of object without properties can be shortcutted.
 	  if (keys.length === 0) {
 	    if (isFunction(value)) {
@@ -1170,40 +1170,40 @@
 	      return formatError(value);
 	    }
 	  }
-	
+
 	  var base = '', array = false, braces = ['{', '}'];
-	
+
 	  // Make Array say that they are Array
 	  if (isArray(value)) {
 	    array = true;
 	    braces = ['[', ']'];
 	  }
-	
+
 	  // Make functions say that they are functions
 	  if (isFunction(value)) {
 	    var n = value.name ? ': ' + value.name : '';
 	    base = ' [Function' + n + ']';
 	  }
-	
+
 	  // Make RegExps say that they are RegExps
 	  if (isRegExp(value)) {
 	    base = ' ' + RegExp.prototype.toString.call(value);
 	  }
-	
+
 	  // Make dates with properties first say the date
 	  if (isDate(value)) {
 	    base = ' ' + Date.prototype.toUTCString.call(value);
 	  }
-	
+
 	  // Make error with message first say the error
 	  if (isError(value)) {
 	    base = ' ' + formatError(value);
 	  }
-	
+
 	  if (keys.length === 0 && (!array || value.length == 0)) {
 	    return braces[0] + base + braces[1];
 	  }
-	
+
 	  if (recurseTimes < 0) {
 	    if (isRegExp(value)) {
 	      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
@@ -1211,9 +1211,9 @@
 	      return ctx.stylize('[Object]', 'special');
 	    }
 	  }
-	
+
 	  ctx.seen.push(value);
-	
+
 	  var output;
 	  if (array) {
 	    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
@@ -1222,13 +1222,13 @@
 	      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
 	    });
 	  }
-	
+
 	  ctx.seen.pop();
-	
+
 	  return reduceToSingleString(output, base, braces);
 	}
-	
-	
+
+
 	function formatPrimitive(ctx, value) {
 	  if (isUndefined(value))
 	    return ctx.stylize('undefined', 'undefined');
@@ -1246,13 +1246,13 @@
 	  if (isNull(value))
 	    return ctx.stylize('null', 'null');
 	}
-	
-	
+
+
 	function formatError(value) {
 	  return '[' + Error.prototype.toString.call(value) + ']';
 	}
-	
-	
+
+
 	function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
 	  var output = [];
 	  for (var i = 0, l = value.length; i < l; ++i) {
@@ -1271,8 +1271,8 @@
 	  });
 	  return output;
 	}
-	
-	
+
+
 	function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
 	  var name, str, desc;
 	  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
@@ -1327,11 +1327,11 @@
 	      name = ctx.stylize(name, 'string');
 	    }
 	  }
-	
+
 	  return name + ': ' + str;
 	}
-	
-	
+
+
 	function reduceToSingleString(output, base, braces) {
 	  var numLinesEst = 0;
 	  var length = output.reduce(function(prev, cur) {
@@ -1339,7 +1339,7 @@
 	    if (cur.indexOf('\n') >= 0) numLinesEst++;
 	    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
 	  }, 0);
-	
+
 	  if (length > 60) {
 	    return braces[0] +
 	           (base === '' ? '' : base + '\n ') +
@@ -1348,79 +1348,79 @@
 	           ' ' +
 	           braces[1];
 	  }
-	
+
 	  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
 	}
-	
-	
+
+
 	// NOTE: These type checking functions intentionally don't use `instanceof`
 	// because it is fragile and can be easily faked with `Object.create()`.
 	function isArray(ar) {
 	  return Array.isArray(ar);
 	}
 	exports.isArray = isArray;
-	
+
 	function isBoolean(arg) {
 	  return typeof arg === 'boolean';
 	}
 	exports.isBoolean = isBoolean;
-	
+
 	function isNull(arg) {
 	  return arg === null;
 	}
 	exports.isNull = isNull;
-	
+
 	function isNullOrUndefined(arg) {
 	  return arg == null;
 	}
 	exports.isNullOrUndefined = isNullOrUndefined;
-	
+
 	function isNumber(arg) {
 	  return typeof arg === 'number';
 	}
 	exports.isNumber = isNumber;
-	
+
 	function isString(arg) {
 	  return typeof arg === 'string';
 	}
 	exports.isString = isString;
-	
+
 	function isSymbol(arg) {
 	  return typeof arg === 'symbol';
 	}
 	exports.isSymbol = isSymbol;
-	
+
 	function isUndefined(arg) {
 	  return arg === void 0;
 	}
 	exports.isUndefined = isUndefined;
-	
+
 	function isRegExp(re) {
 	  return isObject(re) && objectToString(re) === '[object RegExp]';
 	}
 	exports.isRegExp = isRegExp;
-	
+
 	function isObject(arg) {
 	  return typeof arg === 'object' && arg !== null;
 	}
 	exports.isObject = isObject;
-	
+
 	function isDate(d) {
 	  return isObject(d) && objectToString(d) === '[object Date]';
 	}
 	exports.isDate = isDate;
-	
+
 	function isError(e) {
 	  return isObject(e) &&
 	      (objectToString(e) === '[object Error]' || e instanceof Error);
 	}
 	exports.isError = isError;
-	
+
 	function isFunction(arg) {
 	  return typeof arg === 'function';
 	}
 	exports.isFunction = isFunction;
-	
+
 	function isPrimitive(arg) {
 	  return arg === null ||
 	         typeof arg === 'boolean' ||
@@ -1430,22 +1430,22 @@
 	         typeof arg === 'undefined';
 	}
 	exports.isPrimitive = isPrimitive;
-	
+
 	exports.isBuffer = __webpack_require__(9);
-	
+
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
 	}
-	
-	
+
+
 	function pad(n) {
 	  return n < 10 ? '0' + n.toString(10) : n.toString(10);
 	}
-	
-	
+
+
 	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
 	              'Oct', 'Nov', 'Dec'];
-	
+
 	// 26 Feb 16:19:34
 	function timestamp() {
 	  var d = new Date();
@@ -1454,14 +1454,14 @@
 	              pad(d.getSeconds())].join(':');
 	  return [d.getDate(), months[d.getMonth()], time].join(' ');
 	}
-	
-	
+
+
 	// log is just a thin wrapper to console.log that prepends a timestamp
 	exports.log = function() {
 	  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
 	};
-	
-	
+
+
 	/**
 	 * Inherit the prototype methods from one constructor into another.
 	 *
@@ -1476,11 +1476,11 @@
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
 	exports.inherits = __webpack_require__(10);
-	
+
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
 	  if (!add || !isObject(add)) return origin;
-	
+
 	  var keys = Object.keys(add);
 	  var i = keys.length;
 	  while (i--) {
@@ -1488,11 +1488,11 @@
 	  }
 	  return origin;
 	};
-	
+
 	function hasOwnProperty(obj, prop) {
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(8)))
 
 /***/ },
@@ -1500,13 +1500,13 @@
 /***/ function(module, exports) {
 
 	// shim for using process in browser
-	
+
 	var process = module.exports = {};
 	var queue = [];
 	var draining = false;
 	var currentQueue;
 	var queueIndex = -1;
-	
+
 	function cleanUpNextTick() {
 	    if (!draining || !currentQueue) {
 	        return;
@@ -1521,14 +1521,14 @@
 	        drainQueue();
 	    }
 	}
-	
+
 	function drainQueue() {
 	    if (draining) {
 	        return;
 	    }
 	    var timeout = setTimeout(cleanUpNextTick);
 	    draining = true;
-	
+
 	    var len = queue.length;
 	    while(len) {
 	        currentQueue = queue;
@@ -1545,7 +1545,7 @@
 	    draining = false;
 	    clearTimeout(timeout);
 	}
-	
+
 	process.nextTick = function (fun) {
 	    var args = new Array(arguments.length - 1);
 	    if (arguments.length > 1) {
@@ -1558,7 +1558,7 @@
 	        setTimeout(drainQueue, 0);
 	    }
 	};
-	
+
 	// v8 likes predictible objects
 	function Item(fun, array) {
 	    this.fun = fun;
@@ -1573,9 +1573,9 @@
 	process.argv = [];
 	process.version = ''; // empty string to avoid regexp issues
 	process.versions = {};
-	
+
 	function noop() {}
-	
+
 	process.on = noop;
 	process.addListener = noop;
 	process.once = noop;
@@ -1583,11 +1583,11 @@
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
-	
+
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
 	};
-	
+
 	process.cwd = function () { return '/' };
 	process.chdir = function (dir) {
 	    throw new Error('process.chdir is not supported');
@@ -1640,9 +1640,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var BrandsList;
-	
+
 	BrandsList = __webpack_require__(12);
-	
+
 	module.exports = function(list) {
 	  (function() {
 	    return this.brands = function() {
@@ -1660,9 +1660,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayFind;
-	
+
 	arrayFind = __webpack_require__(3);
-	
+
 	module.exports = function(list) {
 	  (function() {
 	    return this.fromHostname = function(hostname) {
@@ -1680,7 +1680,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
+
 	// load the styles
 	var content = __webpack_require__(14);
 	if(typeof content === 'string') content = [[module.id, content, '']];
@@ -1708,10 +1708,10 @@
 	exports = module.exports = __webpack_require__(15)();
 	// imports
 	exports.push([module.id, "@import url(http://fonts.googleapis.com/icon?family=Material+Icons);", ""]);
-	
+
 	// module
 	exports.push([module.id, ".materialize-red {\n  background-color: #e51c23 !important;\n}\n\n.materialize-red-text {\n  color: #e51c23 !important;\n}\n\n.materialize-red.lighten-5 {\n  background-color: #fdeaeb !important;\n}\n\n.materialize-red-text.text-lighten-5 {\n  color: #fdeaeb !important;\n}\n\n.materialize-red.lighten-4 {\n  background-color: #f8c1c3 !important;\n}\n\n.materialize-red-text.text-lighten-4 {\n  color: #f8c1c3 !important;\n}\n\n.materialize-red.lighten-3 {\n  background-color: #f3989b !important;\n}\n\n.materialize-red-text.text-lighten-3 {\n  color: #f3989b !important;\n}\n\n.materialize-red.lighten-2 {\n  background-color: #ee6e73 !important;\n}\n\n.materialize-red-text.text-lighten-2 {\n  color: #ee6e73 !important;\n}\n\n.materialize-red.lighten-1 {\n  background-color: #ea454b !important;\n}\n\n.materialize-red-text.text-lighten-1 {\n  color: #ea454b !important;\n}\n\n.materialize-red.darken-1 {\n  background-color: #d0181e !important;\n}\n\n.materialize-red-text.text-darken-1 {\n  color: #d0181e !important;\n}\n\n.materialize-red.darken-2 {\n  background-color: #b9151b !important;\n}\n\n.materialize-red-text.text-darken-2 {\n  color: #b9151b !important;\n}\n\n.materialize-red.darken-3 {\n  background-color: #a21318 !important;\n}\n\n.materialize-red-text.text-darken-3 {\n  color: #a21318 !important;\n}\n\n.materialize-red.darken-4 {\n  background-color: #8b1014 !important;\n}\n\n.materialize-red-text.text-darken-4 {\n  color: #8b1014 !important;\n}\n\n.red {\n  background-color: #F44336 !important;\n}\n\n.red-text {\n  color: #F44336 !important;\n}\n\n.red.lighten-5 {\n  background-color: #FFEBEE !important;\n}\n\n.red-text.text-lighten-5 {\n  color: #FFEBEE !important;\n}\n\n.red.lighten-4 {\n  background-color: #FFCDD2 !important;\n}\n\n.red-text.text-lighten-4 {\n  color: #FFCDD2 !important;\n}\n\n.red.lighten-3 {\n  background-color: #EF9A9A !important;\n}\n\n.red-text.text-lighten-3 {\n  color: #EF9A9A !important;\n}\n\n.red.lighten-2 {\n  background-color: #E57373 !important;\n}\n\n.red-text.text-lighten-2 {\n  color: #E57373 !important;\n}\n\n.red.lighten-1 {\n  background-color: #EF5350 !important;\n}\n\n.red-text.text-lighten-1 {\n  color: #EF5350 !important;\n}\n\n.red.darken-1 {\n  background-color: #E53935 !important;\n}\n\n.red-text.text-darken-1 {\n  color: #E53935 !important;\n}\n\n.red.darken-2 {\n  background-color: #D32F2F !important;\n}\n\n.red-text.text-darken-2 {\n  color: #D32F2F !important;\n}\n\n.red.darken-3 {\n  background-color: #C62828 !important;\n}\n\n.red-text.text-darken-3 {\n  color: #C62828 !important;\n}\n\n.red.darken-4 {\n  background-color: #B71C1C !important;\n}\n\n.red-text.text-darken-4 {\n  color: #B71C1C !important;\n}\n\n.red.accent-1 {\n  background-color: #FF8A80 !important;\n}\n\n.red-text.text-accent-1 {\n  color: #FF8A80 !important;\n}\n\n.red.accent-2 {\n  background-color: #FF5252 !important;\n}\n\n.red-text.text-accent-2 {\n  color: #FF5252 !important;\n}\n\n.red.accent-3 {\n  background-color: #FF1744 !important;\n}\n\n.red-text.text-accent-3 {\n  color: #FF1744 !important;\n}\n\n.red.accent-4 {\n  background-color: #D50000 !important;\n}\n\n.red-text.text-accent-4 {\n  color: #D50000 !important;\n}\n\n.pink {\n  background-color: #e91e63 !important;\n}\n\n.pink-text {\n  color: #e91e63 !important;\n}\n\n.pink.lighten-5 {\n  background-color: #fce4ec !important;\n}\n\n.pink-text.text-lighten-5 {\n  color: #fce4ec !important;\n}\n\n.pink.lighten-4 {\n  background-color: #f8bbd0 !important;\n}\n\n.pink-text.text-lighten-4 {\n  color: #f8bbd0 !important;\n}\n\n.pink.lighten-3 {\n  background-color: #f48fb1 !important;\n}\n\n.pink-text.text-lighten-3 {\n  color: #f48fb1 !important;\n}\n\n.pink.lighten-2 {\n  background-color: #f06292 !important;\n}\n\n.pink-text.text-lighten-2 {\n  color: #f06292 !important;\n}\n\n.pink.lighten-1 {\n  background-color: #ec407a !important;\n}\n\n.pink-text.text-lighten-1 {\n  color: #ec407a !important;\n}\n\n.pink.darken-1 {\n  background-color: #d81b60 !important;\n}\n\n.pink-text.text-darken-1 {\n  color: #d81b60 !important;\n}\n\n.pink.darken-2 {\n  background-color: #c2185b !important;\n}\n\n.pink-text.text-darken-2 {\n  color: #c2185b !important;\n}\n\n.pink.darken-3 {\n  background-color: #ad1457 !important;\n}\n\n.pink-text.text-darken-3 {\n  color: #ad1457 !important;\n}\n\n.pink.darken-4 {\n  background-color: #880e4f !important;\n}\n\n.pink-text.text-darken-4 {\n  color: #880e4f !important;\n}\n\n.pink.accent-1 {\n  background-color: #ff80ab !important;\n}\n\n.pink-text.text-accent-1 {\n  color: #ff80ab !important;\n}\n\n.pink.accent-2 {\n  background-color: #ff4081 !important;\n}\n\n.pink-text.text-accent-2 {\n  color: #ff4081 !important;\n}\n\n.pink.accent-3 {\n  background-color: #f50057 !important;\n}\n\n.pink-text.text-accent-3 {\n  color: #f50057 !important;\n}\n\n.pink.accent-4 {\n  background-color: #c51162 !important;\n}\n\n.pink-text.text-accent-4 {\n  color: #c51162 !important;\n}\n\n.purple {\n  background-color: #9c27b0 !important;\n}\n\n.purple-text {\n  color: #9c27b0 !important;\n}\n\n.purple.lighten-5 {\n  background-color: #f3e5f5 !important;\n}\n\n.purple-text.text-lighten-5 {\n  color: #f3e5f5 !important;\n}\n\n.purple.lighten-4 {\n  background-color: #e1bee7 !important;\n}\n\n.purple-text.text-lighten-4 {\n  color: #e1bee7 !important;\n}\n\n.purple.lighten-3 {\n  background-color: #ce93d8 !important;\n}\n\n.purple-text.text-lighten-3 {\n  color: #ce93d8 !important;\n}\n\n.purple.lighten-2 {\n  background-color: #ba68c8 !important;\n}\n\n.purple-text.text-lighten-2 {\n  color: #ba68c8 !important;\n}\n\n.purple.lighten-1 {\n  background-color: #ab47bc !important;\n}\n\n.purple-text.text-lighten-1 {\n  color: #ab47bc !important;\n}\n\n.purple.darken-1 {\n  background-color: #8e24aa !important;\n}\n\n.purple-text.text-darken-1 {\n  color: #8e24aa !important;\n}\n\n.purple.darken-2 {\n  background-color: #7b1fa2 !important;\n}\n\n.purple-text.text-darken-2 {\n  color: #7b1fa2 !important;\n}\n\n.purple.darken-3 {\n  background-color: #6a1b9a !important;\n}\n\n.purple-text.text-darken-3 {\n  color: #6a1b9a !important;\n}\n\n.purple.darken-4 {\n  background-color: #4a148c !important;\n}\n\n.purple-text.text-darken-4 {\n  color: #4a148c !important;\n}\n\n.purple.accent-1 {\n  background-color: #ea80fc !important;\n}\n\n.purple-text.text-accent-1 {\n  color: #ea80fc !important;\n}\n\n.purple.accent-2 {\n  background-color: #e040fb !important;\n}\n\n.purple-text.text-accent-2 {\n  color: #e040fb !important;\n}\n\n.purple.accent-3 {\n  background-color: #d500f9 !important;\n}\n\n.purple-text.text-accent-3 {\n  color: #d500f9 !important;\n}\n\n.purple.accent-4 {\n  background-color: #aa00ff !important;\n}\n\n.purple-text.text-accent-4 {\n  color: #aa00ff !important;\n}\n\n.deep-purple {\n  background-color: #673ab7 !important;\n}\n\n.deep-purple-text {\n  color: #673ab7 !important;\n}\n\n.deep-purple.lighten-5 {\n  background-color: #ede7f6 !important;\n}\n\n.deep-purple-text.text-lighten-5 {\n  color: #ede7f6 !important;\n}\n\n.deep-purple.lighten-4 {\n  background-color: #d1c4e9 !important;\n}\n\n.deep-purple-text.text-lighten-4 {\n  color: #d1c4e9 !important;\n}\n\n.deep-purple.lighten-3 {\n  background-color: #b39ddb !important;\n}\n\n.deep-purple-text.text-lighten-3 {\n  color: #b39ddb !important;\n}\n\n.deep-purple.lighten-2 {\n  background-color: #9575cd !important;\n}\n\n.deep-purple-text.text-lighten-2 {\n  color: #9575cd !important;\n}\n\n.deep-purple.lighten-1 {\n  background-color: #7e57c2 !important;\n}\n\n.deep-purple-text.text-lighten-1 {\n  color: #7e57c2 !important;\n}\n\n.deep-purple.darken-1 {\n  background-color: #5e35b1 !important;\n}\n\n.deep-purple-text.text-darken-1 {\n  color: #5e35b1 !important;\n}\n\n.deep-purple.darken-2 {\n  background-color: #512da8 !important;\n}\n\n.deep-purple-text.text-darken-2 {\n  color: #512da8 !important;\n}\n\n.deep-purple.darken-3 {\n  background-color: #4527a0 !important;\n}\n\n.deep-purple-text.text-darken-3 {\n  color: #4527a0 !important;\n}\n\n.deep-purple.darken-4 {\n  background-color: #311b92 !important;\n}\n\n.deep-purple-text.text-darken-4 {\n  color: #311b92 !important;\n}\n\n.deep-purple.accent-1 {\n  background-color: #b388ff !important;\n}\n\n.deep-purple-text.text-accent-1 {\n  color: #b388ff !important;\n}\n\n.deep-purple.accent-2 {\n  background-color: #7c4dff !important;\n}\n\n.deep-purple-text.text-accent-2 {\n  color: #7c4dff !important;\n}\n\n.deep-purple.accent-3 {\n  background-color: #651fff !important;\n}\n\n.deep-purple-text.text-accent-3 {\n  color: #651fff !important;\n}\n\n.deep-purple.accent-4 {\n  background-color: #6200ea !important;\n}\n\n.deep-purple-text.text-accent-4 {\n  color: #6200ea !important;\n}\n\n.indigo {\n  background-color: #3f51b5 !important;\n}\n\n.indigo-text {\n  color: #3f51b5 !important;\n}\n\n.indigo.lighten-5 {\n  background-color: #e8eaf6 !important;\n}\n\n.indigo-text.text-lighten-5 {\n  color: #e8eaf6 !important;\n}\n\n.indigo.lighten-4 {\n  background-color: #c5cae9 !important;\n}\n\n.indigo-text.text-lighten-4 {\n  color: #c5cae9 !important;\n}\n\n.indigo.lighten-3 {\n  background-color: #9fa8da !important;\n}\n\n.indigo-text.text-lighten-3 {\n  color: #9fa8da !important;\n}\n\n.indigo.lighten-2 {\n  background-color: #7986cb !important;\n}\n\n.indigo-text.text-lighten-2 {\n  color: #7986cb !important;\n}\n\n.indigo.lighten-1 {\n  background-color: #5c6bc0 !important;\n}\n\n.indigo-text.text-lighten-1 {\n  color: #5c6bc0 !important;\n}\n\n.indigo.darken-1 {\n  background-color: #3949ab !important;\n}\n\n.indigo-text.text-darken-1 {\n  color: #3949ab !important;\n}\n\n.indigo.darken-2 {\n  background-color: #303f9f !important;\n}\n\n.indigo-text.text-darken-2 {\n  color: #303f9f !important;\n}\n\n.indigo.darken-3 {\n  background-color: #283593 !important;\n}\n\n.indigo-text.text-darken-3 {\n  color: #283593 !important;\n}\n\n.indigo.darken-4 {\n  background-color: #1a237e !important;\n}\n\n.indigo-text.text-darken-4 {\n  color: #1a237e !important;\n}\n\n.indigo.accent-1 {\n  background-color: #8c9eff !important;\n}\n\n.indigo-text.text-accent-1 {\n  color: #8c9eff !important;\n}\n\n.indigo.accent-2 {\n  background-color: #536dfe !important;\n}\n\n.indigo-text.text-accent-2 {\n  color: #536dfe !important;\n}\n\n.indigo.accent-3 {\n  background-color: #3d5afe !important;\n}\n\n.indigo-text.text-accent-3 {\n  color: #3d5afe !important;\n}\n\n.indigo.accent-4 {\n  background-color: #304ffe !important;\n}\n\n.indigo-text.text-accent-4 {\n  color: #304ffe !important;\n}\n\n.blue {\n  background-color: #2196F3 !important;\n}\n\n.blue-text {\n  color: #2196F3 !important;\n}\n\n.blue.lighten-5 {\n  background-color: #E3F2FD !important;\n}\n\n.blue-text.text-lighten-5 {\n  color: #E3F2FD !important;\n}\n\n.blue.lighten-4 {\n  background-color: #BBDEFB !important;\n}\n\n.blue-text.text-lighten-4 {\n  color: #BBDEFB !important;\n}\n\n.blue.lighten-3 {\n  background-color: #90CAF9 !important;\n}\n\n.blue-text.text-lighten-3 {\n  color: #90CAF9 !important;\n}\n\n.blue.lighten-2 {\n  background-color: #64B5F6 !important;\n}\n\n.blue-text.text-lighten-2 {\n  color: #64B5F6 !important;\n}\n\n.blue.lighten-1 {\n  background-color: #42A5F5 !important;\n}\n\n.blue-text.text-lighten-1 {\n  color: #42A5F5 !important;\n}\n\n.blue.darken-1 {\n  background-color: #1E88E5 !important;\n}\n\n.blue-text.text-darken-1 {\n  color: #1E88E5 !important;\n}\n\n.blue.darken-2 {\n  background-color: #1976D2 !important;\n}\n\n.blue-text.text-darken-2 {\n  color: #1976D2 !important;\n}\n\n.blue.darken-3 {\n  background-color: #1565C0 !important;\n}\n\n.blue-text.text-darken-3 {\n  color: #1565C0 !important;\n}\n\n.blue.darken-4 {\n  background-color: #0D47A1 !important;\n}\n\n.blue-text.text-darken-4 {\n  color: #0D47A1 !important;\n}\n\n.blue.accent-1 {\n  background-color: #82B1FF !important;\n}\n\n.blue-text.text-accent-1 {\n  color: #82B1FF !important;\n}\n\n.blue.accent-2 {\n  background-color: #448AFF !important;\n}\n\n.blue-text.text-accent-2 {\n  color: #448AFF !important;\n}\n\n.blue.accent-3 {\n  background-color: #2979FF !important;\n}\n\n.blue-text.text-accent-3 {\n  color: #2979FF !important;\n}\n\n.blue.accent-4 {\n  background-color: #2962FF !important;\n}\n\n.blue-text.text-accent-4 {\n  color: #2962FF !important;\n}\n\n.light-blue {\n  background-color: #03a9f4 !important;\n}\n\n.light-blue-text {\n  color: #03a9f4 !important;\n}\n\n.light-blue.lighten-5 {\n  background-color: #e1f5fe !important;\n}\n\n.light-blue-text.text-lighten-5 {\n  color: #e1f5fe !important;\n}\n\n.light-blue.lighten-4 {\n  background-color: #b3e5fc !important;\n}\n\n.light-blue-text.text-lighten-4 {\n  color: #b3e5fc !important;\n}\n\n.light-blue.lighten-3 {\n  background-color: #81d4fa !important;\n}\n\n.light-blue-text.text-lighten-3 {\n  color: #81d4fa !important;\n}\n\n.light-blue.lighten-2 {\n  background-color: #4fc3f7 !important;\n}\n\n.light-blue-text.text-lighten-2 {\n  color: #4fc3f7 !important;\n}\n\n.light-blue.lighten-1 {\n  background-color: #29b6f6 !important;\n}\n\n.light-blue-text.text-lighten-1 {\n  color: #29b6f6 !important;\n}\n\n.light-blue.darken-1 {\n  background-color: #039be5 !important;\n}\n\n.light-blue-text.text-darken-1 {\n  color: #039be5 !important;\n}\n\n.light-blue.darken-2 {\n  background-color: #0288d1 !important;\n}\n\n.light-blue-text.text-darken-2 {\n  color: #0288d1 !important;\n}\n\n.light-blue.darken-3 {\n  background-color: #0277bd !important;\n}\n\n.light-blue-text.text-darken-3 {\n  color: #0277bd !important;\n}\n\n.light-blue.darken-4 {\n  background-color: #01579b !important;\n}\n\n.light-blue-text.text-darken-4 {\n  color: #01579b !important;\n}\n\n.light-blue.accent-1 {\n  background-color: #80d8ff !important;\n}\n\n.light-blue-text.text-accent-1 {\n  color: #80d8ff !important;\n}\n\n.light-blue.accent-2 {\n  background-color: #40c4ff !important;\n}\n\n.light-blue-text.text-accent-2 {\n  color: #40c4ff !important;\n}\n\n.light-blue.accent-3 {\n  background-color: #00b0ff !important;\n}\n\n.light-blue-text.text-accent-3 {\n  color: #00b0ff !important;\n}\n\n.light-blue.accent-4 {\n  background-color: #0091ea !important;\n}\n\n.light-blue-text.text-accent-4 {\n  color: #0091ea !important;\n}\n\n.cyan {\n  background-color: #00bcd4 !important;\n}\n\n.cyan-text {\n  color: #00bcd4 !important;\n}\n\n.cyan.lighten-5 {\n  background-color: #e0f7fa !important;\n}\n\n.cyan-text.text-lighten-5 {\n  color: #e0f7fa !important;\n}\n\n.cyan.lighten-4 {\n  background-color: #b2ebf2 !important;\n}\n\n.cyan-text.text-lighten-4 {\n  color: #b2ebf2 !important;\n}\n\n.cyan.lighten-3 {\n  background-color: #80deea !important;\n}\n\n.cyan-text.text-lighten-3 {\n  color: #80deea !important;\n}\n\n.cyan.lighten-2 {\n  background-color: #4dd0e1 !important;\n}\n\n.cyan-text.text-lighten-2 {\n  color: #4dd0e1 !important;\n}\n\n.cyan.lighten-1 {\n  background-color: #26c6da !important;\n}\n\n.cyan-text.text-lighten-1 {\n  color: #26c6da !important;\n}\n\n.cyan.darken-1 {\n  background-color: #00acc1 !important;\n}\n\n.cyan-text.text-darken-1 {\n  color: #00acc1 !important;\n}\n\n.cyan.darken-2 {\n  background-color: #0097a7 !important;\n}\n\n.cyan-text.text-darken-2 {\n  color: #0097a7 !important;\n}\n\n.cyan.darken-3 {\n  background-color: #00838f !important;\n}\n\n.cyan-text.text-darken-3 {\n  color: #00838f !important;\n}\n\n.cyan.darken-4 {\n  background-color: #006064 !important;\n}\n\n.cyan-text.text-darken-4 {\n  color: #006064 !important;\n}\n\n.cyan.accent-1 {\n  background-color: #84ffff !important;\n}\n\n.cyan-text.text-accent-1 {\n  color: #84ffff !important;\n}\n\n.cyan.accent-2 {\n  background-color: #18ffff !important;\n}\n\n.cyan-text.text-accent-2 {\n  color: #18ffff !important;\n}\n\n.cyan.accent-3 {\n  background-color: #00e5ff !important;\n}\n\n.cyan-text.text-accent-3 {\n  color: #00e5ff !important;\n}\n\n.cyan.accent-4 {\n  background-color: #00b8d4 !important;\n}\n\n.cyan-text.text-accent-4 {\n  color: #00b8d4 !important;\n}\n\n.teal {\n  background-color: #009688 !important;\n}\n\n.teal-text {\n  color: #009688 !important;\n}\n\n.teal.lighten-5 {\n  background-color: #e0f2f1 !important;\n}\n\n.teal-text.text-lighten-5 {\n  color: #e0f2f1 !important;\n}\n\n.teal.lighten-4 {\n  background-color: #b2dfdb !important;\n}\n\n.teal-text.text-lighten-4 {\n  color: #b2dfdb !important;\n}\n\n.teal.lighten-3 {\n  background-color: #80cbc4 !important;\n}\n\n.teal-text.text-lighten-3 {\n  color: #80cbc4 !important;\n}\n\n.teal.lighten-2 {\n  background-color: #4db6ac !important;\n}\n\n.teal-text.text-lighten-2 {\n  color: #4db6ac !important;\n}\n\n.teal.lighten-1 {\n  background-color: #26a69a !important;\n}\n\n.teal-text.text-lighten-1 {\n  color: #26a69a !important;\n}\n\n.teal.darken-1 {\n  background-color: #00897b !important;\n}\n\n.teal-text.text-darken-1 {\n  color: #00897b !important;\n}\n\n.teal.darken-2 {\n  background-color: #00796b !important;\n}\n\n.teal-text.text-darken-2 {\n  color: #00796b !important;\n}\n\n.teal.darken-3 {\n  background-color: #00695c !important;\n}\n\n.teal-text.text-darken-3 {\n  color: #00695c !important;\n}\n\n.teal.darken-4 {\n  background-color: #004d40 !important;\n}\n\n.teal-text.text-darken-4 {\n  color: #004d40 !important;\n}\n\n.teal.accent-1 {\n  background-color: #a7ffeb !important;\n}\n\n.teal-text.text-accent-1 {\n  color: #a7ffeb !important;\n}\n\n.teal.accent-2 {\n  background-color: #64ffda !important;\n}\n\n.teal-text.text-accent-2 {\n  color: #64ffda !important;\n}\n\n.teal.accent-3 {\n  background-color: #1de9b6 !important;\n}\n\n.teal-text.text-accent-3 {\n  color: #1de9b6 !important;\n}\n\n.teal.accent-4 {\n  background-color: #00bfa5 !important;\n}\n\n.teal-text.text-accent-4 {\n  color: #00bfa5 !important;\n}\n\n.green {\n  background-color: #4CAF50 !important;\n}\n\n.green-text {\n  color: #4CAF50 !important;\n}\n\n.green.lighten-5 {\n  background-color: #E8F5E9 !important;\n}\n\n.green-text.text-lighten-5 {\n  color: #E8F5E9 !important;\n}\n\n.green.lighten-4 {\n  background-color: #C8E6C9 !important;\n}\n\n.green-text.text-lighten-4 {\n  color: #C8E6C9 !important;\n}\n\n.green.lighten-3 {\n  background-color: #A5D6A7 !important;\n}\n\n.green-text.text-lighten-3 {\n  color: #A5D6A7 !important;\n}\n\n.green.lighten-2 {\n  background-color: #81C784 !important;\n}\n\n.green-text.text-lighten-2 {\n  color: #81C784 !important;\n}\n\n.green.lighten-1 {\n  background-color: #66BB6A !important;\n}\n\n.green-text.text-lighten-1 {\n  color: #66BB6A !important;\n}\n\n.green.darken-1 {\n  background-color: #43A047 !important;\n}\n\n.green-text.text-darken-1 {\n  color: #43A047 !important;\n}\n\n.green.darken-2 {\n  background-color: #388E3C !important;\n}\n\n.green-text.text-darken-2 {\n  color: #388E3C !important;\n}\n\n.green.darken-3 {\n  background-color: #2E7D32 !important;\n}\n\n.green-text.text-darken-3 {\n  color: #2E7D32 !important;\n}\n\n.green.darken-4 {\n  background-color: #1B5E20 !important;\n}\n\n.green-text.text-darken-4 {\n  color: #1B5E20 !important;\n}\n\n.green.accent-1 {\n  background-color: #B9F6CA !important;\n}\n\n.green-text.text-accent-1 {\n  color: #B9F6CA !important;\n}\n\n.green.accent-2 {\n  background-color: #69F0AE !important;\n}\n\n.green-text.text-accent-2 {\n  color: #69F0AE !important;\n}\n\n.green.accent-3 {\n  background-color: #00E676 !important;\n}\n\n.green-text.text-accent-3 {\n  color: #00E676 !important;\n}\n\n.green.accent-4 {\n  background-color: #00C853 !important;\n}\n\n.green-text.text-accent-4 {\n  color: #00C853 !important;\n}\n\n.light-green {\n  background-color: #8bc34a !important;\n}\n\n.light-green-text {\n  color: #8bc34a !important;\n}\n\n.light-green.lighten-5 {\n  background-color: #f1f8e9 !important;\n}\n\n.light-green-text.text-lighten-5 {\n  color: #f1f8e9 !important;\n}\n\n.light-green.lighten-4 {\n  background-color: #dcedc8 !important;\n}\n\n.light-green-text.text-lighten-4 {\n  color: #dcedc8 !important;\n}\n\n.light-green.lighten-3 {\n  background-color: #c5e1a5 !important;\n}\n\n.light-green-text.text-lighten-3 {\n  color: #c5e1a5 !important;\n}\n\n.light-green.lighten-2 {\n  background-color: #aed581 !important;\n}\n\n.light-green-text.text-lighten-2 {\n  color: #aed581 !important;\n}\n\n.light-green.lighten-1 {\n  background-color: #9ccc65 !important;\n}\n\n.light-green-text.text-lighten-1 {\n  color: #9ccc65 !important;\n}\n\n.light-green.darken-1 {\n  background-color: #7cb342 !important;\n}\n\n.light-green-text.text-darken-1 {\n  color: #7cb342 !important;\n}\n\n.light-green.darken-2 {\n  background-color: #689f38 !important;\n}\n\n.light-green-text.text-darken-2 {\n  color: #689f38 !important;\n}\n\n.light-green.darken-3 {\n  background-color: #558b2f !important;\n}\n\n.light-green-text.text-darken-3 {\n  color: #558b2f !important;\n}\n\n.light-green.darken-4 {\n  background-color: #33691e !important;\n}\n\n.light-green-text.text-darken-4 {\n  color: #33691e !important;\n}\n\n.light-green.accent-1 {\n  background-color: #ccff90 !important;\n}\n\n.light-green-text.text-accent-1 {\n  color: #ccff90 !important;\n}\n\n.light-green.accent-2 {\n  background-color: #b2ff59 !important;\n}\n\n.light-green-text.text-accent-2 {\n  color: #b2ff59 !important;\n}\n\n.light-green.accent-3 {\n  background-color: #76ff03 !important;\n}\n\n.light-green-text.text-accent-3 {\n  color: #76ff03 !important;\n}\n\n.light-green.accent-4 {\n  background-color: #64dd17 !important;\n}\n\n.light-green-text.text-accent-4 {\n  color: #64dd17 !important;\n}\n\n.lime {\n  background-color: #cddc39 !important;\n}\n\n.lime-text {\n  color: #cddc39 !important;\n}\n\n.lime.lighten-5 {\n  background-color: #f9fbe7 !important;\n}\n\n.lime-text.text-lighten-5 {\n  color: #f9fbe7 !important;\n}\n\n.lime.lighten-4 {\n  background-color: #f0f4c3 !important;\n}\n\n.lime-text.text-lighten-4 {\n  color: #f0f4c3 !important;\n}\n\n.lime.lighten-3 {\n  background-color: #e6ee9c !important;\n}\n\n.lime-text.text-lighten-3 {\n  color: #e6ee9c !important;\n}\n\n.lime.lighten-2 {\n  background-color: #dce775 !important;\n}\n\n.lime-text.text-lighten-2 {\n  color: #dce775 !important;\n}\n\n.lime.lighten-1 {\n  background-color: #d4e157 !important;\n}\n\n.lime-text.text-lighten-1 {\n  color: #d4e157 !important;\n}\n\n.lime.darken-1 {\n  background-color: #c0ca33 !important;\n}\n\n.lime-text.text-darken-1 {\n  color: #c0ca33 !important;\n}\n\n.lime.darken-2 {\n  background-color: #afb42b !important;\n}\n\n.lime-text.text-darken-2 {\n  color: #afb42b !important;\n}\n\n.lime.darken-3 {\n  background-color: #9e9d24 !important;\n}\n\n.lime-text.text-darken-3 {\n  color: #9e9d24 !important;\n}\n\n.lime.darken-4 {\n  background-color: #827717 !important;\n}\n\n.lime-text.text-darken-4 {\n  color: #827717 !important;\n}\n\n.lime.accent-1 {\n  background-color: #f4ff81 !important;\n}\n\n.lime-text.text-accent-1 {\n  color: #f4ff81 !important;\n}\n\n.lime.accent-2 {\n  background-color: #eeff41 !important;\n}\n\n.lime-text.text-accent-2 {\n  color: #eeff41 !important;\n}\n\n.lime.accent-3 {\n  background-color: #c6ff00 !important;\n}\n\n.lime-text.text-accent-3 {\n  color: #c6ff00 !important;\n}\n\n.lime.accent-4 {\n  background-color: #aeea00 !important;\n}\n\n.lime-text.text-accent-4 {\n  color: #aeea00 !important;\n}\n\n.yellow {\n  background-color: #ffeb3b !important;\n}\n\n.yellow-text {\n  color: #ffeb3b !important;\n}\n\n.yellow.lighten-5 {\n  background-color: #fffde7 !important;\n}\n\n.yellow-text.text-lighten-5 {\n  color: #fffde7 !important;\n}\n\n.yellow.lighten-4 {\n  background-color: #fff9c4 !important;\n}\n\n.yellow-text.text-lighten-4 {\n  color: #fff9c4 !important;\n}\n\n.yellow.lighten-3 {\n  background-color: #fff59d !important;\n}\n\n.yellow-text.text-lighten-3 {\n  color: #fff59d !important;\n}\n\n.yellow.lighten-2 {\n  background-color: #fff176 !important;\n}\n\n.yellow-text.text-lighten-2 {\n  color: #fff176 !important;\n}\n\n.yellow.lighten-1 {\n  background-color: #ffee58 !important;\n}\n\n.yellow-text.text-lighten-1 {\n  color: #ffee58 !important;\n}\n\n.yellow.darken-1 {\n  background-color: #fdd835 !important;\n}\n\n.yellow-text.text-darken-1 {\n  color: #fdd835 !important;\n}\n\n.yellow.darken-2 {\n  background-color: #fbc02d !important;\n}\n\n.yellow-text.text-darken-2 {\n  color: #fbc02d !important;\n}\n\n.yellow.darken-3 {\n  background-color: #f9a825 !important;\n}\n\n.yellow-text.text-darken-3 {\n  color: #f9a825 !important;\n}\n\n.yellow.darken-4 {\n  background-color: #f57f17 !important;\n}\n\n.yellow-text.text-darken-4 {\n  color: #f57f17 !important;\n}\n\n.yellow.accent-1 {\n  background-color: #ffff8d !important;\n}\n\n.yellow-text.text-accent-1 {\n  color: #ffff8d !important;\n}\n\n.yellow.accent-2 {\n  background-color: #ffff00 !important;\n}\n\n.yellow-text.text-accent-2 {\n  color: #ffff00 !important;\n}\n\n.yellow.accent-3 {\n  background-color: #ffea00 !important;\n}\n\n.yellow-text.text-accent-3 {\n  color: #ffea00 !important;\n}\n\n.yellow.accent-4 {\n  background-color: #ffd600 !important;\n}\n\n.yellow-text.text-accent-4 {\n  color: #ffd600 !important;\n}\n\n.amber {\n  background-color: #ffc107 !important;\n}\n\n.amber-text {\n  color: #ffc107 !important;\n}\n\n.amber.lighten-5 {\n  background-color: #fff8e1 !important;\n}\n\n.amber-text.text-lighten-5 {\n  color: #fff8e1 !important;\n}\n\n.amber.lighten-4 {\n  background-color: #ffecb3 !important;\n}\n\n.amber-text.text-lighten-4 {\n  color: #ffecb3 !important;\n}\n\n.amber.lighten-3 {\n  background-color: #ffe082 !important;\n}\n\n.amber-text.text-lighten-3 {\n  color: #ffe082 !important;\n}\n\n.amber.lighten-2 {\n  background-color: #ffd54f !important;\n}\n\n.amber-text.text-lighten-2 {\n  color: #ffd54f !important;\n}\n\n.amber.lighten-1 {\n  background-color: #ffca28 !important;\n}\n\n.amber-text.text-lighten-1 {\n  color: #ffca28 !important;\n}\n\n.amber.darken-1 {\n  background-color: #ffb300 !important;\n}\n\n.amber-text.text-darken-1 {\n  color: #ffb300 !important;\n}\n\n.amber.darken-2 {\n  background-color: #ffa000 !important;\n}\n\n.amber-text.text-darken-2 {\n  color: #ffa000 !important;\n}\n\n.amber.darken-3 {\n  background-color: #ff8f00 !important;\n}\n\n.amber-text.text-darken-3 {\n  color: #ff8f00 !important;\n}\n\n.amber.darken-4 {\n  background-color: #ff6f00 !important;\n}\n\n.amber-text.text-darken-4 {\n  color: #ff6f00 !important;\n}\n\n.amber.accent-1 {\n  background-color: #ffe57f !important;\n}\n\n.amber-text.text-accent-1 {\n  color: #ffe57f !important;\n}\n\n.amber.accent-2 {\n  background-color: #ffd740 !important;\n}\n\n.amber-text.text-accent-2 {\n  color: #ffd740 !important;\n}\n\n.amber.accent-3 {\n  background-color: #ffc400 !important;\n}\n\n.amber-text.text-accent-3 {\n  color: #ffc400 !important;\n}\n\n.amber.accent-4 {\n  background-color: #ffab00 !important;\n}\n\n.amber-text.text-accent-4 {\n  color: #ffab00 !important;\n}\n\n.orange {\n  background-color: #ff9800 !important;\n}\n\n.orange-text {\n  color: #ff9800 !important;\n}\n\n.orange.lighten-5 {\n  background-color: #fff3e0 !important;\n}\n\n.orange-text.text-lighten-5 {\n  color: #fff3e0 !important;\n}\n\n.orange.lighten-4 {\n  background-color: #ffe0b2 !important;\n}\n\n.orange-text.text-lighten-4 {\n  color: #ffe0b2 !important;\n}\n\n.orange.lighten-3 {\n  background-color: #ffcc80 !important;\n}\n\n.orange-text.text-lighten-3 {\n  color: #ffcc80 !important;\n}\n\n.orange.lighten-2 {\n  background-color: #ffb74d !important;\n}\n\n.orange-text.text-lighten-2 {\n  color: #ffb74d !important;\n}\n\n.orange.lighten-1 {\n  background-color: #ffa726 !important;\n}\n\n.orange-text.text-lighten-1 {\n  color: #ffa726 !important;\n}\n\n.orange.darken-1 {\n  background-color: #fb8c00 !important;\n}\n\n.orange-text.text-darken-1 {\n  color: #fb8c00 !important;\n}\n\n.orange.darken-2 {\n  background-color: #f57c00 !important;\n}\n\n.orange-text.text-darken-2 {\n  color: #f57c00 !important;\n}\n\n.orange.darken-3 {\n  background-color: #ef6c00 !important;\n}\n\n.orange-text.text-darken-3 {\n  color: #ef6c00 !important;\n}\n\n.orange.darken-4 {\n  background-color: #e65100 !important;\n}\n\n.orange-text.text-darken-4 {\n  color: #e65100 !important;\n}\n\n.orange.accent-1 {\n  background-color: #ffd180 !important;\n}\n\n.orange-text.text-accent-1 {\n  color: #ffd180 !important;\n}\n\n.orange.accent-2 {\n  background-color: #ffab40 !important;\n}\n\n.orange-text.text-accent-2 {\n  color: #ffab40 !important;\n}\n\n.orange.accent-3 {\n  background-color: #ff9100 !important;\n}\n\n.orange-text.text-accent-3 {\n  color: #ff9100 !important;\n}\n\n.orange.accent-4 {\n  background-color: #ff6d00 !important;\n}\n\n.orange-text.text-accent-4 {\n  color: #ff6d00 !important;\n}\n\n.deep-orange {\n  background-color: #ff5722 !important;\n}\n\n.deep-orange-text {\n  color: #ff5722 !important;\n}\n\n.deep-orange.lighten-5 {\n  background-color: #fbe9e7 !important;\n}\n\n.deep-orange-text.text-lighten-5 {\n  color: #fbe9e7 !important;\n}\n\n.deep-orange.lighten-4 {\n  background-color: #ffccbc !important;\n}\n\n.deep-orange-text.text-lighten-4 {\n  color: #ffccbc !important;\n}\n\n.deep-orange.lighten-3 {\n  background-color: #ffab91 !important;\n}\n\n.deep-orange-text.text-lighten-3 {\n  color: #ffab91 !important;\n}\n\n.deep-orange.lighten-2 {\n  background-color: #ff8a65 !important;\n}\n\n.deep-orange-text.text-lighten-2 {\n  color: #ff8a65 !important;\n}\n\n.deep-orange.lighten-1 {\n  background-color: #ff7043 !important;\n}\n\n.deep-orange-text.text-lighten-1 {\n  color: #ff7043 !important;\n}\n\n.deep-orange.darken-1 {\n  background-color: #f4511e !important;\n}\n\n.deep-orange-text.text-darken-1 {\n  color: #f4511e !important;\n}\n\n.deep-orange.darken-2 {\n  background-color: #e64a19 !important;\n}\n\n.deep-orange-text.text-darken-2 {\n  color: #e64a19 !important;\n}\n\n.deep-orange.darken-3 {\n  background-color: #d84315 !important;\n}\n\n.deep-orange-text.text-darken-3 {\n  color: #d84315 !important;\n}\n\n.deep-orange.darken-4 {\n  background-color: #bf360c !important;\n}\n\n.deep-orange-text.text-darken-4 {\n  color: #bf360c !important;\n}\n\n.deep-orange.accent-1 {\n  background-color: #ff9e80 !important;\n}\n\n.deep-orange-text.text-accent-1 {\n  color: #ff9e80 !important;\n}\n\n.deep-orange.accent-2 {\n  background-color: #ff6e40 !important;\n}\n\n.deep-orange-text.text-accent-2 {\n  color: #ff6e40 !important;\n}\n\n.deep-orange.accent-3 {\n  background-color: #ff3d00 !important;\n}\n\n.deep-orange-text.text-accent-3 {\n  color: #ff3d00 !important;\n}\n\n.deep-orange.accent-4 {\n  background-color: #dd2c00 !important;\n}\n\n.deep-orange-text.text-accent-4 {\n  color: #dd2c00 !important;\n}\n\n.brown {\n  background-color: #795548 !important;\n}\n\n.brown-text {\n  color: #795548 !important;\n}\n\n.brown.lighten-5 {\n  background-color: #efebe9 !important;\n}\n\n.brown-text.text-lighten-5 {\n  color: #efebe9 !important;\n}\n\n.brown.lighten-4 {\n  background-color: #d7ccc8 !important;\n}\n\n.brown-text.text-lighten-4 {\n  color: #d7ccc8 !important;\n}\n\n.brown.lighten-3 {\n  background-color: #bcaaa4 !important;\n}\n\n.brown-text.text-lighten-3 {\n  color: #bcaaa4 !important;\n}\n\n.brown.lighten-2 {\n  background-color: #a1887f !important;\n}\n\n.brown-text.text-lighten-2 {\n  color: #a1887f !important;\n}\n\n.brown.lighten-1 {\n  background-color: #8d6e63 !important;\n}\n\n.brown-text.text-lighten-1 {\n  color: #8d6e63 !important;\n}\n\n.brown.darken-1 {\n  background-color: #6d4c41 !important;\n}\n\n.brown-text.text-darken-1 {\n  color: #6d4c41 !important;\n}\n\n.brown.darken-2 {\n  background-color: #5d4037 !important;\n}\n\n.brown-text.text-darken-2 {\n  color: #5d4037 !important;\n}\n\n.brown.darken-3 {\n  background-color: #4e342e !important;\n}\n\n.brown-text.text-darken-3 {\n  color: #4e342e !important;\n}\n\n.brown.darken-4 {\n  background-color: #3e2723 !important;\n}\n\n.brown-text.text-darken-4 {\n  color: #3e2723 !important;\n}\n\n.blue-grey {\n  background-color: #607d8b !important;\n}\n\n.blue-grey-text {\n  color: #607d8b !important;\n}\n\n.blue-grey.lighten-5 {\n  background-color: #eceff1 !important;\n}\n\n.blue-grey-text.text-lighten-5 {\n  color: #eceff1 !important;\n}\n\n.blue-grey.lighten-4 {\n  background-color: #cfd8dc !important;\n}\n\n.blue-grey-text.text-lighten-4 {\n  color: #cfd8dc !important;\n}\n\n.blue-grey.lighten-3 {\n  background-color: #b0bec5 !important;\n}\n\n.blue-grey-text.text-lighten-3 {\n  color: #b0bec5 !important;\n}\n\n.blue-grey.lighten-2 {\n  background-color: #90a4ae !important;\n}\n\n.blue-grey-text.text-lighten-2 {\n  color: #90a4ae !important;\n}\n\n.blue-grey.lighten-1 {\n  background-color: #78909c !important;\n}\n\n.blue-grey-text.text-lighten-1 {\n  color: #78909c !important;\n}\n\n.blue-grey.darken-1 {\n  background-color: #546e7a !important;\n}\n\n.blue-grey-text.text-darken-1 {\n  color: #546e7a !important;\n}\n\n.blue-grey.darken-2 {\n  background-color: #455a64 !important;\n}\n\n.blue-grey-text.text-darken-2 {\n  color: #455a64 !important;\n}\n\n.blue-grey.darken-3 {\n  background-color: #37474f !important;\n}\n\n.blue-grey-text.text-darken-3 {\n  color: #37474f !important;\n}\n\n.blue-grey.darken-4 {\n  background-color: #263238 !important;\n}\n\n.blue-grey-text.text-darken-4 {\n  color: #263238 !important;\n}\n\n.grey {\n  background-color: #9e9e9e !important;\n}\n\n.grey-text {\n  color: #9e9e9e !important;\n}\n\n.grey.lighten-5 {\n  background-color: #fafafa !important;\n}\n\n.grey-text.text-lighten-5 {\n  color: #fafafa !important;\n}\n\n.grey.lighten-4 {\n  background-color: #f5f5f5 !important;\n}\n\n.grey-text.text-lighten-4 {\n  color: #f5f5f5 !important;\n}\n\n.grey.lighten-3 {\n  background-color: #eeeeee !important;\n}\n\n.grey-text.text-lighten-3 {\n  color: #eeeeee !important;\n}\n\n.grey.lighten-2 {\n  background-color: #e0e0e0 !important;\n}\n\n.grey-text.text-lighten-2 {\n  color: #e0e0e0 !important;\n}\n\n.grey.lighten-1 {\n  background-color: #bdbdbd !important;\n}\n\n.grey-text.text-lighten-1 {\n  color: #bdbdbd !important;\n}\n\n.grey.darken-1 {\n  background-color: #757575 !important;\n}\n\n.grey-text.text-darken-1 {\n  color: #757575 !important;\n}\n\n.grey.darken-2 {\n  background-color: #616161 !important;\n}\n\n.grey-text.text-darken-2 {\n  color: #616161 !important;\n}\n\n.grey.darken-3 {\n  background-color: #424242 !important;\n}\n\n.grey-text.text-darken-3 {\n  color: #424242 !important;\n}\n\n.grey.darken-4 {\n  background-color: #212121 !important;\n}\n\n.grey-text.text-darken-4 {\n  color: #212121 !important;\n}\n\n.shades.black {\n  background-color: #000000 !important;\n}\n\n.shades-text.text-black {\n  color: #000000 !important;\n}\n\n.shades.white {\n  background-color: #FFFFFF !important;\n}\n\n.shades-text.text-white {\n  color: #FFFFFF !important;\n}\n\n.shades.transparent {\n  background-color: transparent !important;\n}\n\n.shades-text.text-transparent {\n  color: transparent !important;\n}\n\n.black {\n  background-color: #000000 !important;\n}\n\n.black-text {\n  color: #000000 !important;\n}\n\n.white {\n  background-color: #FFFFFF !important;\n}\n\n.white-text {\n  color: #FFFFFF !important;\n}\n\n.transparent {\n  background-color: transparent !important;\n}\n\n.transparent-text {\n  color: transparent !important;\n}\n\n/* ==========================================================================\n   Materialize variables\n   ========================================================================== */\n\n/**\n * Table of Contents:\n *\n *  1. Colors\n *  2. Badges\n *  3. Buttons\n *  4. Cards\n *  5. Collapsible\n *  6. Chips\n *  7. Date Picker\n *  8. Dropdown\n *  10. Forms\n *  11. Global\n *  12. Grid\n *  13. Navigation Bar\n *  14. Side Navigation\n *  15. Photo Slider\n *  16. Spinners | Loaders\n *  17. Tabs\n *  18. Tables\n *  19. Toasts\n *  20. Typography\n *  21. Footer\n *  22. Flow Text\n *  23. Collections\n *  24. Progress Bar\n */\n\n/* 1. Colors\n   ========================================================================== */\n\n/* 2. Badges\n   ========================================================================== */\n\n/* 3. Buttons\n   ========================================================================== */\n\n/* 4. Cards\n   ========================================================================== */\n\n/* 5. Collapsible\n   ========================================================================== */\n\n/* 6. Chips\n   ========================================================================== */\n\n/* 7. Date Picker\n   ========================================================================== */\n\n/* 8. Dropdown\n   ========================================================================== */\n\n/* 9. Fonts\n   ========================================================================== */\n\n/* 10. Forms\n   ========================================================================== */\n\n/* 11. Global\n   ========================================================================== */\n\n/* 12. Grid\n   ========================================================================== */\n\n/* 13. Navigation Bar\n   ========================================================================== */\n\n/* 14. Side Navigation\n   ========================================================================== */\n\n/* 15. Photo Slider\n   ========================================================================== */\n\n/* 16. Spinners | Loaders\n   ========================================================================== */\n\n/* 17. Tabs\n   ========================================================================== */\n\n/* 18. Tables\n   ========================================================================== */\n\n/* 19. Toasts\n   ========================================================================== */\n\n/* 20. Typography\n   ========================================================================== */\n\n/* 21. Footer\n   ========================================================================== */\n\n/* 22. Flow Text\n   ========================================================================== */\n\n/* 23. Collections\n   ========================================================================== */\n\n/* 24. Progress Bar\n   ========================================================================== */\n\n/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */\n\n/**\n * 1. Set default font family to sans-serif.\n * 2. Prevent iOS and IE text size adjust after device orientation change,\n *    without disabling user zoom.\n */\n\nhtml {\n  font-family: sans-serif;\n  /* 1 */\n  -ms-text-size-adjust: 100%;\n  /* 2 */\n  -webkit-text-size-adjust: 100%;\n  /* 2 */\n}\n\n/**\n * Remove default margin.\n */\n\nbody {\n  margin: 0;\n}\n\n/* HTML5 display definitions\n   ========================================================================== */\n\n/**\n * Correct `block` display not defined for any HTML5 element in IE 8/9.\n * Correct `block` display not defined for `details` or `summary` in IE 10/11\n * and Firefox.\n * Correct `block` display not defined for `main` in IE 11.\n */\n\narticle,\naside,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmain,\nmenu,\nnav,\nsection,\nsummary {\n  display: block;\n}\n\n/**\n * 1. Correct `inline-block` display not defined in IE 8/9.\n * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.\n */\n\naudio,\ncanvas,\nprogress,\nvideo {\n  display: inline-block;\n  /* 1 */\n  vertical-align: baseline;\n  /* 2 */\n}\n\n/**\n * Prevent modern browsers from displaying `audio` without controls.\n * Remove excess height in iOS 5 devices.\n */\n\naudio:not([controls]) {\n  display: none;\n  height: 0;\n}\n\n/**\n * Address `[hidden]` styling not present in IE 8/9/10.\n * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.\n */\n\n[hidden],\ntemplate {\n  display: none;\n}\n\n/* Links\n   ========================================================================== */\n\n/**\n * Remove the gray background color from active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * Improve readability of focused elements when they are also in an\n * active/hover state.\n */\n\na:active,\na:hover {\n  outline: 0;\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Address styling not present in IE 8/9/10/11, Safari, and Chrome.\n */\n\nabbr[title] {\n  border-bottom: 1px dotted;\n}\n\n/**\n * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.\n */\n\nb,\nstrong {\n  font-weight: bold;\n}\n\n/**\n * Address styling not present in Safari and Chrome.\n */\n\ndfn {\n  font-style: italic;\n}\n\n/**\n * Address variable `h1` font-size and margin within `section` and `article`\n * contexts in Firefox 4+, Safari, and Chrome.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/**\n * Address styling not present in IE 8/9.\n */\n\nmark {\n  background: #ff0;\n  color: #000;\n}\n\n/**\n * Address inconsistent and variable font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` affecting `line-height` in all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsup {\n  top: -0.5em;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove border when inside `a` element in IE 8/9/10.\n */\n\nimg {\n  border: 0;\n}\n\n/**\n * Correct overflow not hidden in IE 9/10/11.\n */\n\nsvg:not(:root) {\n  overflow: hidden;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * Address margin not present in IE 8/9 and Safari.\n */\n\nfigure {\n  margin: 1em 40px;\n}\n\n/**\n * Address differences between Firefox and other browsers.\n */\n\nhr {\n  box-sizing: content-box;\n  height: 0;\n}\n\n/**\n * Contain overflow in all browsers.\n */\n\npre {\n  overflow: auto;\n}\n\n/**\n * Address odd `em`-unit font size rendering in all browsers.\n */\n\ncode,\nkbd,\npre,\nsamp {\n  font-family: monospace, monospace;\n  font-size: 1em;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * Known limitation: by default, Chrome and Safari on OS X allow very limited\n * styling of `select`, unless a `border` property is set.\n */\n\n/**\n * 1. Correct color not being inherited.\n *    Known issue: affects color of disabled elements.\n * 2. Correct font properties not being inherited.\n * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  color: inherit;\n  /* 1 */\n  font: inherit;\n  /* 2 */\n  margin: 0;\n  /* 3 */\n}\n\n/**\n * Address `overflow` set to `hidden` in IE 8/9/10/11.\n */\n\nbutton {\n  overflow: visible;\n}\n\n/**\n * Address inconsistent `text-transform` inheritance for `button` and `select`.\n * All other form control elements do not inherit `text-transform` values.\n * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.\n * Correct `select` style inheritance in Firefox.\n */\n\nbutton,\nselect {\n  text-transform: none;\n}\n\n/**\n * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`\n *    and `video` controls.\n * 2. Correct inability to style clickable `input` types in iOS.\n * 3. Improve usability and consistency of cursor style between image-type\n *    `input` and others.\n */\n\nbutton,\nhtml input[type=\"button\"],\ninput[type=\"reset\"],\ninput[type=\"submit\"] {\n  -webkit-appearance: button;\n  /* 2 */\n  cursor: pointer;\n  /* 3 */\n}\n\n/**\n * Re-set default cursor for disabled elements.\n */\n\nbutton[disabled],\nhtml input[disabled] {\n  cursor: default;\n}\n\n/**\n * Remove inner padding and border in Firefox 4+.\n */\n\nbutton::-moz-focus-inner,\ninput::-moz-focus-inner {\n  border: 0;\n  padding: 0;\n}\n\n/**\n * Address Firefox 4+ setting `line-height` on `input` using `!important` in\n * the UA stylesheet.\n */\n\ninput {\n  line-height: normal;\n}\n\n/**\n * It's recommended that you don't attempt to style these elements.\n * Firefox's implementation doesn't respect box-sizing, padding, or width.\n *\n * 1. Address box sizing set to `content-box` in IE 8/9/10.\n * 2. Remove excess padding in IE 8/9/10.\n */\n\ninput[type=\"checkbox\"],\ninput[type=\"radio\"] {\n  box-sizing: border-box;\n  /* 1 */\n  padding: 0;\n  /* 2 */\n}\n\n/**\n * Fix the cursor style for Chrome's increment/decrement buttons. For certain\n * `font-size` values of the `input`, it causes the cursor style of the\n * decrement button to change from `default` to `text`.\n */\n\ninput[type=\"number\"]::-webkit-inner-spin-button,\ninput[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Address `appearance` set to `searchfield` in Safari and Chrome.\n * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.\n */\n\ninput[type=\"search\"] {\n  -webkit-appearance: textfield;\n  /* 1 */\n  box-sizing: content-box;\n  /* 2 */\n}\n\n/**\n * Remove inner padding and search cancel button in Safari and Chrome on OS X.\n * Safari (but not Chrome) clips the cancel button when the search input has\n * padding (and `textfield` appearance).\n */\n\ninput[type=\"search\"]::-webkit-search-cancel-button,\ninput[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * Define consistent border, margin, and padding.\n */\n\nfieldset {\n  border: 1px solid #c0c0c0;\n  margin: 0 2px;\n  padding: 0.35em 0.625em 0.75em;\n}\n\n/**\n * 1. Correct `color` not being inherited in IE 8/9/10/11.\n * 2. Remove padding so people aren't caught out if they zero out fieldsets.\n */\n\nlegend {\n  border: 0;\n  /* 1 */\n  padding: 0;\n  /* 2 */\n}\n\n/**\n * Remove default vertical scrollbar in IE 8/9/10/11.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * Don't inherit the `font-weight` (applied by a rule above).\n * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.\n */\n\noptgroup {\n  font-weight: bold;\n}\n\n/* Tables\n   ========================================================================== */\n\n/**\n * Remove most spacing between table cells.\n */\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\n\ntd,\nth {\n  padding: 0;\n}\n\nhtml {\n  box-sizing: border-box;\n}\n\n*,\n*:before,\n*:after {\n  box-sizing: inherit;\n}\n\nul {\n  list-style-type: none;\n}\n\nul.browser-default {\n  list-style-type: initial;\n}\n\na {\n  color: #039be5;\n  text-decoration: none;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.valign-wrapper {\n  display: flex;\n  align-items: center;\n}\n\n.valign-wrapper .valign {\n  display: block;\n}\n\nul {\n  padding: 0;\n}\n\nul li {\n  list-style-type: none;\n}\n\n.clearfix {\n  clear: both;\n}\n\n.z-depth-0 {\n  box-shadow: none !important;\n}\n\n.z-depth-1,\nnav,\n.card-panel,\n.card,\n.toast,\n.btn,\n.btn-large,\n.btn-floating,\n.dropdown-content,\n.collapsible,\n.side-nav {\n  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);\n}\n\n.z-depth-1-half,\n.btn:hover,\n.btn-large:hover,\n.btn-floating:hover {\n  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);\n}\n\n.z-depth-2 {\n  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\n}\n\n.z-depth-3 {\n  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);\n}\n\n.z-depth-4,\n.modal {\n  box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);\n}\n\n.z-depth-5 {\n  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);\n}\n\n.hoverable {\n  transition: box-shadow .25s;\n  box-shadow: 0;\n}\n\n.hoverable:hover {\n  transition: box-shadow .25s;\n  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);\n}\n\n.divider {\n  height: 1px;\n  overflow: hidden;\n  background-color: #e0e0e0;\n}\n\nblockquote {\n  margin: 20px 0;\n  padding-left: 1.5rem;\n  border-left: 5px solid #ee6e73;\n}\n\ni {\n  line-height: inherit;\n}\n\ni.left {\n  float: left;\n  margin-right: 15px;\n}\n\ni.right {\n  float: right;\n  margin-left: 15px;\n}\n\ni.tiny {\n  font-size: 1rem;\n}\n\ni.small {\n  font-size: 2rem;\n}\n\ni.medium {\n  font-size: 4rem;\n}\n\ni.large {\n  font-size: 6rem;\n}\n\nimg.responsive-img,\nvideo.responsive-video {\n  max-width: 100%;\n  height: auto;\n}\n\n.pagination li {\n  display: inline-block;\n  font-size: 1.2rem;\n  padding: 0 10px;\n  line-height: 30px;\n  border-radius: 2px;\n  text-align: center;\n}\n\n.pagination li a {\n  color: #444;\n}\n\n.pagination li.active a {\n  color: #fff;\n}\n\n.pagination li.active {\n  background-color: #ee6e73;\n}\n\n.pagination li.disabled a {\n  cursor: default;\n  color: #999;\n}\n\n.pagination li i {\n  font-size: 2.2rem;\n  vertical-align: middle;\n}\n\n.pagination li.pages ul li {\n  display: inline-block;\n  float: none;\n}\n\n@media only screen and (max-width: 992px) {\n  .pagination {\n    width: 100%;\n  }\n\n  .pagination li.prev,\n  .pagination li.next {\n    width: 10%;\n  }\n\n  .pagination li.pages {\n    width: 80%;\n    overflow: hidden;\n    white-space: nowrap;\n  }\n}\n\n.breadcrumb {\n  font-size: 18px;\n  color: rgba(255, 255, 255, 0.7);\n}\n\n.breadcrumb i,\n.breadcrumb [class^=\"mdi-\"],\n.breadcrumb [class*=\"mdi-\"],\n.breadcrumb i.material-icons {\n  display: inline-block;\n  float: left;\n  font-size: 24px;\n}\n\n.breadcrumb:before {\n  content: '\\E5CC';\n  color: rgba(255, 255, 255, 0.7);\n  vertical-align: top;\n  display: inline-block;\n  font-family: 'Material Icons';\n  font-weight: normal;\n  font-style: normal;\n  font-size: 25px;\n  margin: 0 10px 0 8px;\n  -webkit-font-smoothing: antialiased;\n}\n\n.breadcrumb:first-child:before {\n  display: none;\n}\n\n.breadcrumb:last-child {\n  color: #fff;\n}\n\n.parallax-container {\n  position: relative;\n  overflow: hidden;\n  height: 500px;\n}\n\n.parallax {\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  z-index: -1;\n}\n\n.parallax img {\n  display: none;\n  position: absolute;\n  left: 50%;\n  bottom: 0;\n  min-width: 100%;\n  min-height: 100%;\n  -webkit-transform: translate3d(0, 0, 0);\n  transform: translate3d(0, 0, 0);\n  transform: translateX(-50%);\n}\n\n.pin-top,\n.pin-bottom {\n  position: relative;\n}\n\n.pinned {\n  position: fixed !important;\n}\n\n/*********************\n  Transition Classes\n**********************/\n\nul.staggered-list li {\n  opacity: 0;\n}\n\n.fade-in {\n  opacity: 0;\n  transform-origin: 0 50%;\n}\n\n/*********************\n  Media Query Classes\n**********************/\n\n@media only screen and (max-width: 600px) {\n  .hide-on-small-only,\n  .hide-on-small-and-down {\n    display: none !important;\n  }\n}\n\n@media only screen and (max-width: 992px) {\n  .hide-on-med-and-down {\n    display: none !important;\n  }\n}\n\n@media only screen and (min-width: 601px) {\n  .hide-on-med-and-up {\n    display: none !important;\n  }\n}\n\n@media only screen and (min-width: 600px) and (max-width: 992px) {\n  .hide-on-med-only {\n    display: none !important;\n  }\n}\n\n@media only screen and (min-width: 993px) {\n  .hide-on-large-only {\n    display: none !important;\n  }\n}\n\n@media only screen and (min-width: 993px) {\n  .show-on-large {\n    display: block !important;\n  }\n}\n\n@media only screen and (min-width: 600px) and (max-width: 992px) {\n  .show-on-medium {\n    display: block !important;\n  }\n}\n\n@media only screen and (max-width: 600px) {\n  .show-on-small {\n    display: block !important;\n  }\n}\n\n@media only screen and (min-width: 601px) {\n  .show-on-medium-and-up {\n    display: block !important;\n  }\n}\n\n@media only screen and (max-width: 992px) {\n  .show-on-medium-and-down {\n    display: block !important;\n  }\n}\n\n@media only screen and (max-width: 600px) {\n  .center-on-small-only {\n    text-align: center;\n  }\n}\n\nfooter.page-footer {\n  margin-top: 20px;\n  padding-top: 20px;\n  background-color: #ee6e73;\n}\n\nfooter.page-footer .footer-copyright {\n  overflow: hidden;\n  height: 50px;\n  line-height: 50px;\n  color: rgba(255, 255, 255, 0.8);\n  background-color: rgba(51, 51, 51, 0.08);\n}\n\ntable,\nth,\ntd {\n  border: none;\n}\n\ntable {\n  width: 100%;\n  display: table;\n}\n\ntable.bordered > thead > tr,\ntable.bordered > tbody > tr {\n  border-bottom: 1px solid #d0d0d0;\n}\n\ntable.striped > tbody > tr:nth-child(odd) {\n  background-color: #f2f2f2;\n}\n\ntable.striped > tbody > tr > td {\n  border-radius: 0;\n}\n\ntable.highlight > tbody > tr {\n  transition: background-color .25s ease;\n}\n\ntable.highlight > tbody > tr:hover {\n  background-color: #f2f2f2;\n}\n\ntable.centered thead tr th,\ntable.centered tbody tr td {\n  text-align: center;\n}\n\nthead {\n  border-bottom: 1px solid #d0d0d0;\n}\n\ntd,\nth {\n  padding: 15px 5px;\n  display: table-cell;\n  text-align: left;\n  vertical-align: middle;\n  border-radius: 2px;\n}\n\n@media only screen and (max-width: 992px) {\n  table.responsive-table {\n    width: 100%;\n    border-collapse: collapse;\n    border-spacing: 0;\n    display: block;\n    position: relative;\n    /* sort out borders */\n  }\n\n  table.responsive-table td:empty:before {\n    content: '\\A0';\n  }\n\n  table.responsive-table th,\n  table.responsive-table td {\n    margin: 0;\n    vertical-align: top;\n  }\n\n  table.responsive-table th {\n    text-align: left;\n  }\n\n  table.responsive-table thead {\n    display: block;\n    float: left;\n  }\n\n  table.responsive-table thead tr {\n    display: block;\n    padding: 0 10px 0 0;\n  }\n\n  table.responsive-table thead tr th::before {\n    content: \"\\A0\";\n  }\n\n  table.responsive-table tbody {\n    display: block;\n    width: auto;\n    position: relative;\n    overflow-x: auto;\n    white-space: nowrap;\n  }\n\n  table.responsive-table tbody tr {\n    display: inline-block;\n    vertical-align: top;\n  }\n\n  table.responsive-table th {\n    display: block;\n    text-align: right;\n  }\n\n  table.responsive-table td {\n    display: block;\n    min-height: 1.25em;\n    text-align: left;\n  }\n\n  table.responsive-table tr {\n    padding: 0 10px;\n  }\n\n  table.responsive-table thead {\n    border: 0;\n    border-right: 1px solid #d0d0d0;\n  }\n\n  table.responsive-table.bordered th {\n    border-bottom: 0;\n    border-left: 0;\n  }\n\n  table.responsive-table.bordered td {\n    border-left: 0;\n    border-right: 0;\n    border-bottom: 0;\n  }\n\n  table.responsive-table.bordered tr {\n    border: 0;\n  }\n\n  table.responsive-table.bordered tbody tr {\n    border-right: 1px solid #d0d0d0;\n  }\n}\n\n.collection {\n  margin: 0.5rem 0 1rem 0;\n  border: 1px solid #e0e0e0;\n  border-radius: 2px;\n  overflow: hidden;\n  position: relative;\n}\n\n.collection .collection-item {\n  background-color: #fff;\n  line-height: 1.5rem;\n  padding: 10px 20px;\n  margin: 0;\n  border-bottom: 1px solid #e0e0e0;\n}\n\n.collection .collection-item.avatar {\n  min-height: 84px;\n  padding-left: 72px;\n  position: relative;\n}\n\n.collection .collection-item.avatar .circle {\n  position: absolute;\n  width: 42px;\n  height: 42px;\n  overflow: hidden;\n  left: 15px;\n  display: inline-block;\n  vertical-align: middle;\n}\n\n.collection .collection-item.avatar i.circle {\n  font-size: 18px;\n  line-height: 42px;\n  color: #fff;\n  background-color: #999;\n  text-align: center;\n}\n\n.collection .collection-item.avatar .title {\n  font-size: 16px;\n}\n\n.collection .collection-item.avatar p {\n  margin: 0;\n}\n\n.collection .collection-item.avatar .secondary-content {\n  position: absolute;\n  top: 16px;\n  right: 16px;\n}\n\n.collection .collection-item:last-child {\n  border-bottom: none;\n}\n\n.collection .collection-item.active {\n  background-color: #26a69a;\n  color: #eafaf9;\n}\n\n.collection .collection-item.active .secondary-content {\n  color: #fff;\n}\n\n.collection a.collection-item {\n  display: block;\n  transition: .25s;\n  color: #26a69a;\n}\n\n.collection a.collection-item:not(.active):hover {\n  background-color: #ddd;\n}\n\n.collection.with-header .collection-header {\n  background-color: #fff;\n  border-bottom: 1px solid #e0e0e0;\n  padding: 10px 20px;\n}\n\n.collection.with-header .collection-item {\n  padding-left: 30px;\n}\n\n.collection.with-header .collection-item.avatar {\n  padding-left: 72px;\n}\n\n.secondary-content {\n  float: right;\n  color: #26a69a;\n}\n\n.collapsible .collection {\n  margin: 0;\n  border: none;\n}\n\nspan.badge {\n  min-width: 3rem;\n  padding: 0 6px;\n  text-align: center;\n  font-size: 1rem;\n  line-height: inherit;\n  color: #757575;\n  position: absolute;\n  right: 15px;\n  box-sizing: border-box;\n}\n\nspan.badge.new {\n  font-weight: 300;\n  font-size: 0.8rem;\n  color: #fff;\n  background-color: #26a69a;\n  border-radius: 2px;\n}\n\nspan.badge.new:after {\n  content: \" new\";\n}\n\nnav ul a span.badge {\n  position: static;\n  margin-left: 4px;\n  line-height: 0;\n}\n\n.video-container {\n  position: relative;\n  padding-bottom: 56.25%;\n  height: 0;\n  overflow: hidden;\n}\n\n.video-container iframe,\n.video-container object,\n.video-container embed {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.progress {\n  position: relative;\n  height: 4px;\n  display: block;\n  width: 100%;\n  background-color: #acece6;\n  border-radius: 2px;\n  margin: 0.5rem 0 1rem 0;\n  overflow: hidden;\n}\n\n.progress .determinate {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  background-color: #26a69a;\n  transition: width .3s linear;\n}\n\n.progress .indeterminate {\n  background-color: #26a69a;\n}\n\n.progress .indeterminate:before {\n  content: '';\n  position: absolute;\n  background-color: inherit;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  will-change: left, right;\n  animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;\n}\n\n.progress .indeterminate:after {\n  content: '';\n  position: absolute;\n  background-color: inherit;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  will-change: left, right;\n  animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;\n  animation-delay: 1.15s;\n}\n\n@keyframes indeterminate {\n  0% {\n    left: -35%;\n    right: 100%;\n  }\n\n  60% {\n    left: 100%;\n    right: -90%;\n  }\n\n  100% {\n    left: 100%;\n    right: -90%;\n  }\n}\n\n@keyframes indeterminate-short {\n  0% {\n    left: -200%;\n    right: 100%;\n  }\n\n  60% {\n    left: 107%;\n    right: -8%;\n  }\n\n  100% {\n    left: 107%;\n    right: -8%;\n  }\n}\n\n/*******************\n  Utility Classes\n*******************/\n\n.hide {\n  display: none !important;\n}\n\n.left-align {\n  text-align: left;\n}\n\n.right-align {\n  text-align: right;\n}\n\n.center,\n.center-align {\n  text-align: center;\n}\n\n.left {\n  float: left !important;\n}\n\n.right {\n  float: right !important;\n}\n\n.no-select,\ninput[type=range],\ninput[type=range] + .thumb {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -khtml-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.circle {\n  border-radius: 50%;\n}\n\n.center-block {\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.truncate {\n  display: block;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.no-padding {\n  padding: 0 !important;\n}\n\n/* This is needed for some mobile phones to display the Google Icon font properly */\n\n.material-icons {\n  text-rendering: optimizeLegibility;\n  font-feature-settings: 'liga';\n}\n\n.container {\n  margin: 0 auto;\n  max-width: 1280px;\n  width: 90%;\n}\n\n@media only screen and (min-width: 601px) {\n  .container {\n    width: 85%;\n  }\n}\n\n@media only screen and (min-width: 993px) {\n  .container {\n    width: 70%;\n  }\n}\n\n.container .row {\n  margin-left: -0.75rem;\n  margin-right: -0.75rem;\n}\n\n.section {\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n}\n\n.section.no-pad {\n  padding: 0;\n}\n\n.section.no-pad-bot {\n  padding-bottom: 0;\n}\n\n.section.no-pad-top {\n  padding-top: 0;\n}\n\n.row {\n  margin-left: auto;\n  margin-right: auto;\n  margin-bottom: 20px;\n}\n\n.row:after {\n  content: \"\";\n  display: table;\n  clear: both;\n}\n\n.row .col {\n  float: left;\n  box-sizing: border-box;\n  padding: 0 0.75rem;\n}\n\n.row .col[class*=\"push-\"],\n.row .col[class*=\"pull-\"] {\n  position: relative;\n}\n\n.row .col.s1 {\n  width: 8.33333%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s2 {\n  width: 16.66667%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s3 {\n  width: 25%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s4 {\n  width: 33.33333%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s5 {\n  width: 41.66667%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s6 {\n  width: 50%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s7 {\n  width: 58.33333%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s8 {\n  width: 66.66667%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s9 {\n  width: 75%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s10 {\n  width: 83.33333%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s11 {\n  width: 91.66667%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.s12 {\n  width: 100%;\n  margin-left: auto;\n  left: auto;\n  right: auto;\n}\n\n.row .col.offset-s1 {\n  margin-left: 8.33333%;\n}\n\n.row .col.pull-s1 {\n  right: 8.33333%;\n}\n\n.row .col.push-s1 {\n  left: 8.33333%;\n}\n\n.row .col.offset-s2 {\n  margin-left: 16.66667%;\n}\n\n.row .col.pull-s2 {\n  right: 16.66667%;\n}\n\n.row .col.push-s2 {\n  left: 16.66667%;\n}\n\n.row .col.offset-s3 {\n  margin-left: 25%;\n}\n\n.row .col.pull-s3 {\n  right: 25%;\n}\n\n.row .col.push-s3 {\n  left: 25%;\n}\n\n.row .col.offset-s4 {\n  margin-left: 33.33333%;\n}\n\n.row .col.pull-s4 {\n  right: 33.33333%;\n}\n\n.row .col.push-s4 {\n  left: 33.33333%;\n}\n\n.row .col.offset-s5 {\n  margin-left: 41.66667%;\n}\n\n.row .col.pull-s5 {\n  right: 41.66667%;\n}\n\n.row .col.push-s5 {\n  left: 41.66667%;\n}\n\n.row .col.offset-s6 {\n  margin-left: 50%;\n}\n\n.row .col.pull-s6 {\n  right: 50%;\n}\n\n.row .col.push-s6 {\n  left: 50%;\n}\n\n.row .col.offset-s7 {\n  margin-left: 58.33333%;\n}\n\n.row .col.pull-s7 {\n  right: 58.33333%;\n}\n\n.row .col.push-s7 {\n  left: 58.33333%;\n}\n\n.row .col.offset-s8 {\n  margin-left: 66.66667%;\n}\n\n.row .col.pull-s8 {\n  right: 66.66667%;\n}\n\n.row .col.push-s8 {\n  left: 66.66667%;\n}\n\n.row .col.offset-s9 {\n  margin-left: 75%;\n}\n\n.row .col.pull-s9 {\n  right: 75%;\n}\n\n.row .col.push-s9 {\n  left: 75%;\n}\n\n.row .col.offset-s10 {\n  margin-left: 83.33333%;\n}\n\n.row .col.pull-s10 {\n  right: 83.33333%;\n}\n\n.row .col.push-s10 {\n  left: 83.33333%;\n}\n\n.row .col.offset-s11 {\n  margin-left: 91.66667%;\n}\n\n.row .col.pull-s11 {\n  right: 91.66667%;\n}\n\n.row .col.push-s11 {\n  left: 91.66667%;\n}\n\n.row .col.offset-s12 {\n  margin-left: 100%;\n}\n\n.row .col.pull-s12 {\n  right: 100%;\n}\n\n.row .col.push-s12 {\n  left: 100%;\n}\n\n@media only screen and (min-width: 601px) {\n  .row .col.m1 {\n    width: 8.33333%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m2 {\n    width: 16.66667%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m3 {\n    width: 25%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m4 {\n    width: 33.33333%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m5 {\n    width: 41.66667%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m6 {\n    width: 50%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m7 {\n    width: 58.33333%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m8 {\n    width: 66.66667%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m9 {\n    width: 75%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m10 {\n    width: 83.33333%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m11 {\n    width: 91.66667%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.m12 {\n    width: 100%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.offset-m1 {\n    margin-left: 8.33333%;\n  }\n\n  .row .col.pull-m1 {\n    right: 8.33333%;\n  }\n\n  .row .col.push-m1 {\n    left: 8.33333%;\n  }\n\n  .row .col.offset-m2 {\n    margin-left: 16.66667%;\n  }\n\n  .row .col.pull-m2 {\n    right: 16.66667%;\n  }\n\n  .row .col.push-m2 {\n    left: 16.66667%;\n  }\n\n  .row .col.offset-m3 {\n    margin-left: 25%;\n  }\n\n  .row .col.pull-m3 {\n    right: 25%;\n  }\n\n  .row .col.push-m3 {\n    left: 25%;\n  }\n\n  .row .col.offset-m4 {\n    margin-left: 33.33333%;\n  }\n\n  .row .col.pull-m4 {\n    right: 33.33333%;\n  }\n\n  .row .col.push-m4 {\n    left: 33.33333%;\n  }\n\n  .row .col.offset-m5 {\n    margin-left: 41.66667%;\n  }\n\n  .row .col.pull-m5 {\n    right: 41.66667%;\n  }\n\n  .row .col.push-m5 {\n    left: 41.66667%;\n  }\n\n  .row .col.offset-m6 {\n    margin-left: 50%;\n  }\n\n  .row .col.pull-m6 {\n    right: 50%;\n  }\n\n  .row .col.push-m6 {\n    left: 50%;\n  }\n\n  .row .col.offset-m7 {\n    margin-left: 58.33333%;\n  }\n\n  .row .col.pull-m7 {\n    right: 58.33333%;\n  }\n\n  .row .col.push-m7 {\n    left: 58.33333%;\n  }\n\n  .row .col.offset-m8 {\n    margin-left: 66.66667%;\n  }\n\n  .row .col.pull-m8 {\n    right: 66.66667%;\n  }\n\n  .row .col.push-m8 {\n    left: 66.66667%;\n  }\n\n  .row .col.offset-m9 {\n    margin-left: 75%;\n  }\n\n  .row .col.pull-m9 {\n    right: 75%;\n  }\n\n  .row .col.push-m9 {\n    left: 75%;\n  }\n\n  .row .col.offset-m10 {\n    margin-left: 83.33333%;\n  }\n\n  .row .col.pull-m10 {\n    right: 83.33333%;\n  }\n\n  .row .col.push-m10 {\n    left: 83.33333%;\n  }\n\n  .row .col.offset-m11 {\n    margin-left: 91.66667%;\n  }\n\n  .row .col.pull-m11 {\n    right: 91.66667%;\n  }\n\n  .row .col.push-m11 {\n    left: 91.66667%;\n  }\n\n  .row .col.offset-m12 {\n    margin-left: 100%;\n  }\n\n  .row .col.pull-m12 {\n    right: 100%;\n  }\n\n  .row .col.push-m12 {\n    left: 100%;\n  }\n}\n\n@media only screen and (min-width: 993px) {\n  .row .col.l1 {\n    width: 8.33333%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l2 {\n    width: 16.66667%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l3 {\n    width: 25%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l4 {\n    width: 33.33333%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l5 {\n    width: 41.66667%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l6 {\n    width: 50%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l7 {\n    width: 58.33333%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l8 {\n    width: 66.66667%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l9 {\n    width: 75%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l10 {\n    width: 83.33333%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l11 {\n    width: 91.66667%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.l12 {\n    width: 100%;\n    margin-left: auto;\n    left: auto;\n    right: auto;\n  }\n\n  .row .col.offset-l1 {\n    margin-left: 8.33333%;\n  }\n\n  .row .col.pull-l1 {\n    right: 8.33333%;\n  }\n\n  .row .col.push-l1 {\n    left: 8.33333%;\n  }\n\n  .row .col.offset-l2 {\n    margin-left: 16.66667%;\n  }\n\n  .row .col.pull-l2 {\n    right: 16.66667%;\n  }\n\n  .row .col.push-l2 {\n    left: 16.66667%;\n  }\n\n  .row .col.offset-l3 {\n    margin-left: 25%;\n  }\n\n  .row .col.pull-l3 {\n    right: 25%;\n  }\n\n  .row .col.push-l3 {\n    left: 25%;\n  }\n\n  .row .col.offset-l4 {\n    margin-left: 33.33333%;\n  }\n\n  .row .col.pull-l4 {\n    right: 33.33333%;\n  }\n\n  .row .col.push-l4 {\n    left: 33.33333%;\n  }\n\n  .row .col.offset-l5 {\n    margin-left: 41.66667%;\n  }\n\n  .row .col.pull-l5 {\n    right: 41.66667%;\n  }\n\n  .row .col.push-l5 {\n    left: 41.66667%;\n  }\n\n  .row .col.offset-l6 {\n    margin-left: 50%;\n  }\n\n  .row .col.pull-l6 {\n    right: 50%;\n  }\n\n  .row .col.push-l6 {\n    left: 50%;\n  }\n\n  .row .col.offset-l7 {\n    margin-left: 58.33333%;\n  }\n\n  .row .col.pull-l7 {\n    right: 58.33333%;\n  }\n\n  .row .col.push-l7 {\n    left: 58.33333%;\n  }\n\n  .row .col.offset-l8 {\n    margin-left: 66.66667%;\n  }\n\n  .row .col.pull-l8 {\n    right: 66.66667%;\n  }\n\n  .row .col.push-l8 {\n    left: 66.66667%;\n  }\n\n  .row .col.offset-l9 {\n    margin-left: 75%;\n  }\n\n  .row .col.pull-l9 {\n    right: 75%;\n  }\n\n  .row .col.push-l9 {\n    left: 75%;\n  }\n\n  .row .col.offset-l10 {\n    margin-left: 83.33333%;\n  }\n\n  .row .col.pull-l10 {\n    right: 83.33333%;\n  }\n\n  .row .col.push-l10 {\n    left: 83.33333%;\n  }\n\n  .row .col.offset-l11 {\n    margin-left: 91.66667%;\n  }\n\n  .row .col.pull-l11 {\n    right: 91.66667%;\n  }\n\n  .row .col.push-l11 {\n    left: 91.66667%;\n  }\n\n  .row .col.offset-l12 {\n    margin-left: 100%;\n  }\n\n  .row .col.pull-l12 {\n    right: 100%;\n  }\n\n  .row .col.push-l12 {\n    left: 100%;\n  }\n}\n\nnav {\n  color: #fff;\n  background-color: #ee6e73;\n  width: 100%;\n  height: 56px;\n  line-height: 56px;\n}\n\nnav a {\n  color: #fff;\n}\n\nnav i,\nnav [class^=\"mdi-\"],\nnav [class*=\"mdi-\"],\nnav i.material-icons {\n  display: block;\n  font-size: 2rem;\n  height: 56px;\n  line-height: 56px;\n}\n\nnav .nav-wrapper {\n  position: relative;\n  height: 100%;\n}\n\n@media only screen and (min-width: 993px) {\n  nav a.button-collapse {\n    display: none;\n  }\n}\n\nnav .button-collapse {\n  float: left;\n  position: relative;\n  z-index: 1;\n  height: 56px;\n}\n\nnav .button-collapse i {\n  font-size: 2.7rem;\n  height: 56px;\n  line-height: 56px;\n}\n\nnav .brand-logo {\n  position: absolute;\n  color: #fff;\n  display: inline-block;\n  font-size: 2.1rem;\n  padding: 0;\n  white-space: nowrap;\n}\n\nnav .brand-logo.center {\n  left: 50%;\n  transform: translateX(-50%);\n}\n\n@media only screen and (max-width: 992px) {\n  nav .brand-logo {\n    left: 50%;\n    transform: translateX(-50%);\n  }\n\n  nav .brand-logo.left,\n  nav .brand-logo.right {\n    padding: 0;\n    transform: none;\n  }\n\n  nav .brand-logo.left {\n    left: 0.5rem;\n  }\n\n  nav .brand-logo.right {\n    right: 0.5rem;\n    left: auto;\n  }\n}\n\nnav .brand-logo.right {\n  right: 0.5rem;\n  padding: 0;\n}\n\nnav ul {\n  margin: 0;\n}\n\nnav ul li {\n  transition: background-color .3s;\n  float: left;\n  padding: 0;\n}\n\nnav ul li.active {\n  background-color: rgba(0, 0, 0, 0.1);\n}\n\nnav ul a {\n  transition: background-color .3s;\n  font-size: 1rem;\n  color: #fff;\n  display: inline-block;\n  padding: 0 15px;\n  cursor: pointer;\n}\n\nnav ul a.btn,\nnav ul a.btn-large,\nnav ul a.btn-large,\nnav ul a.btn-flat,\nnav ul a.btn-floating {\n  margin-top: -2px;\n  margin-left: 15px;\n  margin-right: 15px;\n}\n\nnav ul a:hover {\n  background-color: rgba(0, 0, 0, 0.1);\n}\n\nnav ul.left {\n  float: left;\n}\n\nnav .input-field {\n  margin: 0;\n}\n\nnav .input-field input {\n  height: 100%;\n  font-size: 1.2rem;\n  border: none;\n  padding-left: 2rem;\n}\n\nnav .input-field input:focus,\nnav .input-field input[type=text]:valid,\nnav .input-field input[type=password]:valid,\nnav .input-field input[type=email]:valid,\nnav .input-field input[type=url]:valid,\nnav .input-field input[type=date]:valid {\n  border: none;\n  box-shadow: none;\n}\n\nnav .input-field label {\n  top: 0;\n  left: 0;\n}\n\nnav .input-field label i {\n  color: rgba(255, 255, 255, 0.7);\n  transition: color .3s;\n}\n\nnav .input-field label.active i {\n  color: #fff;\n}\n\nnav .input-field label.active {\n  transform: translateY(0);\n}\n\n.navbar-fixed {\n  position: relative;\n  height: 56px;\n  z-index: 998;\n}\n\n.navbar-fixed nav {\n  position: fixed;\n}\n\n@media only screen and (min-width: 601px) {\n  nav,\n  nav .nav-wrapper i,\n  nav a.button-collapse,\n  nav a.button-collapse i {\n    height: 64px;\n    line-height: 64px;\n  }\n\n  .navbar-fixed {\n    height: 64px;\n  }\n}\n\n@font-face {\n  font-family: \"Roboto\";\n  src: local(Roboto Thin), url(" + __webpack_require__(16) + ");\n  src: url(" + __webpack_require__(16) + "?#iefix) format(\"embedded-opentype\"), url(" + __webpack_require__(17) + ") format(\"woff2\"), url(" + __webpack_require__(18) + ") format(\"woff\"), url(" + __webpack_require__(19) + ") format(\"truetype\");\n  font-weight: 200;\n}\n\n@font-face {\n  font-family: \"Roboto\";\n  src: local(Roboto Light), url(" + __webpack_require__(20) + ");\n  src: url(" + __webpack_require__(20) + "?#iefix) format(\"embedded-opentype\"), url(" + __webpack_require__(21) + ") format(\"woff2\"), url(" + __webpack_require__(22) + ") format(\"woff\"), url(" + __webpack_require__(23) + ") format(\"truetype\");\n  font-weight: 300;\n}\n\n@font-face {\n  font-family: \"Roboto\";\n  src: local(Roboto Regular), url(" + __webpack_require__(24) + ");\n  src: url(" + __webpack_require__(24) + "?#iefix) format(\"embedded-opentype\"), url(" + __webpack_require__(25) + ") format(\"woff2\"), url(" + __webpack_require__(26) + ") format(\"woff\"), url(" + __webpack_require__(27) + ") format(\"truetype\");\n  font-weight: 400;\n}\n\n@font-face {\n  font-family: \"Roboto\";\n  src: url(" + __webpack_require__(28) + ");\n  src: url(" + __webpack_require__(28) + "?#iefix) format(\"embedded-opentype\"), url(" + __webpack_require__(29) + ") format(\"woff2\"), url(" + __webpack_require__(30) + ") format(\"woff\"), url(" + __webpack_require__(31) + ") format(\"truetype\");\n  font-weight: 500;\n}\n\n@font-face {\n  font-family: \"Roboto\";\n  src: url(" + __webpack_require__(32) + ");\n  src: url(" + __webpack_require__(32) + "?#iefix) format(\"embedded-opentype\"), url(" + __webpack_require__(33) + ") format(\"woff2\"), url(" + __webpack_require__(34) + ") format(\"woff\"), url(" + __webpack_require__(35) + ") format(\"truetype\");\n  font-weight: 700;\n}\n\na {\n  text-decoration: none;\n}\n\nhtml {\n  line-height: 1.5;\n  font-family: \"Roboto\", sans-serif;\n  font-weight: normal;\n  color: rgba(0, 0, 0, 0.87);\n}\n\n@media only screen and (min-width: 0) {\n  html {\n    font-size: 14px;\n  }\n}\n\n@media only screen and (min-width: 992px) {\n  html {\n    font-size: 14.5px;\n  }\n}\n\n@media only screen and (min-width: 1200px) {\n  html {\n    font-size: 15px;\n  }\n}\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-weight: 400;\n  line-height: 1.1;\n}\n\nh1 a,\nh2 a,\nh3 a,\nh4 a,\nh5 a,\nh6 a {\n  font-weight: inherit;\n}\n\nh1 {\n  font-size: 4.2rem;\n  line-height: 110%;\n  margin: 2.1rem 0 1.68rem 0;\n}\n\nh2 {\n  font-size: 3.56rem;\n  line-height: 110%;\n  margin: 1.78rem 0 1.424rem 0;\n}\n\nh3 {\n  font-size: 2.92rem;\n  line-height: 110%;\n  margin: 1.46rem 0 1.168rem 0;\n}\n\nh4 {\n  font-size: 2.28rem;\n  line-height: 110%;\n  margin: 1.14rem 0 0.912rem 0;\n}\n\nh5 {\n  font-size: 1.64rem;\n  line-height: 110%;\n  margin: 0.82rem 0 0.656rem 0;\n}\n\nh6 {\n  font-size: 1rem;\n  line-height: 110%;\n  margin: 0.5rem 0 0.4rem 0;\n}\n\nem {\n  font-style: italic;\n}\n\nstrong {\n  font-weight: 500;\n}\n\nsmall {\n  font-size: 75%;\n}\n\n.light,\nfooter.page-footer .footer-copyright {\n  font-weight: 300;\n}\n\n.thin {\n  font-weight: 200;\n}\n\n.flow-text {\n  font-weight: 300;\n}\n\n@media only screen and (min-width: 360px) {\n  .flow-text {\n    font-size: 1.2rem;\n  }\n}\n\n@media only screen and (min-width: 390px) {\n  .flow-text {\n    font-size: 1.224rem;\n  }\n}\n\n@media only screen and (min-width: 420px) {\n  .flow-text {\n    font-size: 1.248rem;\n  }\n}\n\n@media only screen and (min-width: 450px) {\n  .flow-text {\n    font-size: 1.272rem;\n  }\n}\n\n@media only screen and (min-width: 480px) {\n  .flow-text {\n    font-size: 1.296rem;\n  }\n}\n\n@media only screen and (min-width: 510px) {\n  .flow-text {\n    font-size: 1.32rem;\n  }\n}\n\n@media only screen and (min-width: 540px) {\n  .flow-text {\n    font-size: 1.344rem;\n  }\n}\n\n@media only screen and (min-width: 570px) {\n  .flow-text {\n    font-size: 1.368rem;\n  }\n}\n\n@media only screen and (min-width: 600px) {\n  .flow-text {\n    font-size: 1.392rem;\n  }\n}\n\n@media only screen and (min-width: 630px) {\n  .flow-text {\n    font-size: 1.416rem;\n  }\n}\n\n@media only screen and (min-width: 660px) {\n  .flow-text {\n    font-size: 1.44rem;\n  }\n}\n\n@media only screen and (min-width: 690px) {\n  .flow-text {\n    font-size: 1.464rem;\n  }\n}\n\n@media only screen and (min-width: 720px) {\n  .flow-text {\n    font-size: 1.488rem;\n  }\n}\n\n@media only screen and (min-width: 750px) {\n  .flow-text {\n    font-size: 1.512rem;\n  }\n}\n\n@media only screen and (min-width: 780px) {\n  .flow-text {\n    font-size: 1.536rem;\n  }\n}\n\n@media only screen and (min-width: 810px) {\n  .flow-text {\n    font-size: 1.56rem;\n  }\n}\n\n@media only screen and (min-width: 840px) {\n  .flow-text {\n    font-size: 1.584rem;\n  }\n}\n\n@media only screen and (min-width: 870px) {\n  .flow-text {\n    font-size: 1.608rem;\n  }\n}\n\n@media only screen and (min-width: 900px) {\n  .flow-text {\n    font-size: 1.632rem;\n  }\n}\n\n@media only screen and (min-width: 930px) {\n  .flow-text {\n    font-size: 1.656rem;\n  }\n}\n\n@media only screen and (min-width: 960px) {\n  .flow-text {\n    font-size: 1.68rem;\n  }\n}\n\n@media only screen and (max-width: 360px) {\n  .flow-text {\n    font-size: 1.2rem;\n  }\n}\n\n.card-panel {\n  transition: box-shadow .25s;\n  padding: 20px;\n  margin: 0.5rem 0 1rem 0;\n  border-radius: 2px;\n  background-color: #fff;\n}\n\n.card {\n  position: relative;\n  margin: 0.5rem 0 1rem 0;\n  background-color: #fff;\n  transition: box-shadow .25s;\n  border-radius: 2px;\n}\n\n.card .card-title {\n  font-size: 24px;\n  font-weight: 300;\n}\n\n.card .card-title.activator {\n  cursor: pointer;\n}\n\n.card.small,\n.card.medium,\n.card.large {\n  position: relative;\n}\n\n.card.small .card-image,\n.card.medium .card-image,\n.card.large .card-image {\n  max-height: 60%;\n  overflow: hidden;\n}\n\n.card.small .card-content,\n.card.medium .card-content,\n.card.large .card-content {\n  max-height: 40%;\n  overflow: hidden;\n}\n\n.card.small .card-action,\n.card.medium .card-action,\n.card.large .card-action {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\n\n.card.small {\n  height: 300px;\n}\n\n.card.medium {\n  height: 400px;\n}\n\n.card.large {\n  height: 500px;\n}\n\n.card .card-image {\n  position: relative;\n}\n\n.card .card-image img {\n  display: block;\n  border-radius: 2px 2px 0 0;\n  position: relative;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  width: 100%;\n}\n\n.card .card-image .card-title {\n  color: #fff;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  padding: 20px;\n}\n\n.card .card-content {\n  padding: 20px;\n  border-radius: 0 0 2px 2px;\n}\n\n.card .card-content p {\n  margin: 0;\n  color: inherit;\n}\n\n.card .card-content .card-title {\n  line-height: 48px;\n}\n\n.card .card-action {\n  position: relative;\n  background-color: inherit;\n  border-top: 1px solid rgba(160, 160, 160, 0.2);\n  padding: 20px;\n  z-index: 2;\n}\n\n.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {\n  color: #ffab40;\n  margin-right: 20px;\n  transition: color .3s ease;\n  text-transform: uppercase;\n}\n\n.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating):hover {\n  color: #ffd8a6;\n}\n\n.card .card-action + .card-reveal {\n  z-index: 1;\n  padding-bottom: 64px;\n}\n\n.card .card-reveal {\n  padding: 20px;\n  position: absolute;\n  background-color: #fff;\n  width: 100%;\n  overflow-y: auto;\n  top: 100%;\n  height: 100%;\n  z-index: 3;\n  display: none;\n}\n\n.card .card-reveal .card-title {\n  cursor: pointer;\n  display: block;\n}\n\n#toast-container {\n  display: block;\n  position: fixed;\n  z-index: 10000;\n}\n\n@media only screen and (max-width: 600px) {\n  #toast-container {\n    min-width: 100%;\n    bottom: 0%;\n  }\n}\n\n@media only screen and (min-width: 601px) and (max-width: 992px) {\n  #toast-container {\n    left: 5%;\n    bottom: 7%;\n    max-width: 90%;\n  }\n}\n\n@media only screen and (min-width: 993px) {\n  #toast-container {\n    top: 10%;\n    right: 7%;\n    max-width: 86%;\n  }\n}\n\n.toast {\n  border-radius: 2px;\n  top: 0;\n  width: auto;\n  clear: both;\n  margin-top: 10px;\n  position: relative;\n  max-width: 100%;\n  height: auto;\n  min-height: 48px;\n  line-height: 1.5em;\n  word-break: break-all;\n  background-color: #323232;\n  padding: 10px 25px;\n  font-size: 1.1rem;\n  font-weight: 300;\n  color: #fff;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n.toast .btn,\n.toast .btn-large,\n.toast .btn-flat {\n  margin: 0;\n  margin-left: 3rem;\n}\n\n.toast.rounded {\n  border-radius: 24px;\n}\n\n@media only screen and (max-width: 600px) {\n  .toast {\n    width: 100%;\n    border-radius: 0;\n  }\n}\n\n@media only screen and (min-width: 601px) and (max-width: 992px) {\n  .toast {\n    float: left;\n  }\n}\n\n@media only screen and (min-width: 993px) {\n  .toast {\n    float: right;\n  }\n}\n\n.tabs {\n  display: flex;\n  position: relative;\n  overflow-x: auto;\n  overflow-y: hidden;\n  height: 48px;\n  background-color: #fff;\n  margin: 0 auto;\n  width: 100%;\n  white-space: nowrap;\n}\n\n.tabs .tab {\n  -webkit-box-flex: 1;\n  -webkit-flex-grow: 1;\n  -ms-flex-positive: 1;\n  flex-grow: 1;\n  display: block;\n  float: left;\n  text-align: center;\n  line-height: 48px;\n  height: 48px;\n  padding: 0;\n  margin: 0;\n  text-transform: uppercase;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  letter-spacing: .8px;\n  width: 15%;\n  min-width: 80px;\n}\n\n.tabs .tab a {\n  color: #ee6e73;\n  display: block;\n  width: 100%;\n  height: 100%;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  transition: color .28s ease;\n}\n\n.tabs .tab a:hover {\n  color: #f9c9cb;\n}\n\n.tabs .tab.disabled a {\n  color: #f9c9cb;\n  cursor: default;\n}\n\n.tabs .indicator {\n  position: absolute;\n  bottom: 0;\n  height: 2px;\n  background-color: #f6b2b5;\n  will-change: left, right;\n}\n\n.material-tooltip {\n  padding: 10px 8px;\n  font-size: 1rem;\n  z-index: 2000;\n  background-color: transparent;\n  border-radius: 2px;\n  color: #fff;\n  min-height: 36px;\n  line-height: 120%;\n  opacity: 0;\n  display: none;\n  position: absolute;\n  text-align: center;\n  max-width: calc(100% - 4px);\n  overflow: hidden;\n  left: 0;\n  top: 0;\n  pointer-events: none;\n  will-change: top, left;\n}\n\n.backdrop {\n  position: absolute;\n  opacity: 0;\n  display: none;\n  height: 7px;\n  width: 14px;\n  border-radius: 0 0 14px 14px;\n  background-color: #323232;\n  z-index: -1;\n  transform-origin: 50% 10%;\n  will-change: transform, opacity;\n}\n\n.btn,\n.btn-large,\n.btn-flat {\n  border: none;\n  border-radius: 2px;\n  display: inline-block;\n  height: 36px;\n  line-height: 36px;\n  outline: 0;\n  padding: 0 2rem;\n  text-transform: uppercase;\n  vertical-align: middle;\n  -webkit-tap-highlight-color: transparent;\n}\n\n.btn.disabled,\n.disabled.btn-large,\n.btn-floating.disabled,\n.btn-large.disabled,\n.btn:disabled .btn-large:disabled,\n.btn-large:disabled .btn-large:disabled,\n.btn-floating:disabled {\n  background-color: #DFDFDF !important;\n  box-shadow: none;\n  color: #9F9F9F !important;\n  cursor: default;\n}\n\n.btn.disabled *,\n.disabled.btn-large *,\n.btn-floating.disabled *,\n.btn-large.disabled *,\n.btn:disabled .btn-large:disabled *,\n.btn-large:disabled .btn-large:disabled *,\n.btn-floating:disabled * {\n  pointer-events: none;\n}\n\n.btn.disabled:hover,\n.disabled.btn-large:hover,\n.btn-floating.disabled:hover,\n.btn-large.disabled:hover,\n.btn:disabled .btn-large:disabled:hover,\n.btn-large:disabled .btn-large:disabled:hover,\n.btn-floating:disabled:hover {\n  background-color: #DFDFDF !important;\n  color: #9F9F9F !important;\n}\n\n.btn i,\n.btn-large i,\n.btn-floating i,\n.btn-large i,\n.btn-flat i {\n  font-size: 1.3rem;\n  line-height: inherit;\n}\n\n.btn,\n.btn-large {\n  text-decoration: none;\n  color: #fff;\n  background-color: #26a69a;\n  text-align: center;\n  letter-spacing: .5px;\n  transition: .2s ease-out;\n  cursor: pointer;\n}\n\n.btn:hover,\n.btn-large:hover {\n  background-color: #2bbbad;\n}\n\n.btn-floating {\n  display: inline-block;\n  color: #fff;\n  position: relative;\n  overflow: hidden;\n  z-index: 1;\n  width: 37px;\n  height: 37px;\n  line-height: 37px;\n  padding: 0;\n  background-color: #26a69a;\n  border-radius: 50%;\n  transition: .3s;\n  cursor: pointer;\n  vertical-align: middle;\n}\n\n.btn-floating i {\n  width: inherit;\n  display: inline-block;\n  text-align: center;\n  color: #fff;\n  font-size: 1.6rem;\n  line-height: 37px;\n}\n\n.btn-floating:hover {\n  background-color: #26a69a;\n}\n\n.btn-floating:before {\n  border-radius: 0;\n}\n\n.btn-floating.btn-large {\n  width: 55.5px;\n  height: 55.5px;\n}\n\n.btn-floating.btn-large i {\n  line-height: 55.5px;\n}\n\nbutton.btn-floating {\n  border: none;\n}\n\n.fixed-action-btn {\n  position: fixed;\n  right: 23px;\n  bottom: 23px;\n  padding-top: 15px;\n  margin-bottom: 0;\n  z-index: 998;\n}\n\n.fixed-action-btn.active ul {\n  visibility: visible;\n}\n\n.fixed-action-btn.horizontal {\n  padding: 0 0 0 15px;\n}\n\n.fixed-action-btn.horizontal ul {\n  text-align: right;\n  right: 64px;\n  top: 50%;\n  transform: translateY(-50%);\n  height: 100%;\n  left: auto;\n  width: 500px;\n  /*width 100% only goes to width of button container */\n}\n\n.fixed-action-btn.horizontal ul li {\n  display: inline-block;\n  margin: 15px 15px 0 0;\n}\n\n.fixed-action-btn ul {\n  left: 0;\n  right: 0;\n  text-align: center;\n  position: absolute;\n  bottom: 64px;\n  margin: 0;\n  visibility: hidden;\n}\n\n.fixed-action-btn ul li {\n  margin-bottom: 15px;\n}\n\n.fixed-action-btn ul a.btn-floating {\n  opacity: 0;\n}\n\n.btn-flat {\n  box-shadow: none;\n  background-color: transparent;\n  color: #343434;\n  cursor: pointer;\n}\n\n.btn-flat.disabled {\n  color: #b3b3b3;\n  cursor: default;\n}\n\n.btn-large {\n  height: 54px;\n  line-height: 54px;\n}\n\n.btn-large i {\n  font-size: 1.6rem;\n}\n\n.btn-block {\n  display: block;\n}\n\n.dropdown-content {\n  background-color: #fff;\n  margin: 0;\n  display: none;\n  min-width: 100px;\n  max-height: 650px;\n  overflow-y: auto;\n  opacity: 0;\n  position: absolute;\n  z-index: 999;\n  will-change: width, height;\n}\n\n.dropdown-content li {\n  clear: both;\n  color: rgba(0, 0, 0, 0.87);\n  cursor: pointer;\n  min-height: 50px;\n  line-height: 1.5rem;\n  width: 100%;\n  text-align: left;\n  text-transform: none;\n}\n\n.dropdown-content li:hover,\n.dropdown-content li.active,\n.dropdown-content li.selected {\n  background-color: #eee;\n}\n\n.dropdown-content li.active.selected {\n  background-color: #e1e1e1;\n}\n\n.dropdown-content li.divider {\n  min-height: 0;\n  height: 1px;\n}\n\n.dropdown-content li > a,\n.dropdown-content li > span {\n  font-size: 16px;\n  color: #26a69a;\n  display: block;\n  line-height: 22px;\n  padding: 14px 16px;\n}\n\n.dropdown-content li > span > label {\n  top: 1px;\n  left: 3px;\n  height: 18px;\n}\n\n.dropdown-content li > a > i {\n  height: inherit;\n  line-height: inherit;\n}\n\n/*!\n * Waves v0.6.0\n * http://fian.my.id/Waves\n *\n * Copyright 2014 Alfiana E. Sibuea and other contributors\n * Released under the MIT license\n * https://github.com/fians/Waves/blob/master/LICENSE\n */\n\n.waves-effect {\n  position: relative;\n  cursor: pointer;\n  display: inline-block;\n  overflow: hidden;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  -webkit-tap-highlight-color: transparent;\n  vertical-align: middle;\n  z-index: 1;\n  will-change: opacity, transform;\n  transition: all .3s ease-out;\n}\n\n.waves-effect .waves-ripple {\n  position: absolute;\n  border-radius: 50%;\n  width: 20px;\n  height: 20px;\n  margin-top: -10px;\n  margin-left: -10px;\n  opacity: 0;\n  background: rgba(0, 0, 0, 0.2);\n  transition: all 0.7s ease-out;\n  transition-property: transform, opacity;\n  transform: scale(0);\n  pointer-events: none;\n}\n\n.waves-effect.waves-light .waves-ripple {\n  background-color: rgba(255, 255, 255, 0.45);\n}\n\n.waves-effect.waves-red .waves-ripple {\n  background-color: rgba(244, 67, 54, 0.7);\n}\n\n.waves-effect.waves-yellow .waves-ripple {\n  background-color: rgba(255, 235, 59, 0.7);\n}\n\n.waves-effect.waves-orange .waves-ripple {\n  background-color: rgba(255, 152, 0, 0.7);\n}\n\n.waves-effect.waves-purple .waves-ripple {\n  background-color: rgba(156, 39, 176, 0.7);\n}\n\n.waves-effect.waves-green .waves-ripple {\n  background-color: rgba(76, 175, 80, 0.7);\n}\n\n.waves-effect.waves-teal .waves-ripple {\n  background-color: rgba(0, 150, 136, 0.7);\n}\n\n.waves-effect input[type=\"button\"],\n.waves-effect input[type=\"reset\"],\n.waves-effect input[type=\"submit\"] {\n  border: 0;\n  font-style: normal;\n  font-size: inherit;\n  text-transform: inherit;\n  background: none;\n}\n\n.waves-notransition {\n  transition: none !important;\n}\n\n.waves-circle {\n  transform: translateZ(0);\n  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);\n}\n\n.waves-input-wrapper {\n  border-radius: 0.2em;\n  vertical-align: bottom;\n}\n\n.waves-input-wrapper .waves-button-input {\n  position: relative;\n  top: 0;\n  left: 0;\n  z-index: 1;\n}\n\n.waves-circle {\n  text-align: center;\n  width: 2.5em;\n  height: 2.5em;\n  line-height: 2.5em;\n  border-radius: 50%;\n  -webkit-mask-image: none;\n}\n\n.waves-block {\n  display: block;\n}\n\n/* Firefox Bug: link not triggered */\n\na.waves-effect .waves-ripple {\n  z-index: -1;\n}\n\n.modal {\n  display: none;\n  position: fixed;\n  left: 0;\n  right: 0;\n  background-color: #fafafa;\n  padding: 0;\n  max-height: 70%;\n  width: 55%;\n  margin: auto;\n  overflow-y: auto;\n  border-radius: 2px;\n  will-change: top, opacity;\n}\n\n@media only screen and (max-width: 992px) {\n  .modal {\n    width: 80%;\n  }\n}\n\n.modal h1,\n.modal h2,\n.modal h3,\n.modal h4 {\n  margin-top: 0;\n}\n\n.modal .modal-content {\n  padding: 24px;\n}\n\n.modal .modal-close {\n  cursor: pointer;\n}\n\n.modal .modal-footer {\n  border-radius: 0 0 2px 2px;\n  background-color: #fafafa;\n  padding: 4px 6px;\n  height: 56px;\n  width: 100%;\n}\n\n.modal .modal-footer .btn,\n.modal .modal-footer .btn-large,\n.modal .modal-footer .btn-flat {\n  float: right;\n  margin: 6px 0;\n}\n\n.lean-overlay {\n  position: fixed;\n  z-index: 999;\n  top: -100px;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  height: 125%;\n  width: 100%;\n  background: #000;\n  display: none;\n  will-change: opacity;\n}\n\n.modal.modal-fixed-footer {\n  padding: 0;\n  height: 70%;\n}\n\n.modal.modal-fixed-footer .modal-content {\n  position: absolute;\n  height: calc(100% - 56px);\n  max-height: 100%;\n  width: 100%;\n  overflow-y: auto;\n}\n\n.modal.modal-fixed-footer .modal-footer {\n  border-top: 1px solid rgba(0, 0, 0, 0.1);\n  position: absolute;\n  bottom: 0;\n}\n\n.modal.bottom-sheet {\n  top: auto;\n  bottom: -100%;\n  margin: 0;\n  width: 100%;\n  max-height: 45%;\n  border-radius: 0;\n  will-change: bottom, opacity;\n}\n\n.collapsible {\n  border-top: 1px solid #ddd;\n  border-right: 1px solid #ddd;\n  border-left: 1px solid #ddd;\n  margin: 0.5rem 0 1rem 0;\n}\n\n.collapsible-header {\n  display: block;\n  cursor: pointer;\n  min-height: 3rem;\n  line-height: 3rem;\n  padding: 0 1rem;\n  background-color: #fff;\n  border-bottom: 1px solid #ddd;\n}\n\n.collapsible-header i {\n  width: 2rem;\n  font-size: 1.6rem;\n  line-height: 3rem;\n  display: block;\n  float: left;\n  text-align: center;\n  margin-right: 1rem;\n}\n\n.collapsible-body {\n  display: none;\n  border-bottom: 1px solid #ddd;\n  box-sizing: border-box;\n}\n\n.collapsible-body p {\n  margin: 0;\n  padding: 2rem;\n}\n\n.side-nav .collapsible,\n.side-nav.fixed .collapsible {\n  border: none;\n  box-shadow: none;\n}\n\n.side-nav .collapsible li,\n.side-nav.fixed .collapsible li {\n  padding: 0;\n}\n\n.side-nav .collapsible-header,\n.side-nav.fixed .collapsible-header {\n  background-color: transparent;\n  border: none;\n  line-height: inherit;\n  height: inherit;\n  padding: 0 30px;\n}\n\n.side-nav .collapsible-header:hover,\n.side-nav.fixed .collapsible-header:hover {\n  background-color: rgba(0, 0, 0, 0.05);\n}\n\n.side-nav .collapsible-header i,\n.side-nav.fixed .collapsible-header i {\n  line-height: inherit;\n}\n\n.side-nav .collapsible-body,\n.side-nav.fixed .collapsible-body {\n  border: 0;\n  background-color: #fff;\n}\n\n.side-nav .collapsible-body li a,\n.side-nav.fixed .collapsible-body li a {\n  padding: 0 37.5px 0 45px;\n}\n\n.collapsible.popout {\n  border: none;\n  box-shadow: none;\n}\n\n.collapsible.popout > li {\n  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);\n  margin: 0 24px;\n  transition: margin 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);\n}\n\n.collapsible.popout > li.active {\n  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);\n  margin: 16px 0;\n}\n\n.chip {\n  display: inline-block;\n  height: 32px;\n  font-size: 13px;\n  font-weight: 500;\n  color: rgba(0, 0, 0, 0.6);\n  line-height: 32px;\n  padding: 0 12px;\n  border-radius: 16px;\n  background-color: #e4e4e4;\n}\n\n.chip img {\n  float: left;\n  margin: 0 8px 0 -12px;\n  height: 32px;\n  width: 32px;\n  border-radius: 50%;\n}\n\n.chip i.material-icons {\n  cursor: pointer;\n  float: right;\n  font-size: 16px;\n  line-height: 32px;\n  padding-left: 8px;\n}\n\n.materialboxed {\n  display: block;\n  cursor: zoom-in;\n  position: relative;\n  transition: opacity .4s;\n}\n\n.materialboxed:hover {\n  will-change: left, top, width, height;\n}\n\n.materialboxed:hover:not(.active) {\n  opacity: .8;\n}\n\n.materialboxed.active {\n  cursor: zoom-out;\n}\n\n#materialbox-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background-color: #292929;\n  z-index: 1000;\n  will-change: opacity;\n}\n\n.materialbox-caption {\n  position: fixed;\n  display: none;\n  color: #fff;\n  line-height: 50px;\n  bottom: 0;\n  width: 100%;\n  text-align: center;\n  padding: 0% 15%;\n  height: 50px;\n  z-index: 1000;\n  -webkit-font-smoothing: antialiased;\n}\n\nselect:focus {\n  outline: 1px solid #c9f3ef;\n}\n\nbutton:focus {\n  outline: none;\n  background-color: #2ab7a9;\n}\n\nlabel {\n  font-size: 0.8rem;\n  color: #9e9e9e;\n}\n\n/* Text Inputs + Textarea\n   ========================================================================== */\n\n/* Style Placeholders */\n\n::-webkit-input-placeholder {\n  color: #d1d1d1;\n}\n\n:-moz-placeholder {\n  /* Firefox 18- */\n  color: #d1d1d1;\n}\n\n::-moz-placeholder {\n  /* Firefox 19+ */\n  color: #d1d1d1;\n}\n\n:-ms-input-placeholder {\n  color: #d1d1d1;\n}\n\n/* Text inputs */\n\ninput:not([type]),\ninput[type=text],\ninput[type=password],\ninput[type=email],\ninput[type=url],\ninput[type=time],\ninput[type=date],\ninput[type=datetime],\ninput[type=datetime-local],\ninput[type=tel],\ninput[type=number],\ninput[type=search],\ntextarea.materialize-textarea {\n  background-color: transparent;\n  border: none;\n  border-bottom: 1px solid #9e9e9e;\n  border-radius: 0;\n  outline: none;\n  height: 3rem;\n  width: 100%;\n  font-size: 1rem;\n  margin: 0 0 15px 0;\n  padding: 0;\n  box-shadow: none;\n  box-sizing: content-box;\n  transition: all 0.3s;\n}\n\ninput:not([type]):disabled,\ninput:not([type])[readonly=\"readonly\"],\ninput[type=text]:disabled,\ninput[type=text][readonly=\"readonly\"],\ninput[type=password]:disabled,\ninput[type=password][readonly=\"readonly\"],\ninput[type=email]:disabled,\ninput[type=email][readonly=\"readonly\"],\ninput[type=url]:disabled,\ninput[type=url][readonly=\"readonly\"],\ninput[type=time]:disabled,\ninput[type=time][readonly=\"readonly\"],\ninput[type=date]:disabled,\ninput[type=date][readonly=\"readonly\"],\ninput[type=datetime]:disabled,\ninput[type=datetime][readonly=\"readonly\"],\ninput[type=datetime-local]:disabled,\ninput[type=datetime-local][readonly=\"readonly\"],\ninput[type=tel]:disabled,\ninput[type=tel][readonly=\"readonly\"],\ninput[type=number]:disabled,\ninput[type=number][readonly=\"readonly\"],\ninput[type=search]:disabled,\ninput[type=search][readonly=\"readonly\"],\ntextarea.materialize-textarea:disabled,\ntextarea.materialize-textarea[readonly=\"readonly\"] {\n  color: rgba(0, 0, 0, 0.26);\n  border-bottom: 1px dotted rgba(0, 0, 0, 0.26);\n}\n\ninput:not([type]):disabled + label,\ninput:not([type])[readonly=\"readonly\"] + label,\ninput[type=text]:disabled + label,\ninput[type=text][readonly=\"readonly\"] + label,\ninput[type=password]:disabled + label,\ninput[type=password][readonly=\"readonly\"] + label,\ninput[type=email]:disabled + label,\ninput[type=email][readonly=\"readonly\"] + label,\ninput[type=url]:disabled + label,\ninput[type=url][readonly=\"readonly\"] + label,\ninput[type=time]:disabled + label,\ninput[type=time][readonly=\"readonly\"] + label,\ninput[type=date]:disabled + label,\ninput[type=date][readonly=\"readonly\"] + label,\ninput[type=datetime]:disabled + label,\ninput[type=datetime][readonly=\"readonly\"] + label,\ninput[type=datetime-local]:disabled + label,\ninput[type=datetime-local][readonly=\"readonly\"] + label,\ninput[type=tel]:disabled + label,\ninput[type=tel][readonly=\"readonly\"] + label,\ninput[type=number]:disabled + label,\ninput[type=number][readonly=\"readonly\"] + label,\ninput[type=search]:disabled + label,\ninput[type=search][readonly=\"readonly\"] + label,\ntextarea.materialize-textarea:disabled + label,\ntextarea.materialize-textarea[readonly=\"readonly\"] + label {\n  color: rgba(0, 0, 0, 0.26);\n}\n\ninput:not([type]):focus:not([readonly]),\ninput[type=text]:focus:not([readonly]),\ninput[type=password]:focus:not([readonly]),\ninput[type=email]:focus:not([readonly]),\ninput[type=url]:focus:not([readonly]),\ninput[type=time]:focus:not([readonly]),\ninput[type=date]:focus:not([readonly]),\ninput[type=datetime]:focus:not([readonly]),\ninput[type=datetime-local]:focus:not([readonly]),\ninput[type=tel]:focus:not([readonly]),\ninput[type=number]:focus:not([readonly]),\ninput[type=search]:focus:not([readonly]),\ntextarea.materialize-textarea:focus:not([readonly]) {\n  border-bottom: 1px solid #26a69a;\n  box-shadow: 0 1px 0 0 #26a69a;\n}\n\ninput:not([type]):focus:not([readonly]) + label,\ninput[type=text]:focus:not([readonly]) + label,\ninput[type=password]:focus:not([readonly]) + label,\ninput[type=email]:focus:not([readonly]) + label,\ninput[type=url]:focus:not([readonly]) + label,\ninput[type=time]:focus:not([readonly]) + label,\ninput[type=date]:focus:not([readonly]) + label,\ninput[type=datetime]:focus:not([readonly]) + label,\ninput[type=datetime-local]:focus:not([readonly]) + label,\ninput[type=tel]:focus:not([readonly]) + label,\ninput[type=number]:focus:not([readonly]) + label,\ninput[type=search]:focus:not([readonly]) + label,\ntextarea.materialize-textarea:focus:not([readonly]) + label {\n  color: #26a69a;\n}\n\ninput:not([type]).valid,\ninput:not([type]):focus.valid,\ninput[type=text].valid,\ninput[type=text]:focus.valid,\ninput[type=password].valid,\ninput[type=password]:focus.valid,\ninput[type=email].valid,\ninput[type=email]:focus.valid,\ninput[type=url].valid,\ninput[type=url]:focus.valid,\ninput[type=time].valid,\ninput[type=time]:focus.valid,\ninput[type=date].valid,\ninput[type=date]:focus.valid,\ninput[type=datetime].valid,\ninput[type=datetime]:focus.valid,\ninput[type=datetime-local].valid,\ninput[type=datetime-local]:focus.valid,\ninput[type=tel].valid,\ninput[type=tel]:focus.valid,\ninput[type=number].valid,\ninput[type=number]:focus.valid,\ninput[type=search].valid,\ninput[type=search]:focus.valid,\ntextarea.materialize-textarea.valid,\ntextarea.materialize-textarea:focus.valid {\n  border-bottom: 1px solid #4CAF50;\n  box-shadow: 0 1px 0 0 #4CAF50;\n}\n\ninput:not([type]).valid + label:after,\ninput:not([type]):focus.valid + label:after,\ninput[type=text].valid + label:after,\ninput[type=text]:focus.valid + label:after,\ninput[type=password].valid + label:after,\ninput[type=password]:focus.valid + label:after,\ninput[type=email].valid + label:after,\ninput[type=email]:focus.valid + label:after,\ninput[type=url].valid + label:after,\ninput[type=url]:focus.valid + label:after,\ninput[type=time].valid + label:after,\ninput[type=time]:focus.valid + label:after,\ninput[type=date].valid + label:after,\ninput[type=date]:focus.valid + label:after,\ninput[type=datetime].valid + label:after,\ninput[type=datetime]:focus.valid + label:after,\ninput[type=datetime-local].valid + label:after,\ninput[type=datetime-local]:focus.valid + label:after,\ninput[type=tel].valid + label:after,\ninput[type=tel]:focus.valid + label:after,\ninput[type=number].valid + label:after,\ninput[type=number]:focus.valid + label:after,\ninput[type=search].valid + label:after,\ninput[type=search]:focus.valid + label:after,\ntextarea.materialize-textarea.valid + label:after,\ntextarea.materialize-textarea:focus.valid + label:after {\n  content: attr(data-success);\n  color: #4CAF50;\n  opacity: 1;\n}\n\ninput:not([type]).invalid,\ninput:not([type]):focus.invalid,\ninput[type=text].invalid,\ninput[type=text]:focus.invalid,\ninput[type=password].invalid,\ninput[type=password]:focus.invalid,\ninput[type=email].invalid,\ninput[type=email]:focus.invalid,\ninput[type=url].invalid,\ninput[type=url]:focus.invalid,\ninput[type=time].invalid,\ninput[type=time]:focus.invalid,\ninput[type=date].invalid,\ninput[type=date]:focus.invalid,\ninput[type=datetime].invalid,\ninput[type=datetime]:focus.invalid,\ninput[type=datetime-local].invalid,\ninput[type=datetime-local]:focus.invalid,\ninput[type=tel].invalid,\ninput[type=tel]:focus.invalid,\ninput[type=number].invalid,\ninput[type=number]:focus.invalid,\ninput[type=search].invalid,\ninput[type=search]:focus.invalid,\ntextarea.materialize-textarea.invalid,\ntextarea.materialize-textarea:focus.invalid {\n  border-bottom: 1px solid #F44336;\n  box-shadow: 0 1px 0 0 #F44336;\n}\n\ninput:not([type]).invalid + label:after,\ninput:not([type]):focus.invalid + label:after,\ninput[type=text].invalid + label:after,\ninput[type=text]:focus.invalid + label:after,\ninput[type=password].invalid + label:after,\ninput[type=password]:focus.invalid + label:after,\ninput[type=email].invalid + label:after,\ninput[type=email]:focus.invalid + label:after,\ninput[type=url].invalid + label:after,\ninput[type=url]:focus.invalid + label:after,\ninput[type=time].invalid + label:after,\ninput[type=time]:focus.invalid + label:after,\ninput[type=date].invalid + label:after,\ninput[type=date]:focus.invalid + label:after,\ninput[type=datetime].invalid + label:after,\ninput[type=datetime]:focus.invalid + label:after,\ninput[type=datetime-local].invalid + label:after,\ninput[type=datetime-local]:focus.invalid + label:after,\ninput[type=tel].invalid + label:after,\ninput[type=tel]:focus.invalid + label:after,\ninput[type=number].invalid + label:after,\ninput[type=number]:focus.invalid + label:after,\ninput[type=search].invalid + label:after,\ninput[type=search]:focus.invalid + label:after,\ntextarea.materialize-textarea.invalid + label:after,\ntextarea.materialize-textarea:focus.invalid + label:after {\n  content: attr(data-error);\n  color: #F44336;\n  opacity: 1;\n}\n\ninput:not([type]).validate + label,\ninput[type=text].validate + label,\ninput[type=password].validate + label,\ninput[type=email].validate + label,\ninput[type=url].validate + label,\ninput[type=time].validate + label,\ninput[type=date].validate + label,\ninput[type=datetime].validate + label,\ninput[type=datetime-local].validate + label,\ninput[type=tel].validate + label,\ninput[type=number].validate + label,\ninput[type=search].validate + label,\ntextarea.materialize-textarea.validate + label {\n  width: 100%;\n  pointer-events: none;\n}\n\ninput:not([type]) + label:after,\ninput[type=text] + label:after,\ninput[type=password] + label:after,\ninput[type=email] + label:after,\ninput[type=url] + label:after,\ninput[type=time] + label:after,\ninput[type=date] + label:after,\ninput[type=datetime] + label:after,\ninput[type=datetime-local] + label:after,\ninput[type=tel] + label:after,\ninput[type=number] + label:after,\ninput[type=search] + label:after,\ntextarea.materialize-textarea + label:after {\n  display: block;\n  content: \"\";\n  position: absolute;\n  top: 65px;\n  opacity: 0;\n  transition: .2s opacity ease-out, .2s color ease-out;\n}\n\n.input-field {\n  position: relative;\n  margin-top: 1rem;\n}\n\n.input-field label {\n  color: #9e9e9e;\n  position: absolute;\n  top: 0.8rem;\n  left: 0.75rem;\n  font-size: 1rem;\n  cursor: text;\n  transition: .2s ease-out;\n}\n\n.input-field label.active {\n  font-size: 0.8rem;\n  transform: translateY(-140%);\n}\n\n.input-field .prefix {\n  position: absolute;\n  width: 3rem;\n  font-size: 2rem;\n  transition: color .2s;\n}\n\n.input-field .prefix.active {\n  color: #26a69a;\n}\n\n.input-field .prefix ~ input,\n.input-field .prefix ~ textarea {\n  margin-left: 3rem;\n  width: 92%;\n  width: calc(100% - 3rem);\n}\n\n.input-field .prefix ~ textarea {\n  padding-top: .8rem;\n}\n\n.input-field .prefix ~ label {\n  margin-left: 3rem;\n}\n\n@media only screen and (max-width: 992px) {\n  .input-field .prefix ~ input {\n    width: 86%;\n    width: calc(100% - 3rem);\n  }\n}\n\n@media only screen and (max-width: 600px) {\n  .input-field .prefix ~ input {\n    width: 80%;\n    width: calc(100% - 3rem);\n  }\n}\n\n/* Search Field */\n\n.input-field input[type=search] {\n  display: block;\n  line-height: inherit;\n  padding-left: 4rem;\n  width: calc(100% - 4rem);\n}\n\n.input-field input[type=search]:focus {\n  background-color: #fff;\n  border: 0;\n  box-shadow: none;\n  color: #444;\n}\n\n.input-field input[type=search]:focus + label i,\n.input-field input[type=search]:focus ~ .mdi-navigation-close,\n.input-field input[type=search]:focus ~ .material-icons {\n  color: #444;\n}\n\n.input-field input[type=search] + label {\n  left: 1rem;\n}\n\n.input-field input[type=search] ~ .mdi-navigation-close,\n.input-field input[type=search] ~ .material-icons {\n  position: absolute;\n  top: 0;\n  right: 1rem;\n  color: transparent;\n  cursor: pointer;\n  font-size: 2rem;\n  transition: .3s color;\n}\n\n/* Textarea */\n\ntextarea {\n  width: 100%;\n  height: 3rem;\n  background-color: transparent;\n}\n\ntextarea.materialize-textarea {\n  overflow-y: hidden;\n  /* prevents scroll bar flash */\n  padding: 1.6rem 0;\n  /* prevents text jump on Enter keypress */\n  resize: none;\n  min-height: 3rem;\n}\n\n.hiddendiv {\n  display: none;\n  white-space: pre-wrap;\n  word-wrap: break-word;\n  overflow-wrap: break-word;\n  /* future version of deprecated 'word-wrap' */\n  padding-top: 1.2rem;\n  /* prevents text jump on Enter keypress */\n}\n\n/* Radio Buttons\n   ========================================================================== */\n\n[type=\"radio\"]:not(:checked),\n[type=\"radio\"]:checked {\n  position: absolute;\n  left: -9999px;\n  opacity: 0;\n}\n\n[type=\"radio\"]:not(:checked) + label,\n[type=\"radio\"]:checked + label {\n  position: relative;\n  padding-left: 35px;\n  cursor: pointer;\n  display: inline-block;\n  height: 25px;\n  line-height: 25px;\n  font-size: 1rem;\n  transition: .28s ease;\n  -khtml-user-select: none;\n  /* webkit (konqueror) browsers */\n  user-select: none;\n}\n\n[type=\"radio\"] + label:before,\n[type=\"radio\"] + label:after {\n  content: '';\n  position: absolute;\n  left: 0;\n  top: 0;\n  margin: 4px;\n  width: 16px;\n  height: 16px;\n  z-index: 0;\n  transition: .28s ease;\n}\n\n/* Unchecked styles */\n\n[type=\"radio\"]:not(:checked) + label:before,\n[type=\"radio\"]:not(:checked) + label:after,\n[type=\"radio\"]:checked + label:before,\n[type=\"radio\"]:checked + label:after,\n[type=\"radio\"].with-gap:checked + label:before,\n[type=\"radio\"].with-gap:checked + label:after {\n  border-radius: 50%;\n}\n\n[type=\"radio\"]:not(:checked) + label:before,\n[type=\"radio\"]:not(:checked) + label:after {\n  border: 2px solid #5a5a5a;\n}\n\n[type=\"radio\"]:not(:checked) + label:after {\n  z-index: -1;\n  transform: scale(0);\n}\n\n/* Checked styles */\n\n[type=\"radio\"]:checked + label:before {\n  border: 2px solid transparent;\n}\n\n[type=\"radio\"]:checked + label:after,\n[type=\"radio\"].with-gap:checked + label:before,\n[type=\"radio\"].with-gap:checked + label:after {\n  border: 2px solid #26a69a;\n}\n\n[type=\"radio\"]:checked + label:after,\n[type=\"radio\"].with-gap:checked + label:after {\n  background-color: #26a69a;\n  z-index: 0;\n}\n\n[type=\"radio\"]:checked + label:after {\n  transform: scale(1.02);\n}\n\n/* Radio With gap */\n\n[type=\"radio\"].with-gap:checked + label:after {\n  transform: scale(0.5);\n}\n\n/* Focused styles */\n\n[type=\"radio\"].tabbed:focus + label:before {\n  box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);\n}\n\n/* Disabled Radio With gap */\n\n[type=\"radio\"].with-gap:disabled:checked + label:before {\n  border: 2px solid rgba(0, 0, 0, 0.26);\n}\n\n[type=\"radio\"].with-gap:disabled:checked + label:after {\n  border: none;\n  background-color: rgba(0, 0, 0, 0.26);\n}\n\n/* Disabled style */\n\n[type=\"radio\"]:disabled:not(:checked) + label:before,\n[type=\"radio\"]:disabled:checked + label:before {\n  background-color: transparent;\n  border-color: rgba(0, 0, 0, 0.26);\n}\n\n[type=\"radio\"]:disabled + label {\n  color: rgba(0, 0, 0, 0.26);\n}\n\n[type=\"radio\"]:disabled:not(:checked) + label:before {\n  border-color: rgba(0, 0, 0, 0.26);\n}\n\n[type=\"radio\"]:disabled:checked + label:after {\n  background-color: rgba(0, 0, 0, 0.26);\n  border-color: #BDBDBD;\n}\n\n/* Checkboxes\n   ========================================================================== */\n\n/* CUSTOM CSS CHECKBOXES */\n\nform p {\n  margin-bottom: 10px;\n  text-align: left;\n}\n\nform p:last-child {\n  margin-bottom: 0;\n}\n\n/* Remove default checkbox */\n\n[type=\"checkbox\"]:not(:checked),\n[type=\"checkbox\"]:checked {\n  position: absolute;\n  left: -9999px;\n  opacity: 0;\n}\n\n[type=\"checkbox\"] {\n  /* checkbox aspect */\n}\n\n[type=\"checkbox\"] + label {\n  position: relative;\n  padding-left: 35px;\n  cursor: pointer;\n  display: inline-block;\n  height: 25px;\n  line-height: 25px;\n  font-size: 1rem;\n  -webkit-user-select: none;\n  /* webkit (safari, chrome) browsers */\n  -moz-user-select: none;\n  /* mozilla browsers */\n  -khtml-user-select: none;\n  /* webkit (konqueror) browsers */\n  -ms-user-select: none;\n  /* IE10+ */\n}\n\n[type=\"checkbox\"] + label:before,\n[type=\"checkbox\"]:not(.filled-in) + label:after {\n  content: '';\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 18px;\n  height: 18px;\n  z-index: 0;\n  border: 2px solid #5a5a5a;\n  border-radius: 1px;\n  margin-top: 2px;\n  transition: .2s;\n}\n\n[type=\"checkbox\"]:not(.filled-in) + label:after {\n  border: 0;\n  transform: scale(0);\n}\n\n[type=\"checkbox\"]:not(:checked):disabled + label:before {\n  border: none;\n  background-color: rgba(0, 0, 0, 0.26);\n}\n\n[type=\"checkbox\"].tabbed:focus + label:after {\n  transform: scale(1);\n  border: 0;\n  border-radius: 50%;\n  box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);\n  background-color: rgba(0, 0, 0, 0.1);\n}\n\n[type=\"checkbox\"]:checked + label:before {\n  top: -4px;\n  left: -5px;\n  width: 12px;\n  height: 22px;\n  border-top: 2px solid transparent;\n  border-left: 2px solid transparent;\n  border-right: 2px solid #26a69a;\n  border-bottom: 2px solid #26a69a;\n  transform: rotate(40deg);\n  backface-visibility: hidden;\n  transform-origin: 100% 100%;\n}\n\n[type=\"checkbox\"]:checked:disabled + label:before {\n  border-right: 2px solid rgba(0, 0, 0, 0.26);\n  border-bottom: 2px solid rgba(0, 0, 0, 0.26);\n}\n\n/* Indeterminate checkbox */\n\n[type=\"checkbox\"]:indeterminate + label:before {\n  top: -11px;\n  left: -12px;\n  width: 10px;\n  height: 22px;\n  border-top: none;\n  border-left: none;\n  border-right: 2px solid #26a69a;\n  border-bottom: none;\n  transform: rotate(90deg);\n  backface-visibility: hidden;\n  transform-origin: 100% 100%;\n}\n\n[type=\"checkbox\"]:indeterminate:disabled + label:before {\n  border-right: 2px solid rgba(0, 0, 0, 0.26);\n  background-color: transparent;\n}\n\n[type=\"checkbox\"].filled-in + label:after {\n  border-radius: 2px;\n}\n\n[type=\"checkbox\"].filled-in + label:before,\n[type=\"checkbox\"].filled-in + label:after {\n  content: '';\n  left: 0;\n  position: absolute;\n  /* .1s delay is for check animation */\n  transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;\n  z-index: 1;\n}\n\n[type=\"checkbox\"].filled-in:not(:checked) + label:before {\n  width: 0;\n  height: 0;\n  border: 3px solid transparent;\n  left: 6px;\n  top: 10px;\n  -webkit-transform: rotateZ(37deg);\n  transform: rotateZ(37deg);\n  -webkit-transform-origin: 20% 40%;\n  transform-origin: 100% 100%;\n}\n\n[type=\"checkbox\"].filled-in:not(:checked) + label:after {\n  height: 20px;\n  width: 20px;\n  background-color: transparent;\n  border: 2px solid #5a5a5a;\n  top: 0px;\n  z-index: 0;\n}\n\n[type=\"checkbox\"].filled-in:checked + label:before {\n  top: 0;\n  left: 1px;\n  width: 8px;\n  height: 13px;\n  border-top: 2px solid transparent;\n  border-left: 2px solid transparent;\n  border-right: 2px solid #fff;\n  border-bottom: 2px solid #fff;\n  -webkit-transform: rotateZ(37deg);\n  transform: rotateZ(37deg);\n  -webkit-transform-origin: 100% 100%;\n  transform-origin: 100% 100%;\n}\n\n[type=\"checkbox\"].filled-in:checked + label:after {\n  top: 0;\n  width: 20px;\n  height: 20px;\n  border: 2px solid #26a69a;\n  background-color: #26a69a;\n  z-index: 0;\n}\n\n[type=\"checkbox\"].filled-in.tabbed:focus + label:after {\n  border-radius: 2px;\n  border-color: #5a5a5a;\n  background-color: rgba(0, 0, 0, 0.1);\n}\n\n[type=\"checkbox\"].filled-in.tabbed:checked:focus + label:after {\n  border-radius: 2px;\n  background-color: #26a69a;\n  border-color: #26a69a;\n}\n\n[type=\"checkbox\"].filled-in:disabled:not(:checked) + label:before {\n  background-color: transparent;\n  border: 2px solid transparent;\n}\n\n[type=\"checkbox\"].filled-in:disabled:not(:checked) + label:after {\n  border-color: transparent;\n  background-color: #BDBDBD;\n}\n\n[type=\"checkbox\"].filled-in:disabled:checked + label:before {\n  background-color: transparent;\n}\n\n[type=\"checkbox\"].filled-in:disabled:checked + label:after {\n  background-color: #BDBDBD;\n  border-color: #BDBDBD;\n}\n\n/* Switch\n   ========================================================================== */\n\n.switch,\n.switch * {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -khtml-user-select: none;\n  -ms-user-select: none;\n}\n\n.switch label {\n  cursor: pointer;\n}\n\n.switch label input[type=checkbox] {\n  opacity: 0;\n  width: 0;\n  height: 0;\n}\n\n.switch label input[type=checkbox]:checked + .lever {\n  background-color: #84c7c1;\n}\n\n.switch label input[type=checkbox]:checked + .lever:after {\n  background-color: #26a69a;\n  left: 24px;\n}\n\n.switch label .lever {\n  content: \"\";\n  display: inline-block;\n  position: relative;\n  width: 40px;\n  height: 15px;\n  background-color: #818181;\n  border-radius: 15px;\n  margin-right: 10px;\n  transition: background 0.3s ease;\n  vertical-align: middle;\n  margin: 0 16px;\n}\n\n.switch label .lever:after {\n  content: \"\";\n  position: absolute;\n  display: inline-block;\n  width: 21px;\n  height: 21px;\n  background-color: #F1F1F1;\n  border-radius: 21px;\n  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);\n  left: -5px;\n  top: -3px;\n  transition: left 0.3s ease, background .3s ease, box-shadow 0.1s ease;\n}\n\ninput[type=checkbox]:checked:not(:disabled) ~ .lever:active::after,\ninput[type=checkbox]:checked:not(:disabled).tabbed:focus ~ .lever::after {\n  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4), 0 0 0 15px rgba(38, 166, 154, 0.1);\n}\n\ninput[type=checkbox]:not(:disabled) ~ .lever:active:after,\ninput[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {\n  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4), 0 0 0 15px rgba(0, 0, 0, 0.08);\n}\n\n.switch input[type=checkbox][disabled] + .lever {\n  cursor: default;\n}\n\n.switch label input[type=checkbox][disabled] + .lever:after,\n.switch label input[type=checkbox][disabled]:checked + .lever:after {\n  background-color: #BDBDBD;\n}\n\n/* Select Field\n   ========================================================================== */\n\nselect {\n  display: none;\n}\n\nselect.browser-default {\n  display: block;\n}\n\nselect {\n  background-color: rgba(255, 255, 255, 0.9);\n  width: 100%;\n  padding: 5px;\n  border: 1px solid #f2f2f2;\n  border-radius: 2px;\n  height: 3rem;\n}\n\n.select-label {\n  position: absolute;\n}\n\n.select-wrapper {\n  position: relative;\n}\n\n.select-wrapper input.select-dropdown {\n  position: relative;\n  cursor: pointer;\n  background-color: transparent;\n  border: none;\n  border-bottom: 1px solid #9e9e9e;\n  outline: none;\n  height: 3rem;\n  line-height: 3rem;\n  width: 100%;\n  font-size: 1rem;\n  margin: 0 0 15px 0;\n  padding: 0;\n  display: block;\n}\n\n.select-wrapper span.caret {\n  color: initial;\n  position: absolute;\n  right: 0;\n  top: 16px;\n  font-size: 10px;\n}\n\n.select-wrapper span.caret.disabled {\n  color: rgba(0, 0, 0, 0.26);\n}\n\n.select-wrapper + label {\n  position: absolute;\n  top: -14px;\n  font-size: 0.8rem;\n}\n\nselect:disabled {\n  color: rgba(0, 0, 0, 0.3);\n}\n\n.select-wrapper input.select-dropdown:disabled {\n  color: rgba(0, 0, 0, 0.3);\n  cursor: default;\n  -webkit-user-select: none;\n  /* webkit (safari, chrome) browsers */\n  -moz-user-select: none;\n  /* mozilla browsers */\n  -ms-user-select: none;\n  /* IE10+ */\n  border-bottom: 1px solid rgba(0, 0, 0, 0.3);\n}\n\n.select-wrapper i {\n  color: rgba(0, 0, 0, 0.3);\n}\n\n.select-dropdown li.disabled,\n.select-dropdown li.disabled > span,\n.select-dropdown li.optgroup {\n  color: rgba(0, 0, 0, 0.3);\n  background-color: transparent;\n}\n\n.prefix ~ .select-wrapper {\n  margin-left: 3rem;\n  width: 92%;\n  width: calc(100% - 3rem);\n}\n\n.prefix ~ label {\n  margin-left: 3rem;\n}\n\n.select-dropdown li img {\n  height: 40px;\n  width: 40px;\n  margin: 5px 15px;\n  float: right;\n}\n\n.select-dropdown li.optgroup {\n  border-top: 1px solid #eee;\n}\n\n.select-dropdown li.optgroup.selected > span {\n  color: rgba(0, 0, 0, 0.7);\n}\n\n.select-dropdown li.optgroup > span {\n  color: rgba(0, 0, 0, 0.4);\n}\n\n.select-dropdown li.optgroup ~ li.optgroup-option {\n  padding-left: 1rem;\n}\n\n/* File Input\n   ========================================================================== */\n\n.file-field {\n  position: relative;\n}\n\n.file-field .file-path-wrapper {\n  overflow: hidden;\n  padding-left: 10px;\n}\n\n.file-field input.file-path {\n  width: 100%;\n}\n\n.file-field .btn,\n.file-field .btn-large {\n  float: left;\n  height: 3rem;\n  line-height: 3rem;\n}\n\n.file-field span {\n  cursor: pointer;\n}\n\n.file-field input[type=file] {\n  position: absolute;\n  top: 0;\n  right: 0;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  margin: 0;\n  padding: 0;\n  font-size: 20px;\n  cursor: pointer;\n  opacity: 0;\n  filter: alpha(opacity=0);\n}\n\n/* Range\n   ========================================================================== */\n\n.range-field {\n  position: relative;\n}\n\ninput[type=range],\ninput[type=range] + .thumb {\n  cursor: pointer;\n}\n\ninput[type=range] {\n  position: relative;\n  background-color: transparent;\n  border: none;\n  outline: none;\n  width: 100%;\n  margin: 15px 0;\n  padding: 0;\n}\n\ninput[type=range]:focus {\n  outline: none;\n}\n\ninput[type=range] + .thumb {\n  position: absolute;\n  border: none;\n  height: 0;\n  width: 0;\n  border-radius: 50%;\n  background-color: #26a69a;\n  top: 10px;\n  margin-left: -6px;\n  transform-origin: 50% 50%;\n  transform: rotate(-45deg);\n}\n\ninput[type=range] + .thumb .value {\n  display: block;\n  width: 30px;\n  text-align: center;\n  color: #26a69a;\n  font-size: 0;\n  transform: rotate(45deg);\n}\n\ninput[type=range] + .thumb.active {\n  border-radius: 50% 50% 50% 0;\n}\n\ninput[type=range] + .thumb.active .value {\n  color: #fff;\n  margin-left: -1px;\n  margin-top: 8px;\n  font-size: 10px;\n}\n\ninput[type=range] {\n  -webkit-appearance: none;\n}\n\ninput[type=range]::-webkit-slider-runnable-track {\n  height: 3px;\n  background: #c2c0c2;\n  border: none;\n}\n\ninput[type=range]::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  border: none;\n  height: 14px;\n  width: 14px;\n  border-radius: 50%;\n  background-color: #26a69a;\n  transform-origin: 50% 50%;\n  margin: -5px 0 0 0;\n  transition: .3s;\n}\n\ninput[type=range]:focus::-webkit-slider-runnable-track {\n  background: #ccc;\n}\n\ninput[type=range] {\n  /* fix for FF unable to apply focus style bug  */\n  border: 1px solid white;\n  /*required for proper track sizing in FF*/\n}\n\ninput[type=range]::-moz-range-track {\n  height: 3px;\n  background: #ddd;\n  border: none;\n}\n\ninput[type=range]::-moz-range-thumb {\n  border: none;\n  height: 14px;\n  width: 14px;\n  border-radius: 50%;\n  background: #26a69a;\n  margin-top: -5px;\n}\n\ninput[type=range]:-moz-focusring {\n  outline: 1px solid #fff;\n  outline-offset: -1px;\n}\n\ninput[type=range]:focus::-moz-range-track {\n  background: #ccc;\n}\n\ninput[type=range]::-ms-track {\n  height: 3px;\n  background: transparent;\n  border-color: transparent;\n  border-width: 6px 0;\n  /*remove default tick marks*/\n  color: transparent;\n}\n\ninput[type=range]::-ms-fill-lower {\n  background: #777;\n}\n\ninput[type=range]::-ms-fill-upper {\n  background: #ddd;\n}\n\ninput[type=range]::-ms-thumb {\n  border: none;\n  height: 14px;\n  width: 14px;\n  border-radius: 50%;\n  background: #26a69a;\n}\n\ninput[type=range]:focus::-ms-fill-lower {\n  background: #888;\n}\n\ninput[type=range]:focus::-ms-fill-upper {\n  background: #ccc;\n}\n\n/***************\n    Nav List\n***************/\n\n.table-of-contents.fixed {\n  position: fixed;\n}\n\n.table-of-contents li {\n  padding: 2px 0;\n}\n\n.table-of-contents a {\n  display: inline-block;\n  font-weight: 300;\n  color: #757575;\n  padding-left: 20px;\n  height: 1.5rem;\n  line-height: 1.5rem;\n  letter-spacing: .4;\n  display: inline-block;\n}\n\n.table-of-contents a:hover {\n  color: #a8a8a8;\n  padding-left: 19px;\n  border-left: 1px solid #ea4a4f;\n}\n\n.table-of-contents a.active {\n  font-weight: 500;\n  padding-left: 18px;\n  border-left: 2px solid #ea4a4f;\n}\n\n.side-nav {\n  position: fixed;\n  width: 240px;\n  left: 0;\n  top: 0;\n  margin: 0;\n  transform: translateX(-100%);\n  height: 100%;\n  height: calc(100% + 60px);\n  height: -moz-calc(100%);\n  padding-bottom: 60px;\n  background-color: #fff;\n  z-index: 999;\n  backface-visibility: hidden;\n  overflow-y: auto;\n  will-change: transform;\n  backface-visibility: hidden;\n  transform: translateX(-105%);\n}\n\n.side-nav.right-aligned {\n  right: 0;\n  transform: translateX(105%);\n  left: auto;\n  transform: translateX(100%);\n}\n\n.side-nav .collapsible {\n  margin: 0;\n}\n\n.side-nav li {\n  float: none;\n  line-height: 64px;\n}\n\n.side-nav li.active {\n  background-color: rgba(0, 0, 0, 0.05);\n}\n\n.side-nav a {\n  color: #444;\n  display: block;\n  font-size: 1rem;\n  height: 64px;\n  line-height: 64px;\n  padding: 0 30px;\n}\n\n.side-nav a:hover {\n  background-color: rgba(0, 0, 0, 0.05);\n}\n\n.side-nav a.btn,\n.side-nav a.btn-large,\n.side-nav a.btn-large,\n.side-nav a.btn-flat,\n.side-nav a.btn-floating {\n  margin: 10px 15px;\n}\n\n.side-nav a.btn,\n.side-nav a.btn-large,\n.side-nav a.btn-large,\n.side-nav a.btn-floating {\n  color: #fff;\n}\n\n.side-nav a.btn-flat {\n  color: #343434;\n}\n\n.side-nav a.btn:hover,\n.side-nav a.btn-large:hover,\n.side-nav a.btn-large:hover {\n  background-color: #2bbbad;\n}\n\n.side-nav a.btn-floating:hover {\n  background-color: #26a69a;\n}\n\n.drag-target {\n  height: 100%;\n  width: 10px;\n  position: fixed;\n  top: 0;\n  z-index: 998;\n}\n\n.side-nav.fixed a {\n  display: block;\n  padding: 0 30px;\n  color: #444;\n}\n\n.side-nav.fixed {\n  left: 0;\n  transform: translateX(0);\n  position: fixed;\n}\n\n.side-nav.fixed.right-aligned {\n  right: 0;\n  left: auto;\n}\n\n@media only screen and (max-width: 992px) {\n  .side-nav.fixed {\n    transform: translateX(-105%);\n  }\n\n  .side-nav.fixed.right-aligned {\n    transform: translateX(105%);\n  }\n}\n\n.side-nav .collapsible-body li.active,\n.side-nav.fixed .collapsible-body li.active {\n  background-color: #ee6e73;\n}\n\n.side-nav .collapsible-body li.active a,\n.side-nav.fixed .collapsible-body li.active a {\n  color: #fff;\n}\n\n#sidenav-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  height: 120vh;\n  background-color: rgba(0, 0, 0, 0.5);\n  z-index: 997;\n  will-change: opacity;\n}\n\n/*\n    @license\n    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.\n    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt\n    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt\n    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt\n    Code distributed by Google as part of the polymer project is also\n    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt\n */\n\n/**************************/\n\n/* STYLES FOR THE SPINNER */\n\n/**************************/\n\n/*\n * Constants:\n *      STROKEWIDTH = 3px\n *      ARCSIZE     = 270 degrees (amount of circle the arc takes up)\n *      ARCTIME     = 1333ms (time it takes to expand and contract arc)\n *      ARCSTARTROT = 216 degrees (how much the start location of the arc\n *                                should rotate each time, 216 gives us a\n *                                5 pointed star shape (it's 360/5 * 3).\n *                                For a 7 pointed star, we might do\n *                                360/7 * 3 = 154.286)\n *      CONTAINERWIDTH = 28px\n *      SHRINK_TIME = 400ms\n */\n\n.preloader-wrapper {\n  display: inline-block;\n  position: relative;\n  width: 48px;\n  height: 48px;\n}\n\n.preloader-wrapper.small {\n  width: 36px;\n  height: 36px;\n}\n\n.preloader-wrapper.big {\n  width: 64px;\n  height: 64px;\n}\n\n.preloader-wrapper.active {\n  /* duration: 360 * ARCTIME / (ARCSTARTROT + (360-ARCSIZE)) */\n  -webkit-animation: container-rotate 1568ms linear infinite;\n  animation: container-rotate 1568ms linear infinite;\n}\n\n@-webkit-keyframes container-rotate {\n  to {\n    -webkit-transform: rotate(360deg);\n  }\n}\n\n@keyframes container-rotate {\n  to {\n    transform: rotate(360deg);\n  }\n}\n\n.spinner-layer {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  opacity: 0;\n  border-color: #26a69a;\n}\n\n.spinner-blue,\n.spinner-blue-only {\n  border-color: #4285f4;\n}\n\n.spinner-red,\n.spinner-red-only {\n  border-color: #db4437;\n}\n\n.spinner-yellow,\n.spinner-yellow-only {\n  border-color: #f4b400;\n}\n\n.spinner-green,\n.spinner-green-only {\n  border-color: #0f9d58;\n}\n\n/**\n * IMPORTANT NOTE ABOUT CSS ANIMATION PROPERTIES (keanulee):\n *\n * iOS Safari (tested on iOS 8.1) does not handle animation-delay very well - it doesn't\n * guarantee that the animation will start _exactly_ after that value. So we avoid using\n * animation-delay and instead set custom keyframes for each color (as redundant as it\n * seems).\n *\n * We write out each animation in full (instead of separating animation-name,\n * animation-duration, etc.) because under the polyfill, Safari does not recognize those\n * specific properties properly, treats them as -webkit-animation, and overrides the\n * other animation rules. See https://github.com/Polymer/platform/issues/53.\n */\n\n.active .spinner-layer.spinner-blue {\n  /* durations: 4 * ARCTIME */\n  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, blue-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, blue-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n}\n\n.active .spinner-layer.spinner-red {\n  /* durations: 4 * ARCTIME */\n  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, red-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, red-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n}\n\n.active .spinner-layer.spinner-yellow {\n  /* durations: 4 * ARCTIME */\n  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, yellow-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, yellow-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n}\n\n.active .spinner-layer.spinner-green {\n  /* durations: 4 * ARCTIME */\n  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, green-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both, green-fade-in-out 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n}\n\n.active .spinner-layer,\n.active .spinner-layer.spinner-blue-only,\n.active .spinner-layer.spinner-red-only,\n.active .spinner-layer.spinner-yellow-only,\n.active .spinner-layer.spinner-green-only {\n  /* durations: 4 * ARCTIME */\n  opacity: 1;\n  -webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n  animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n}\n\n@-webkit-keyframes fill-unfill-rotate {\n  12.5% {\n    -webkit-transform: rotate(135deg);\n  }\n\n  /* 0.5 * ARCSIZE */\n  25% {\n    -webkit-transform: rotate(270deg);\n  }\n\n  /* 1   * ARCSIZE */\n  37.5% {\n    -webkit-transform: rotate(405deg);\n  }\n\n  /* 1.5 * ARCSIZE */\n  50% {\n    -webkit-transform: rotate(540deg);\n  }\n\n  /* 2   * ARCSIZE */\n  62.5% {\n    -webkit-transform: rotate(675deg);\n  }\n\n  /* 2.5 * ARCSIZE */\n  75% {\n    -webkit-transform: rotate(810deg);\n  }\n\n  /* 3   * ARCSIZE */\n  87.5% {\n    -webkit-transform: rotate(945deg);\n  }\n\n  /* 3.5 * ARCSIZE */\n  to {\n    -webkit-transform: rotate(1080deg);\n  }\n\n  /* 4   * ARCSIZE */}\n\n@keyframes fill-unfill-rotate {\n  12.5% {\n    transform: rotate(135deg);\n  }\n\n  /* 0.5 * ARCSIZE */\n  25% {\n    transform: rotate(270deg);\n  }\n\n  /* 1   * ARCSIZE */\n  37.5% {\n    transform: rotate(405deg);\n  }\n\n  /* 1.5 * ARCSIZE */\n  50% {\n    transform: rotate(540deg);\n  }\n\n  /* 2   * ARCSIZE */\n  62.5% {\n    transform: rotate(675deg);\n  }\n\n  /* 2.5 * ARCSIZE */\n  75% {\n    transform: rotate(810deg);\n  }\n\n  /* 3   * ARCSIZE */\n  87.5% {\n    transform: rotate(945deg);\n  }\n\n  /* 3.5 * ARCSIZE */\n  to {\n    transform: rotate(1080deg);\n  }\n\n  /* 4   * ARCSIZE */}\n\n@-webkit-keyframes blue-fade-in-out {\n  from {\n    opacity: 1;\n  }\n\n  25% {\n    opacity: 1;\n  }\n\n  26% {\n    opacity: 0;\n  }\n\n  89% {\n    opacity: 0;\n  }\n\n  90% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n@keyframes blue-fade-in-out {\n  from {\n    opacity: 1;\n  }\n\n  25% {\n    opacity: 1;\n  }\n\n  26% {\n    opacity: 0;\n  }\n\n  89% {\n    opacity: 0;\n  }\n\n  90% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 1;\n  }\n}\n\n@-webkit-keyframes red-fade-in-out {\n  from {\n    opacity: 0;\n  }\n\n  15% {\n    opacity: 0;\n  }\n\n  25% {\n    opacity: 1;\n  }\n\n  50% {\n    opacity: 1;\n  }\n\n  51% {\n    opacity: 0;\n  }\n}\n\n@keyframes red-fade-in-out {\n  from {\n    opacity: 0;\n  }\n\n  15% {\n    opacity: 0;\n  }\n\n  25% {\n    opacity: 1;\n  }\n\n  50% {\n    opacity: 1;\n  }\n\n  51% {\n    opacity: 0;\n  }\n}\n\n@-webkit-keyframes yellow-fade-in-out {\n  from {\n    opacity: 0;\n  }\n\n  40% {\n    opacity: 0;\n  }\n\n  50% {\n    opacity: 1;\n  }\n\n  75% {\n    opacity: 1;\n  }\n\n  76% {\n    opacity: 0;\n  }\n}\n\n@keyframes yellow-fade-in-out {\n  from {\n    opacity: 0;\n  }\n\n  40% {\n    opacity: 0;\n  }\n\n  50% {\n    opacity: 1;\n  }\n\n  75% {\n    opacity: 1;\n  }\n\n  76% {\n    opacity: 0;\n  }\n}\n\n@-webkit-keyframes green-fade-in-out {\n  from {\n    opacity: 0;\n  }\n\n  65% {\n    opacity: 0;\n  }\n\n  75% {\n    opacity: 1;\n  }\n\n  90% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n\n@keyframes green-fade-in-out {\n  from {\n    opacity: 0;\n  }\n\n  65% {\n    opacity: 0;\n  }\n\n  75% {\n    opacity: 1;\n  }\n\n  90% {\n    opacity: 1;\n  }\n\n  100% {\n    opacity: 0;\n  }\n}\n\n/**\n * Patch the gap that appear between the two adjacent div.circle-clipper while the\n * spinner is rotating (appears on Chrome 38, Safari 7.1, and IE 11).\n */\n\n.gap-patch {\n  position: absolute;\n  top: 0;\n  left: 45%;\n  width: 10%;\n  height: 100%;\n  overflow: hidden;\n  border-color: inherit;\n}\n\n.gap-patch .circle {\n  width: 1000%;\n  left: -450%;\n}\n\n.circle-clipper {\n  display: inline-block;\n  position: relative;\n  width: 50%;\n  height: 100%;\n  overflow: hidden;\n  border-color: inherit;\n}\n\n.circle-clipper .circle {\n  width: 200%;\n  height: 100%;\n  border-width: 3px;\n  /* STROKEWIDTH */\n  border-style: solid;\n  border-color: inherit;\n  border-bottom-color: transparent !important;\n  border-radius: 50%;\n  -webkit-animation: none;\n  animation: none;\n  position: absolute;\n  top: 0;\n  right: 0;\n  bottom: 0;\n}\n\n.circle-clipper.left .circle {\n  left: 0;\n  border-right-color: transparent !important;\n  -webkit-transform: rotate(129deg);\n  transform: rotate(129deg);\n}\n\n.circle-clipper.right .circle {\n  left: -100%;\n  border-left-color: transparent !important;\n  -webkit-transform: rotate(-129deg);\n  transform: rotate(-129deg);\n}\n\n.active .circle-clipper.left .circle {\n  /* duration: ARCTIME */\n  -webkit-animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n  animation: left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n}\n\n.active .circle-clipper.right .circle {\n  /* duration: ARCTIME */\n  -webkit-animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n  animation: right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;\n}\n\n@-webkit-keyframes left-spin {\n  from {\n    -webkit-transform: rotate(130deg);\n  }\n\n  50% {\n    -webkit-transform: rotate(-5deg);\n  }\n\n  to {\n    -webkit-transform: rotate(130deg);\n  }\n}\n\n@keyframes left-spin {\n  from {\n    transform: rotate(130deg);\n  }\n\n  50% {\n    transform: rotate(-5deg);\n  }\n\n  to {\n    transform: rotate(130deg);\n  }\n}\n\n@-webkit-keyframes right-spin {\n  from {\n    -webkit-transform: rotate(-130deg);\n  }\n\n  50% {\n    -webkit-transform: rotate(5deg);\n  }\n\n  to {\n    -webkit-transform: rotate(-130deg);\n  }\n}\n\n@keyframes right-spin {\n  from {\n    transform: rotate(-130deg);\n  }\n\n  50% {\n    transform: rotate(5deg);\n  }\n\n  to {\n    transform: rotate(-130deg);\n  }\n}\n\n#spinnerContainer.cooldown {\n  /* duration: SHRINK_TIME */\n  -webkit-animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0, 0.2, 1);\n  animation: container-rotate 1568ms linear infinite, fade-out 400ms cubic-bezier(0.4, 0, 0.2, 1);\n}\n\n@-webkit-keyframes fade-out {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n@keyframes fade-out {\n  from {\n    opacity: 1;\n  }\n\n  to {\n    opacity: 0;\n  }\n}\n\n.slider {\n  position: relative;\n  height: 400px;\n  width: 100%;\n}\n\n.slider.fullscreen {\n  height: 100%;\n  width: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n}\n\n.slider.fullscreen ul.slides {\n  height: 100%;\n}\n\n.slider.fullscreen ul.indicators {\n  z-index: 2;\n  bottom: 30px;\n}\n\n.slider .slides {\n  background-color: #9e9e9e;\n  margin: 0;\n  height: 400px;\n}\n\n.slider .slides li {\n  opacity: 0;\n  position: absolute;\n  top: 0;\n  left: 0;\n  z-index: 1;\n  width: 100%;\n  height: inherit;\n  overflow: hidden;\n}\n\n.slider .slides li img {\n  height: 100%;\n  width: 100%;\n  background-size: cover;\n  background-position: center;\n}\n\n.slider .slides li .caption {\n  color: #fff;\n  position: absolute;\n  top: 15%;\n  left: 15%;\n  width: 70%;\n  opacity: 0;\n}\n\n.slider .slides li .caption p {\n  color: #e0e0e0;\n}\n\n.slider .slides li.active {\n  z-index: 2;\n}\n\n.slider .indicators {\n  position: absolute;\n  text-align: center;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  margin: 0;\n}\n\n.slider .indicators .indicator-item {\n  display: inline-block;\n  position: relative;\n  cursor: pointer;\n  height: 16px;\n  width: 16px;\n  margin: 0 12px;\n  background-color: #e0e0e0;\n  transition: background-color .3s;\n  border-radius: 50%;\n}\n\n.slider .indicators .indicator-item.active {\n  background-color: #4CAF50;\n}\n\n.carousel {\n  overflow: hidden;\n  position: relative;\n  width: 100%;\n  height: 400px;\n  perspective: 500px;\n  transform-style: preserve-3d;\n  transform-origin: 0% 50%;\n}\n\n.carousel .carousel-item {\n  width: 200px;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n\n.carousel .carousel-item img {\n  width: 100%;\n}\n\n.carousel.carousel-slider {\n  top: 0;\n  left: 0;\n  height: 0;\n}\n\n.carousel.carousel-slider .carousel-item {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  left: 0;\n}\n\n/* ==========================================================================\n   $BASE-PICKER\n   ========================================================================== */\n\n/**\n * Note: the root picker element should *NOT* be styled more than what's here.\n */\n\n.picker {\n  font-size: 16px;\n  text-align: left;\n  line-height: 1.2;\n  color: #000000;\n  position: absolute;\n  z-index: 10000;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n/**\n * The picker input element.\n */\n\n.picker__input {\n  cursor: default;\n}\n\n/**\n * When the picker is opened, the input element is \"activated\".\n */\n\n.picker__input.picker__input--active {\n  border-color: #0089ec;\n}\n\n/**\n * The holder is the only \"scrollable\" top-level container element.\n */\n\n.picker__holder {\n  width: 100%;\n  overflow-y: auto;\n  -webkit-overflow-scrolling: touch;\n}\n\n/*!\n * Default mobile-first, responsive styling for pickadate.js\n * Demo: http://amsul.github.io/pickadate.js\n */\n\n/**\n * Note: the root picker element should *NOT* be styled more than what's here.\n */\n\n/**\n * Make the holder and frame fullscreen.\n */\n\n.picker__holder,\n.picker__frame {\n  bottom: 0;\n  left: 0;\n  right: 0;\n  top: 100%;\n}\n\n/**\n * The holder should overlay the entire screen.\n */\n\n.picker__holder {\n  position: fixed;\n  -webkit-transition: background 0.15s ease-out, top 0s 0.15s;\n  -moz-transition: background 0.15s ease-out, top 0s 0.15s;\n  transition: background 0.15s ease-out, top 0s 0.15s;\n  -webkit-backface-visibility: hidden;\n}\n\n/**\n * The frame that bounds the box contents of the picker.\n */\n\n.picker__frame {\n  position: absolute;\n  margin: 0 auto;\n  min-width: 256px;\n  width: 300px;\n  max-height: 350px;\n  -ms-filter: \"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)\";\n  filter: alpha(opacity=0);\n  -moz-opacity: 0;\n  opacity: 0;\n  -webkit-transition: all 0.15s ease-out;\n  -moz-transition: all 0.15s ease-out;\n  transition: all 0.15s ease-out;\n}\n\n@media (min-height: 28.875em) {\n  .picker__frame {\n    overflow: visible;\n    top: auto;\n    bottom: -100%;\n    max-height: 80%;\n  }\n}\n\n@media (min-height: 40.125em) {\n  .picker__frame {\n    margin-bottom: 7.5%;\n  }\n}\n\n/**\n * The wrapper sets the stage to vertically align the box contents.\n */\n\n.picker__wrap {\n  display: table;\n  width: 100%;\n  height: 100%;\n}\n\n@media (min-height: 28.875em) {\n  .picker__wrap {\n    display: block;\n  }\n}\n\n/**\n * The box contains all the picker contents.\n */\n\n.picker__box {\n  background: #ffffff;\n  display: table-cell;\n  vertical-align: middle;\n}\n\n@media (min-height: 28.875em) {\n  .picker__box {\n    display: block;\n    border: 1px solid #777777;\n    border-top-color: #898989;\n    border-bottom-width: 0;\n    -webkit-border-radius: 5px 5px 0 0;\n    -moz-border-radius: 5px 5px 0 0;\n    border-radius: 5px 5px 0 0;\n    -webkit-box-shadow: 0 12px 36px 16px rgba(0, 0, 0, 0.24);\n    -moz-box-shadow: 0 12px 36px 16px rgba(0, 0, 0, 0.24);\n    box-shadow: 0 12px 36px 16px rgba(0, 0, 0, 0.24);\n  }\n}\n\n/**\n * When the picker opens...\n */\n\n.picker--opened .picker__holder {\n  top: 0;\n  background: transparent;\n  -ms-filter: \"progid:DXImageTransform.Microsoft.gradient(startColorstr=#1E000000,endColorstr=#1E000000)\";\n  zoom: 1;\n  background: rgba(0, 0, 0, 0.32);\n  -webkit-transition: background 0.15s ease-out;\n  -moz-transition: background 0.15s ease-out;\n  transition: background 0.15s ease-out;\n}\n\n.picker--opened .picker__frame {\n  top: 0;\n  -ms-filter: \"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)\";\n  filter: alpha(opacity=100);\n  -moz-opacity: 1;\n  opacity: 1;\n}\n\n@media (min-height: 35.875em) {\n  .picker--opened .picker__frame {\n    top: 10%;\n    bottom: auto;\n  }\n}\n\n/**\n * For `large` screens, transform into an inline picker.\n */\n\n/* ==========================================================================\n   CUSTOM MATERIALIZE STYLES\n   ========================================================================== */\n\n.picker__input.picker__input--active {\n  border-color: #E3F2FD;\n}\n\n.picker__frame {\n  margin: 0 auto;\n  max-width: 325px;\n}\n\n@media (min-height: 38.875em) {\n  .picker--opened .picker__frame {\n    top: 10%;\n    bottom: auto;\n  }\n}\n\n/* ==========================================================================\n   $BASE-DATE-PICKER\n   ========================================================================== */\n\n/**\n * The picker box.\n */\n\n.picker__box {\n  padding: 0 1em;\n}\n\n/**\n * The header containing the month and year stuff.\n */\n\n.picker__header {\n  text-align: center;\n  position: relative;\n  margin-top: .75em;\n}\n\n/**\n * The month and year labels.\n */\n\n.picker__month,\n.picker__year {\n  display: inline-block;\n  margin-left: .25em;\n  margin-right: .25em;\n}\n\n/**\n * The month and year selectors.\n */\n\n.picker__select--month,\n.picker__select--year {\n  height: 2em;\n  padding: 0;\n  margin-left: .25em;\n  margin-right: .25em;\n}\n\n.picker__select--month.browser-default {\n  display: inline;\n  background-color: #FFFFFF;\n  width: 40%;\n}\n\n.picker__select--year.browser-default {\n  display: inline;\n  background-color: #FFFFFF;\n  width: 26%;\n}\n\n.picker__select--month:focus,\n.picker__select--year:focus {\n  border-color: rgba(0, 0, 0, 0.05);\n}\n\n/**\n * The month navigation buttons.\n */\n\n.picker__nav--prev,\n.picker__nav--next {\n  position: absolute;\n  padding: .5em 1.25em;\n  width: 1em;\n  height: 1em;\n  box-sizing: content-box;\n  top: -0.25em;\n}\n\n.picker__nav--prev {\n  left: -1em;\n  padding-right: 1.25em;\n}\n\n.picker__nav--next {\n  right: -1em;\n  padding-left: 1.25em;\n}\n\n.picker__nav--disabled,\n.picker__nav--disabled:hover,\n.picker__nav--disabled:before,\n.picker__nav--disabled:before:hover {\n  cursor: default;\n  background: none;\n  border-right-color: #f5f5f5;\n  border-left-color: #f5f5f5;\n}\n\n/**\n * The calendar table of dates\n */\n\n.picker__table {\n  text-align: center;\n  border-collapse: collapse;\n  border-spacing: 0;\n  table-layout: fixed;\n  font-size: 1rem;\n  width: 100%;\n  margin-top: .75em;\n  margin-bottom: .5em;\n}\n\n.picker__table th,\n.picker__table td {\n  text-align: center;\n}\n\n.picker__table td {\n  margin: 0;\n  padding: 0;\n}\n\n/**\n * The weekday labels\n */\n\n.picker__weekday {\n  width: 14.285714286%;\n  font-size: .75em;\n  padding-bottom: .25em;\n  color: #999999;\n  font-weight: 500;\n  /* Increase the spacing a tad */\n}\n\n@media (min-height: 33.875em) {\n  .picker__weekday {\n    padding-bottom: .5em;\n  }\n}\n\n/**\n * The days on the calendar\n */\n\n.picker__day--today {\n  position: relative;\n  color: #595959;\n  letter-spacing: -.3;\n  padding: .75rem 0;\n  font-weight: 400;\n  border: 1px solid transparent;\n}\n\n.picker__day--disabled:before {\n  border-top-color: #aaaaaa;\n}\n\n.picker__day--infocus:hover {\n  cursor: pointer;\n  color: #000;\n  font-weight: 500;\n}\n\n.picker__day--outfocus {\n  display: none;\n  padding: .75rem 0;\n  color: #fff;\n}\n\n.picker__day--outfocus:hover {\n  cursor: pointer;\n  color: #dddddd;\n  font-weight: 500;\n}\n\n.picker__day--highlighted:hover,\n.picker--focused .picker__day--highlighted {\n  cursor: pointer;\n}\n\n.picker__day--selected,\n.picker__day--selected:hover,\n.picker--focused .picker__day--selected {\n  border-radius: 50%;\n  transform: scale(0.75);\n  background: #0089ec;\n  color: #ffffff;\n}\n\n.picker__day--disabled,\n.picker__day--disabled:hover,\n.picker--focused .picker__day--disabled {\n  background: #f5f5f5;\n  border-color: #f5f5f5;\n  color: #dddddd;\n  cursor: default;\n}\n\n.picker__day--highlighted.picker__day--disabled,\n.picker__day--highlighted.picker__day--disabled:hover {\n  background: #bbbbbb;\n}\n\n/**\n * The footer containing the \"today\", \"clear\", and \"close\" buttons.\n */\n\n.picker__footer {\n  text-align: center;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\n.picker__button--today,\n.picker__button--clear,\n.picker__button--close {\n  border: 1px solid #ffffff;\n  background: #ffffff;\n  font-size: .8em;\n  padding: .66em 0;\n  font-weight: bold;\n  width: 33%;\n  display: inline-block;\n  vertical-align: bottom;\n}\n\n.picker__button--today:hover,\n.picker__button--clear:hover,\n.picker__button--close:hover {\n  cursor: pointer;\n  color: #000000;\n  background: #b1dcfb;\n  border-bottom-color: #b1dcfb;\n}\n\n.picker__button--today:focus,\n.picker__button--clear:focus,\n.picker__button--close:focus {\n  background: #b1dcfb;\n  border-color: rgba(0, 0, 0, 0.05);\n  outline: none;\n}\n\n.picker__button--today:before,\n.picker__button--clear:before,\n.picker__button--close:before {\n  position: relative;\n  display: inline-block;\n  height: 0;\n}\n\n.picker__button--today:before,\n.picker__button--clear:before {\n  content: \" \";\n  margin-right: .45em;\n}\n\n.picker__button--today:before {\n  top: -0.05em;\n  width: 0;\n  border-top: 0.66em solid #0059bc;\n  border-left: .66em solid transparent;\n}\n\n.picker__button--clear:before {\n  top: -0.25em;\n  width: .66em;\n  border-top: 3px solid #ee2200;\n}\n\n.picker__button--close:before {\n  content: \"\\D7\";\n  top: -0.1em;\n  vertical-align: top;\n  font-size: 1.1em;\n  margin-right: .35em;\n  color: #777777;\n}\n\n.picker__button--today[disabled],\n.picker__button--today[disabled]:hover {\n  background: #f5f5f5;\n  border-color: #f5f5f5;\n  color: #dddddd;\n  cursor: default;\n}\n\n.picker__button--today[disabled]:before {\n  border-top-color: #aaaaaa;\n}\n\n/* ==========================================================================\n   CUSTOM MATERIALIZE STYLES\n   ========================================================================== */\n\n.picker__box {\n  border-radius: 2px;\n  overflow: hidden;\n}\n\n.picker__date-display {\n  text-align: center;\n  background-color: #26a69a;\n  color: #fff;\n  padding-bottom: 15px;\n  font-weight: 300;\n}\n\n.picker__nav--prev:hover,\n.picker__nav--next:hover {\n  cursor: pointer;\n  color: #000000;\n  background: #a1ded8;\n}\n\n.picker__weekday-display {\n  background-color: #1f897f;\n  padding: 10px;\n  font-weight: 200;\n  letter-spacing: .5;\n  font-size: 1rem;\n  margin-bottom: 15px;\n}\n\n.picker__month-display {\n  text-transform: uppercase;\n  font-size: 2rem;\n}\n\n.picker__day-display {\n  font-size: 4.5rem;\n  font-weight: 400;\n}\n\n.picker__year-display {\n  font-size: 1.8rem;\n  color: rgba(255, 255, 255, 0.4);\n}\n\n.picker__box {\n  padding: 0;\n}\n\n.picker__calendar-container {\n  padding: 0 1rem;\n}\n\n.picker__calendar-container thead {\n  border: none;\n}\n\n.picker__table {\n  margin-top: 0;\n  margin-bottom: .5em;\n}\n\n.picker__day--infocus {\n  color: #595959;\n  letter-spacing: -.3;\n  padding: .75rem 0;\n  font-weight: 400;\n  border: 1px solid transparent;\n}\n\n.picker__day.picker__day--today {\n  color: #26a69a;\n}\n\n.picker__day.picker__day--today.picker__day--selected {\n  color: #fff;\n}\n\n.picker__weekday {\n  font-size: .9rem;\n}\n\n.picker__day--selected,\n.picker__day--selected:hover,\n.picker--focused .picker__day--selected {\n  border-radius: 50%;\n  transform: scale(0.9);\n  background-color: #26a69a;\n  color: #ffffff;\n}\n\n.picker__day--selected.picker__day--outfocus,\n.picker__day--selected:hover.picker__day--outfocus,\n.picker--focused .picker__day--selected.picker__day--outfocus {\n  background-color: #a1ded8;\n}\n\n.picker__footer {\n  text-align: right;\n  padding: 5px 10px;\n}\n\n.picker__close,\n.picker__today {\n  font-size: 1.1rem;\n  padding: 0 1rem;\n  color: #26a69a;\n}\n\n.picker__nav--prev:before,\n.picker__nav--next:before {\n  content: \" \";\n  border-top: .5em solid transparent;\n  border-bottom: .5em solid transparent;\n  border-right: 0.75em solid #676767;\n  width: 0;\n  height: 0;\n  display: block;\n  margin: 0 auto;\n}\n\n.picker__nav--next:before {\n  border-right: 0;\n  border-left: 0.75em solid #676767;\n}\n\nbutton.picker__today:focus,\nbutton.picker__clear:focus,\nbutton.picker__close:focus {\n  background-color: #a1ded8;\n}\n\n/* ==========================================================================\n   $BASE-TIME-PICKER\n   ========================================================================== */\n\n/**\n * The list of times.\n */\n\n.picker__list {\n  list-style: none;\n  padding: 0.75em 0 4.2em;\n  margin: 0;\n}\n\n/**\n * The times on the clock.\n */\n\n.picker__list-item {\n  border-bottom: 1px solid #dddddd;\n  border-top: 1px solid #dddddd;\n  margin-bottom: -1px;\n  position: relative;\n  background: #ffffff;\n  padding: .75em 1.25em;\n}\n\n@media (min-height: 46.75em) {\n  .picker__list-item {\n    padding: .5em 1em;\n  }\n}\n\n/* Hovered time */\n\n.picker__list-item:hover {\n  cursor: pointer;\n  color: #000000;\n  background: #b1dcfb;\n  border-color: #0089ec;\n  z-index: 10;\n}\n\n/* Highlighted and hovered/focused time */\n\n.picker__list-item--highlighted {\n  border-color: #0089ec;\n  z-index: 10;\n}\n\n.picker__list-item--highlighted:hover,\n.picker--focused .picker__list-item--highlighted {\n  cursor: pointer;\n  color: #000000;\n  background: #b1dcfb;\n}\n\n/* Selected and hovered/focused time */\n\n.picker__list-item--selected,\n.picker__list-item--selected:hover,\n.picker--focused .picker__list-item--selected {\n  background: #0089ec;\n  color: #ffffff;\n  z-index: 10;\n}\n\n/* Disabled time */\n\n.picker__list-item--disabled,\n.picker__list-item--disabled:hover,\n.picker--focused .picker__list-item--disabled {\n  background: #f5f5f5;\n  border-color: #f5f5f5;\n  color: #dddddd;\n  cursor: default;\n  border-color: #dddddd;\n  z-index: auto;\n}\n\n/**\n * The clear button\n */\n\n.picker--time .picker__button--clear {\n  display: block;\n  width: 80%;\n  margin: 1em auto 0;\n  padding: 1em 1.25em;\n  background: none;\n  border: 0;\n  font-weight: 500;\n  font-size: .67em;\n  text-align: center;\n  text-transform: uppercase;\n  color: #666;\n}\n\n.picker--time .picker__button--clear:hover,\n.picker--time .picker__button--clear:focus {\n  color: #000000;\n  background: #b1dcfb;\n  background: #ee2200;\n  border-color: #ee2200;\n  cursor: pointer;\n  color: #ffffff;\n  outline: none;\n}\n\n.picker--time .picker__button--clear:before {\n  top: -0.25em;\n  color: #666;\n  font-size: 1.25em;\n  font-weight: bold;\n}\n\n.picker--time .picker__button--clear:hover:before,\n.picker--time .picker__button--clear:focus:before {\n  color: #ffffff;\n}\n\n/* ==========================================================================\n   $DEFAULT-TIME-PICKER\n   ========================================================================== */\n\n/**\n * The frame the bounds the time picker.\n */\n\n.picker--time .picker__frame {\n  min-width: 256px;\n  max-width: 320px;\n}\n\n/**\n * The picker box.\n */\n\n.picker--time .picker__box {\n  font-size: 1em;\n  background: #f2f2f2;\n  padding: 0;\n}\n\n@media (min-height: 40.125em) {\n  .picker--time .picker__box {\n    margin-bottom: 5em;\n  }\n}\n\nhtml {\n  height: 500px;\n  width: 400px;\n}\n\n.hoverable {\n  cursor: pointer;\n}\n\n.wn-cloak {\n  display: none;\n}", ""]);
-	
+
 	// exports
 
 
@@ -1726,7 +1726,7 @@
 	// css base code, injected by the css-loader
 	module.exports = function() {
 		var list = [];
-	
+
 		// return the list of modules as css string
 		list.toString = function toString() {
 			var result = [];
@@ -1740,7 +1740,7 @@
 			}
 			return result.join("");
 		};
-	
+
 		// import a list of modules into the list
 		list.i = function(modules, mediaQuery) {
 			if(typeof modules === "string")
@@ -1916,23 +1916,23 @@
 		singletonElement = null,
 		singletonCounter = 0,
 		styleElementsInsertedAtTop = [];
-	
+
 	module.exports = function(list, options) {
 		if(false) {
 			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
 		}
-	
+
 		options = options || {};
 		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
 		// tags it will allow on a page
 		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
-	
+
 		// By default, add <style> tags to the bottom of <head>.
 		if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
-	
+
 		var styles = listToStyles(list);
 		addStylesToDom(styles, options);
-	
+
 		return function update(newList) {
 			var mayRemove = [];
 			for(var i = 0; i < styles.length; i++) {
@@ -1955,7 +1955,7 @@
 			}
 		};
 	}
-	
+
 	function addStylesToDom(styles, options) {
 		for(var i = 0; i < styles.length; i++) {
 			var item = styles[i];
@@ -1977,7 +1977,7 @@
 			}
 		}
 	}
-	
+
 	function listToStyles(list) {
 		var styles = [];
 		var newStyles = {};
@@ -1995,7 +1995,7 @@
 		}
 		return styles;
 	}
-	
+
 	function insertStyleElement(options, styleElement) {
 		var head = getHeadElement();
 		var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
@@ -2014,7 +2014,7 @@
 			throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
 		}
 	}
-	
+
 	function removeStyleElement(styleElement) {
 		styleElement.parentNode.removeChild(styleElement);
 		var idx = styleElementsInsertedAtTop.indexOf(styleElement);
@@ -2022,24 +2022,24 @@
 			styleElementsInsertedAtTop.splice(idx, 1);
 		}
 	}
-	
+
 	function createStyleElement(options) {
 		var styleElement = document.createElement("style");
 		styleElement.type = "text/css";
 		insertStyleElement(options, styleElement);
 		return styleElement;
 	}
-	
+
 	function createLinkElement(options) {
 		var linkElement = document.createElement("link");
 		linkElement.rel = "stylesheet";
 		insertStyleElement(options, linkElement);
 		return linkElement;
 	}
-	
+
 	function addStyle(obj, options) {
 		var styleElement, update, remove;
-	
+
 		if (options.singleton) {
 			var styleIndex = singletonCounter++;
 			styleElement = singletonElement || (singletonElement = createStyleElement(options));
@@ -2065,9 +2065,9 @@
 				removeStyleElement(styleElement);
 			};
 		}
-	
+
 		update(obj);
-	
+
 		return function updateStyle(newObj) {
 			if(newObj) {
 				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
@@ -2078,19 +2078,19 @@
 			}
 		};
 	}
-	
+
 	var replaceText = (function () {
 		var textStore = [];
-	
+
 		return function (index, replacement) {
 			textStore[index] = replacement;
 			return textStore.filter(Boolean).join('\n');
 		};
 	})();
-	
+
 	function applyToSingletonTag(styleElement, index, remove, obj) {
 		var css = remove ? "" : obj.css;
-	
+
 		if (styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = replaceText(index, css);
 		} else {
@@ -2104,15 +2104,15 @@
 			}
 		}
 	}
-	
+
 	function applyToTag(styleElement, obj) {
 		var css = obj.css;
 		var media = obj.media;
-	
+
 		if(media) {
 			styleElement.setAttribute("media", media)
 		}
-	
+
 		if(styleElement.styleSheet) {
 			styleElement.styleSheet.cssText = css;
 		} else {
@@ -2122,22 +2122,22 @@
 			styleElement.appendChild(document.createTextNode(css));
 		}
 	}
-	
+
 	function updateLink(linkElement, obj) {
 		var css = obj.css;
 		var sourceMap = obj.sourceMap;
-	
+
 		if(sourceMap) {
 			// http://stackoverflow.com/a/26603875
 			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
 		}
-	
+
 		var blob = new Blob([css], { type: "text/css" });
-	
+
 		var oldSrc = linkElement.href;
-	
+
 		linkElement.href = URL.createObjectURL(blob);
-	
+
 		if(oldSrc)
 			URL.revokeObjectURL(oldSrc);
 	}
@@ -2152,7 +2152,7 @@
 	 * (c) Steven Sanderson - http://knockoutjs.com/
 	 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
 	 */
-	
+
 	(function(){
 	var DEBUG=true;
 	(function(undefined){
@@ -2182,11 +2182,11 @@
 	// Google Closure Compiler helpers (used only to make the minified file smaller)
 	ko.exportSymbol = function(koPath, object) {
 	    var tokens = koPath.split(".");
-	
+
 	    // In the future, "ko" may become distinct from "koExports" (so that non-exported objects are not reachable)
 	    // At that point, "target" would be set to: (typeof koExports !== "undefined" ? koExports : ko)
 	    var target = ko;
-	
+
 	    for (var i = 0; i < tokens.length - 1; i++)
 	        target = target[tokens[i]];
 	    target[tokens[tokens.length - 1]] = object;
@@ -2195,14 +2195,14 @@
 	    owner[publicName] = object;
 	};
 	ko.version = "3.4.0";
-	
+
 	ko.exportSymbol('version', ko.version);
 	// For any options that may affect various areas of Knockout and aren't directly associated with data binding.
 	ko.options = {
 	    'deferUpdates': false,
 	    'useOnlyNativeEvents': false
 	};
-	
+
 	//ko.exportSymbol('options', ko.options);   // 'options' isn't minified
 	ko.utils = (function () {
 	    function objectForEach(obj, action) {
@@ -2212,7 +2212,7 @@
 	            }
 	        }
 	    }
-	
+
 	    function extend(target, source) {
 	        if (source) {
 	            for(var prop in source) {
@@ -2223,15 +2223,15 @@
 	        }
 	        return target;
 	    }
-	
+
 	    function setPrototypeOf(obj, proto) {
 	        obj.__proto__ = proto;
 	        return obj;
 	    }
-	
+
 	    var canSetPrototype = ({ __proto__: [] } instanceof Array);
 	    var canUseSymbols = !DEBUG && typeof Symbol === 'function';
-	
+
 	    // Represent the known event types in a compact way, then at runtime transform it into a hash with event name as key (for fast lookup)
 	    var knownEvents = {}, knownEventTypesByEventName = {};
 	    var keyEventTypeName = (navigator && /Firefox\/2/i.test(navigator.userAgent)) ? 'KeyboardEvent' : 'UIEvents';
@@ -2244,14 +2244,14 @@
 	        }
 	    });
 	    var eventsThatMustBeRegisteredUsingAttachEvent = { 'propertychange': true }; // Workaround for an IE9 issue - https://github.com/SteveSanderson/knockout/issues/406
-	
+
 	    // Detect IE versions for bug workarounds (uses IE conditionals, not UA string, for robustness)
 	    // Note that, since IE 10 does not support conditional comments, the following logic only detects IE < 10.
 	    // Currently this is by design, since IE 10+ behaves correctly when treated as a standard browser.
 	    // If there is a future need to detect specific versions of IE10+, we will amend this.
 	    var ieVersion = document && (function() {
 	        var version = 3, div = document.createElement('div'), iElems = div.getElementsByTagName('i');
-	
+
 	        // Keep constructing conditional HTML blocks until we hit one that resolves to an empty fragment
 	        while (
 	            div.innerHTML = '<!--[if gt IE ' + (++version) + ']><i></i><![endif]-->',
@@ -2261,18 +2261,18 @@
 	    }());
 	    var isIe6 = ieVersion === 6,
 	        isIe7 = ieVersion === 7;
-	
+
 	    function isClickOnCheckableElement(element, eventType) {
 	        if ((ko.utils.tagNameLower(element) !== "input") || !element.type) return false;
 	        if (eventType.toLowerCase() != "click") return false;
 	        var inputType = element.type;
 	        return (inputType == "checkbox") || (inputType == "radio");
 	    }
-	
+
 	    // For details on the pattern for changing node classes
 	    // see: https://github.com/knockout/knockout/issues/1597
 	    var cssClassNameRegex = /\S+/g;
-	
+
 	    function toggleDomNodeCssClass(node, classNames, shouldHaveClass) {
 	        var addOrRemoveFn;
 	        if (classNames) {
@@ -2290,7 +2290,7 @@
 	            }
 	        }
 	    }
-	
+
 	    function toggleObjectClassPropertyString(obj, prop, classNames, shouldHaveClass) {
 	        // obj/prop is either a node/'className' or a SVGAnimatedString/'baseVal'.
 	        var currentClassNames = obj[prop].match(cssClassNameRegex) || [];
@@ -2299,15 +2299,15 @@
 	        });
 	        obj[prop] = currentClassNames.join(" ");
 	    }
-	
+
 	    return {
 	        fieldsIncludedWithJsonPost: ['authenticity_token', /^__RequestVerificationToken(_.*)?$/],
-	
+
 	        arrayForEach: function (array, action) {
 	            for (var i = 0, j = array.length; i < j; i++)
 	                action(array[i], i);
 	        },
-	
+
 	        arrayIndexOf: function (array, item) {
 	            if (typeof Array.prototype.indexOf == "function")
 	                return Array.prototype.indexOf.call(array, item);
@@ -2316,14 +2316,14 @@
 	                    return i;
 	            return -1;
 	        },
-	
+
 	        arrayFirst: function (array, predicate, predicateOwner) {
 	            for (var i = 0, j = array.length; i < j; i++)
 	                if (predicate.call(predicateOwner, array[i], i))
 	                    return array[i];
 	            return null;
 	        },
-	
+
 	        arrayRemoveItem: function (array, itemToRemove) {
 	            var index = ko.utils.arrayIndexOf(array, itemToRemove);
 	            if (index > 0) {
@@ -2333,7 +2333,7 @@
 	                array.shift();
 	            }
 	        },
-	
+
 	        arrayGetDistinctValues: function (array) {
 	            array = array || [];
 	            var result = [];
@@ -2343,7 +2343,7 @@
 	            }
 	            return result;
 	        },
-	
+
 	        arrayMap: function (array, mapping) {
 	            array = array || [];
 	            var result = [];
@@ -2351,7 +2351,7 @@
 	                result.push(mapping(array[i], i));
 	            return result;
 	        },
-	
+
 	        arrayFilter: function (array, predicate) {
 	            array = array || [];
 	            var result = [];
@@ -2360,7 +2360,7 @@
 	                    result.push(array[i]);
 	            return result;
 	        },
-	
+
 	        arrayPushAll: function (array, valuesToPush) {
 	            if (valuesToPush instanceof Array)
 	                array.push.apply(array, valuesToPush);
@@ -2369,7 +2369,7 @@
 	                    array.push(valuesToPush[i]);
 	            return array;
 	        },
-	
+
 	        addOrRemoveItem: function(array, value, included) {
 	            var existingEntryIndex = ko.utils.arrayIndexOf(ko.utils.peekObservable(array), value);
 	            if (existingEntryIndex < 0) {
@@ -2380,17 +2380,17 @@
 	                    array.splice(existingEntryIndex, 1);
 	            }
 	        },
-	
+
 	        canSetPrototype: canSetPrototype,
-	
+
 	        extend: extend,
-	
+
 	        setPrototypeOf: setPrototypeOf,
-	
+
 	        setPrototypeOfOrExtend: canSetPrototype ? setPrototypeOf : extend,
-	
+
 	        objectForEach: objectForEach,
-	
+
 	        objectMap: function(source, mapping) {
 	            if (!source)
 	                return source;
@@ -2402,26 +2402,26 @@
 	            }
 	            return target;
 	        },
-	
+
 	        emptyDomNode: function (domNode) {
 	            while (domNode.firstChild) {
 	                ko.removeNode(domNode.firstChild);
 	            }
 	        },
-	
+
 	        moveCleanedNodesToContainerElement: function(nodes) {
 	            // Ensure it's a real array, as we're about to reparent the nodes and
 	            // we don't want the underlying collection to change while we're doing that.
 	            var nodesArray = ko.utils.makeArray(nodes);
 	            var templateDocument = (nodesArray[0] && nodesArray[0].ownerDocument) || document;
-	
+
 	            var container = templateDocument.createElement('div');
 	            for (var i = 0, j = nodesArray.length; i < j; i++) {
 	                container.appendChild(ko.cleanNode(nodesArray[i]));
 	            }
 	            return container;
 	        },
-	
+
 	        cloneNodes: function (nodesArray, shouldCleanNodes) {
 	            for (var i = 0, j = nodesArray.length, newNodesArray = []; i < j; i++) {
 	                var clonedNode = nodesArray[i].cloneNode(true);
@@ -2429,7 +2429,7 @@
 	            }
 	            return newNodesArray;
 	        },
-	
+
 	        setDomNodeChildren: function (domNode, childNodes) {
 	            ko.utils.emptyDomNode(domNode);
 	            if (childNodes) {
@@ -2437,7 +2437,7 @@
 	                    domNode.appendChild(childNodes[i]);
 	            }
 	        },
-	
+
 	        replaceDomNodes: function (nodeToReplaceOrNodeArray, newNodesArray) {
 	            var nodesToReplaceArray = nodeToReplaceOrNodeArray.nodeType ? [nodeToReplaceOrNodeArray] : nodeToReplaceOrNodeArray;
 	            if (nodesToReplaceArray.length > 0) {
@@ -2450,7 +2450,7 @@
 	                }
 	            }
 	        },
-	
+
 	        fixUpContinuousNodeArray: function(continuousNodeArray, parentNode) {
 	            // Before acting on a set of nodes that were previously outputted by a template function, we have to reconcile
 	            // them against what is in the DOM right now. It may be that some of the nodes have already been removed, or that
@@ -2467,19 +2467,19 @@
 	            //       See https://github.com/knockout/knockout/pull/1903
 	            //   [C] We want to output a continuous series of nodes. So, ignore any nodes that have already been removed,
 	            //       and include any nodes that have been inserted among the previous collection
-	
+
 	            if (continuousNodeArray.length) {
 	                // The parent node can be a virtual element; so get the real parent node
 	                parentNode = (parentNode.nodeType === 8 && parentNode.parentNode) || parentNode;
-	
+
 	                // Rule [A]
 	                while (continuousNodeArray.length && continuousNodeArray[0].parentNode !== parentNode)
 	                    continuousNodeArray.splice(0, 1);
-	
+
 	                // Rule [B]
 	                while (continuousNodeArray.length > 1 && continuousNodeArray[continuousNodeArray.length - 1].parentNode !== parentNode)
 	                    continuousNodeArray.length--;
-	
+
 	                // Rule [C]
 	                if (continuousNodeArray.length > 1) {
 	                    var current = continuousNodeArray[0], last = continuousNodeArray[continuousNodeArray.length - 1];
@@ -2494,7 +2494,7 @@
 	            }
 	            return continuousNodeArray;
 	        },
-	
+
 	        setOptionNodeSelectionState: function (optionNode, isSelected) {
 	            // IE6 sometimes throws "unknown error" if you try to write to .selected directly, whereas Firefox struggles with setAttribute. Pick one based on browser.
 	            if (ieVersion < 7)
@@ -2502,21 +2502,21 @@
 	            else
 	                optionNode.selected = isSelected;
 	        },
-	
+
 	        stringTrim: function (string) {
 	            return string === null || string === undefined ? '' :
 	                string.trim ?
 	                    string.trim() :
 	                    string.toString().replace(/^[\s\xa0]+|[\s\xa0]+$/g, '');
 	        },
-	
+
 	        stringStartsWith: function (string, startsWith) {
 	            string = string || "";
 	            if (startsWith.length > string.length)
 	                return false;
 	            return string.substring(0, startsWith.length) === startsWith;
 	        },
-	
+
 	        domNodeIsContainedBy: function (node, containedByNode) {
 	            if (node === containedByNode)
 	                return true;
@@ -2531,22 +2531,22 @@
 	            }
 	            return !!node;
 	        },
-	
+
 	        domNodeIsAttachedToDocument: function (node) {
 	            return ko.utils.domNodeIsContainedBy(node, node.ownerDocument.documentElement);
 	        },
-	
+
 	        anyDomNodeIsAttachedToDocument: function(nodes) {
 	            return !!ko.utils.arrayFirst(nodes, ko.utils.domNodeIsAttachedToDocument);
 	        },
-	
+
 	        tagNameLower: function(element) {
 	            // For HTML elements, tagName will always be upper case; for XHTML elements, it'll be lower case.
 	            // Possible future optimization: If we know it's an element from an XHTML document (not HTML),
 	            // we don't need to do the .toLowerCase() as it will always be lower case anyway.
 	            return element && element.tagName && element.tagName.toLowerCase();
 	        },
-	
+
 	        catchFunctionErrors: function (delegate) {
 	            return ko['onError'] ? function () {
 	                try {
@@ -2557,21 +2557,21 @@
 	                }
 	            } : delegate;
 	        },
-	
+
 	        setTimeout: function (handler, timeout) {
 	            return setTimeout(ko.utils.catchFunctionErrors(handler), timeout);
 	        },
-	
+
 	        deferError: function (error) {
 	            setTimeout(function () {
 	                ko['onError'] && ko['onError'](error);
 	                throw error;
 	            }, 0);
 	        },
-	
+
 	        registerEventHandler: function (element, eventType, handler) {
 	            var wrappedHandler = ko.utils.catchFunctionErrors(handler);
-	
+
 	            var mustUseAttachEvent = ieVersion && eventsThatMustBeRegisteredUsingAttachEvent[eventType];
 	            if (!ko.options['useOnlyNativeEvents'] && !mustUseAttachEvent && jQueryInstance) {
 	                jQueryInstance(element)['bind'](eventType, wrappedHandler);
@@ -2581,7 +2581,7 @@
 	                var attachEventHandler = function (event) { wrappedHandler.call(element, event); },
 	                    attachEventName = "on" + eventType;
 	                element.attachEvent(attachEventName, attachEventHandler);
-	
+
 	                // IE does not dispose attachEvent handlers automatically (unlike with addEventListener)
 	                // so to avoid leaks, we have to remove them manually. See bug #856
 	                ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
@@ -2590,17 +2590,17 @@
 	            } else
 	                throw new Error("Browser doesn't support addEventListener or attachEvent");
 	        },
-	
+
 	        triggerEvent: function (element, eventType) {
 	            if (!(element && element.nodeType))
 	                throw new Error("element must be a DOM node when calling triggerEvent");
-	
+
 	            // For click events on checkboxes and radio buttons, jQuery toggles the element checked state *after* the
 	            // event handler runs instead of *before*. (This was fixed in 1.9 for checkboxes but not for radio buttons.)
 	            // IE doesn't change the checked state when you trigger the click event using "fireEvent".
 	            // In both cases, we'll use the click method instead.
 	            var useClickWorkaround = isClickOnCheckableElement(element, eventType);
-	
+
 	            if (!ko.options['useOnlyNativeEvents'] && jQueryInstance && !useClickWorkaround) {
 	                jQueryInstance(element)['trigger'](eventType);
 	            } else if (typeof document.createEvent == "function") {
@@ -2620,22 +2620,22 @@
 	                throw new Error("Browser doesn't support triggering events");
 	            }
 	        },
-	
+
 	        unwrapObservable: function (value) {
 	            return ko.isObservable(value) ? value() : value;
 	        },
-	
+
 	        peekObservable: function (value) {
 	            return ko.isObservable(value) ? value.peek() : value;
 	        },
-	
+
 	        toggleDomNodeCssClass: toggleDomNodeCssClass,
-	
+
 	        setTextContent: function(element, textContent) {
 	            var value = ko.utils.unwrapObservable(textContent);
 	            if ((value === null) || (value === undefined))
 	                value = "";
-	
+
 	            // We need there to be exactly one child: a text node.
 	            // If there are no children, more than one, or if it's not a text node,
 	            // we'll clear everything and create a single text node.
@@ -2645,13 +2645,13 @@
 	            } else {
 	                innerTextNode.data = value;
 	            }
-	
+
 	            ko.utils.forceRefresh(element);
 	        },
-	
+
 	        setElementName: function(element, name) {
 	            element.name = name;
-	
+
 	            // Workaround IE 6/7 issue
 	            // - https://github.com/SteveSanderson/knockout/issues/197
 	            // - http://www.matts411.com/post/setting_the_name_attribute_in_ie_dom/
@@ -2662,7 +2662,7 @@
 	                catch(e) {} // For IE9 with doc mode "IE9 Standards" and browser mode "IE9 Compatibility View"
 	            }
 	        },
-	
+
 	        forceRefresh: function(node) {
 	            // Workaround for an IE9 rendering bug - https://github.com/SteveSanderson/knockout/issues/209
 	            if (ieVersion >= 9) {
@@ -2672,7 +2672,7 @@
 	                    elem.style.zoom = elem.style.zoom;
 	            }
 	        },
-	
+
 	        ensureSelectElementIsRenderedCorrectly: function(selectElement) {
 	            // Workaround for IE9 rendering bug - it doesn't reliably display all the text in dynamically-added select boxes unless you force it to re-render by updating the width.
 	            // (See https://github.com/SteveSanderson/knockout/issues/312, http://stackoverflow.com/questions/5908494/select-only-shows-first-char-of-selected-option)
@@ -2683,7 +2683,7 @@
 	                selectElement.style.width = originalWidth;
 	            }
 	        },
-	
+
 	        range: function (min, max) {
 	            min = ko.utils.unwrapObservable(min);
 	            max = ko.utils.unwrapObservable(max);
@@ -2692,7 +2692,7 @@
 	                result.push(i);
 	            return result;
 	        },
-	
+
 	        makeArray: function(arrayLikeObject) {
 	            var result = [];
 	            for (var i = 0, j = arrayLikeObject.length; i < j; i++) {
@@ -2700,15 +2700,15 @@
 	            };
 	            return result;
 	        },
-	
+
 	        createSymbolOrString: function(identifier) {
 	            return canUseSymbols ? Symbol(identifier) : identifier;
 	        },
-	
+
 	        isIe6 : isIe6,
 	        isIe7 : isIe7,
 	        ieVersion : ieVersion,
-	
+
 	        getFormFields: function(form, fieldName) {
 	            var fields = ko.utils.makeArray(form.getElementsByTagName("input")).concat(ko.utils.makeArray(form.getElementsByTagName("textarea")));
 	            var isMatchingField = (typeof fieldName == 'string')
@@ -2721,7 +2721,7 @@
 	            };
 	            return matches;
 	        },
-	
+
 	        parseJson: function (jsonString) {
 	            if (typeof jsonString == "string") {
 	                jsonString = ko.utils.stringTrim(jsonString);
@@ -2733,19 +2733,19 @@
 	            }
 	            return null;
 	        },
-	
+
 	        stringifyJson: function (data, replacer, space) {   // replacer and space are optional
 	            if (!JSON || !JSON.stringify)
 	                throw new Error("Cannot find JSON.stringify(). Some browsers (e.g., IE < 8) don't support it natively, but you can overcome this by adding a script reference to json2.js, downloadable from http://www.json.org/json2.js");
 	            return JSON.stringify(ko.utils.unwrapObservable(data), replacer, space);
 	        },
-	
+
 	        postJson: function (urlOrForm, data, options) {
 	            options = options || {};
 	            var params = options['params'] || {};
 	            var includeFields = options['includeFields'] || this.fieldsIncludedWithJsonPost;
 	            var url = urlOrForm;
-	
+
 	            // If we were given a form, use its 'action' URL and pick out any requested field values
 	            if((typeof urlOrForm == 'object') && (ko.utils.tagNameLower(urlOrForm) === "form")) {
 	                var originalForm = urlOrForm;
@@ -2756,7 +2756,7 @@
 	                        params[fields[j].name] = fields[j].value;
 	                }
 	            }
-	
+
 	            data = ko.utils.unwrapObservable(data);
 	            var form = document.createElement("form");
 	            form.style.display = "none";
@@ -2783,7 +2783,7 @@
 	        }
 	    }
 	}());
-	
+
 	ko.exportSymbol('utils', ko.utils);
 	ko.exportSymbol('utils.arrayForEach', ko.utils.arrayForEach);
 	ko.exportSymbol('utils.arrayFirst', ko.utils.arrayFirst);
@@ -2809,7 +2809,7 @@
 	ko.exportSymbol('utils.addOrRemoveItem', ko.utils.addOrRemoveItem);
 	ko.exportSymbol('utils.setTextContent', ko.utils.setTextContent);
 	ko.exportSymbol('unwrap', ko.utils.unwrapObservable); // Convenient shorthand, because this is used so commonly
-	
+
 	if (!Function.prototype['bind']) {
 	    // Function.prototype.bind is a standard part of ECMAScript 5th Edition (December 2009, http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-262.pdf)
 	    // In case the browser doesn't implement it natively, provide a JavaScript implementation. This implementation is based on the one in prototype.js
@@ -2829,12 +2829,12 @@
 	        }
 	    };
 	}
-	
+
 	ko.utils.domData = new (function () {
 	    var uniqueId = 0;
 	    var dataStoreKeyExpandoPropertyName = "__ko__" + (new Date).getTime();
 	    var dataStore = {};
-	
+
 	    function getAll(node, createIfNotFound) {
 	        var dataStoreKey = node[dataStoreKeyExpandoPropertyName];
 	        var hasExistingDataStore = dataStoreKey && (dataStoreKey !== "null") && dataStore[dataStoreKey];
@@ -2846,7 +2846,7 @@
 	        }
 	        return dataStore[dataStoreKey];
 	    }
-	
+
 	    return {
 	        get: function (node, key) {
 	            var allDataForNode = getAll(node, false);
@@ -2870,21 +2870,21 @@
 	            }
 	            return false;
 	        },
-	
+
 	        nextKey: function () {
 	            return (uniqueId++) + dataStoreKeyExpandoPropertyName;
 	        }
 	    };
 	})();
-	
+
 	ko.exportSymbol('utils.domData', ko.utils.domData);
 	ko.exportSymbol('utils.domData.clear', ko.utils.domData.clear); // Exporting only so specs can clear up after themselves fully
-	
+
 	ko.utils.domNodeDisposal = new (function () {
 	    var domDataKey = ko.utils.domData.nextKey();
 	    var cleanableNodeTypes = { 1: true, 8: true, 9: true };       // Element, Comment, Document
 	    var cleanableNodeTypesWithDescendants = { 1: true, 9: true }; // Element, Document
-	
+
 	    function getDisposeCallbacksCollection(node, createIfNotFound) {
 	        var allDisposeCallbacks = ko.utils.domData.get(node, domDataKey);
 	        if ((allDisposeCallbacks === undefined) && createIfNotFound) {
@@ -2896,7 +2896,7 @@
 	    function destroyCallbacksCollection(node) {
 	        ko.utils.domData.set(node, domDataKey, undefined);
 	    }
-	
+
 	    function cleanSingleNode(node) {
 	        // Run all the dispose callbacks
 	        var callbacks = getDisposeCallbacksCollection(node, false);
@@ -2905,19 +2905,19 @@
 	            for (var i = 0; i < callbacks.length; i++)
 	                callbacks[i](node);
 	        }
-	
+
 	        // Erase the DOM data
 	        ko.utils.domData.clear(node);
-	
+
 	        // Perform cleanup needed by external libraries (currently only jQuery, but can be extended)
 	        ko.utils.domNodeDisposal["cleanExternalData"](node);
-	
+
 	        // Clear any immediate-child comment nodes, as these wouldn't have been found by
 	        // node.getElementsByTagName("*") in cleanNode() (comment nodes aren't elements)
 	        if (cleanableNodeTypesWithDescendants[node.nodeType])
 	            cleanImmediateCommentTypeChildren(node);
 	    }
-	
+
 	    function cleanImmediateCommentTypeChildren(nodeWithChildren) {
 	        var child, nextChild = nodeWithChildren.firstChild;
 	        while (child = nextChild) {
@@ -2926,14 +2926,14 @@
 	                cleanSingleNode(child);
 	        }
 	    }
-	
+
 	    return {
 	        addDisposeCallback : function(node, callback) {
 	            if (typeof callback != "function")
 	                throw new Error("Callback must be a function");
 	            getDisposeCallbacksCollection(node, true).push(callback);
 	        },
-	
+
 	        removeDisposeCallback : function(node, callback) {
 	            var callbacksCollection = getDisposeCallbacksCollection(node, false);
 	            if (callbacksCollection) {
@@ -2942,12 +2942,12 @@
 	                    destroyCallbacksCollection(node);
 	            }
 	        },
-	
+
 	        cleanNode : function(node) {
 	            // First clean this node, where applicable
 	            if (cleanableNodeTypes[node.nodeType]) {
 	                cleanSingleNode(node);
-	
+
 	                // ... then its descendants, where applicable
 	                if (cleanableNodeTypesWithDescendants[node.nodeType]) {
 	                    // Clone the descendants list in case it changes during iteration
@@ -2959,13 +2959,13 @@
 	            }
 	            return node;
 	        },
-	
+
 	        removeNode : function(node) {
 	            ko.cleanNode(node);
 	            if (node.parentNode)
 	                node.parentNode.removeChild(node);
 	        },
-	
+
 	        "cleanExternalData" : function (node) {
 	            // Special support for jQuery here because it's so commonly used.
 	            // Many jQuery plugins (including jquery.tmpl) store data using jQuery's equivalent of domData
@@ -2998,32 +2998,32 @@
 	            'option': select,
 	            'optgroup': select
 	        },
-	
+
 	        // This is needed for old IE if you're *not* using either jQuery or innerShiv. Doesn't affect other cases.
 	        mayRequireCreateElementHack = ko.utils.ieVersion <= 8;
-	
+
 	    function getWrap(tags) {
 	        var m = tags.match(/^<([a-z]+)[ >]/);
 	        return (m && lookup[m[1]]) || none;
 	    }
-	
+
 	    function simpleHtmlParse(html, documentContext) {
 	        documentContext || (documentContext = document);
 	        var windowContext = documentContext['parentWindow'] || documentContext['defaultView'] || window;
-	
+
 	        // Based on jQuery's "clean" function, but only accounting for table-related elements.
 	        // If you have referenced jQuery, this won't be used anyway - KO will use jQuery's "clean" function directly
-	
+
 	        // Note that there's still an issue in IE < 9 whereby it will discard comment nodes that are the first child of
 	        // a descendant node. For example: "<div><!-- mycomment -->abc</div>" will get parsed as "<div>abc</div>"
 	        // This won't affect anyone who has referenced jQuery, and there's always the workaround of inserting a dummy node
 	        // (possibly a text node) in front of the comment. So, KO does not attempt to workaround this IE issue automatically at present.
-	
+
 	        // Trim whitespace, otherwise indexOf won't work as expected
 	        var tags = ko.utils.stringTrim(html).toLowerCase(), div = documentContext.createElement("div"),
 	            wrap = getWrap(tags),
 	            depth = wrap[0];
-	
+
 	        // Go to html and back, then peel off extra wrappers
 	        // Note that we always prefix with some dummy text, because otherwise, IE<9 will strip out leading comment nodes in descendants. Total madness.
 	        var markup = "ignored<div>" + wrap[1] + html + wrap[2] + "</div>";
@@ -3038,21 +3038,21 @@
 	                // only works if we assign innerHTML on an element associated with that document.
 	                documentContext.appendChild(div);
 	            }
-	
+
 	            div.innerHTML = markup;
-	
+
 	            if (mayRequireCreateElementHack) {
 	                div.parentNode.removeChild(div);
 	            }
 	        }
-	
+
 	        // Move to the right depth
 	        while (depth--)
 	            div = div.lastChild;
-	
+
 	        return ko.utils.makeArray(div.lastChild.childNodes);
 	    }
-	
+
 	    function jQueryHtmlParse(html, documentContext) {
 	        // jQuery's "parseHTML" function was introduced in jQuery 1.8.0 and is a documented public API.
 	        if (jQueryInstance['parseHTML']) {
@@ -3060,7 +3060,7 @@
 	        } else {
 	            // For jQuery < 1.8.0, we fall back on the undocumented internal "clean" function.
 	            var elems = jQueryInstance['clean']([html], documentContext);
-	
+
 	            // As of jQuery 1.7.1, jQuery parses the HTML by appending it to some dummy parent nodes held in an in-memory document fragment.
 	            // Unfortunately, it never clears the dummy parent nodes from the document fragment, so it leaks memory over time.
 	            // Fix this by finding the top-most dummy parent element, and detaching it from its owner fragment.
@@ -3073,27 +3073,27 @@
 	                if (elem.parentNode)
 	                    elem.parentNode.removeChild(elem);
 	            }
-	
+
 	            return elems;
 	        }
 	    }
-	
+
 	    ko.utils.parseHtmlFragment = function(html, documentContext) {
 	        return jQueryInstance ?
 	            jQueryHtmlParse(html, documentContext) :   // As below, benefit from jQuery's optimisations where possible
 	            simpleHtmlParse(html, documentContext);  // ... otherwise, this simple logic will do in most common cases.
 	    };
-	
+
 	    ko.utils.setHtml = function(node, html) {
 	        ko.utils.emptyDomNode(node);
-	
+
 	        // There's no legitimate reason to display a stringified observable without unwrapping it, so we'll unwrap it
 	        html = ko.utils.unwrapObservable(html);
-	
+
 	        if ((html !== null) && (html !== undefined)) {
 	            if (typeof html != 'string')
 	                html = html.toString();
-	
+
 	            // jQuery contains a lot of sophisticated code to parse arbitrary HTML fragments,
 	            // for example <tr> elements which are not normally allowed to exist on their own.
 	            // If you've referenced jQuery we'll use that rather than duplicating its code.
@@ -3108,13 +3108,13 @@
 	        }
 	    };
 	})();
-	
+
 	ko.exportSymbol('utils.parseHtmlFragment', ko.utils.parseHtmlFragment);
 	ko.exportSymbol('utils.setHtml', ko.utils.setHtml);
-	
+
 	ko.memoization = (function () {
 	    var memos = {};
-	
+
 	    function randomMax8HexChars() {
 	        return (((1 + Math.random()) * 0x100000000) | 0).toString(16).substring(1);
 	    }
@@ -3133,7 +3133,7 @@
 	                findMemoNodes(childNodes[i], appendToArray);
 	        }
 	    }
-	
+
 	    return {
 	        memoize: function (callback) {
 	            if (typeof callback != "function")
@@ -3142,7 +3142,7 @@
 	            memos[memoId] = callback;
 	            return "<!--[ko_memo:" + memoId + "]-->";
 	        },
-	
+
 	        unmemoize: function (memoId, callbackParams) {
 	            var callback = memos[memoId];
 	            if (callback === undefined)
@@ -3153,7 +3153,7 @@
 	            }
 	            finally { delete memos[memoId]; }
 	        },
-	
+
 	        unmemoizeDomNodeAndDescendants: function (domNode, extraCallbackParamsArray) {
 	            var memos = [];
 	            findMemoNodes(domNode, memos);
@@ -3168,14 +3168,14 @@
 	                    node.parentNode.removeChild(node); // If possible, erase it totally (not always possible - someone else might just hold a reference to it then call unmemoizeDomNodeAndDescendants again)
 	            }
 	        },
-	
+
 	        parseMemoText: function (memoText) {
 	            var match = memoText.match(/^\[ko_memo\:(.*?)\]$/);
 	            return match ? match[1] : null;
 	        }
 	    };
 	})();
-	
+
 	ko.exportSymbol('memoization', ko.memoization);
 	ko.exportSymbol('memoization.memoize', ko.memoization.memoize);
 	ko.exportSymbol('memoization.unmemoize', ko.memoization.unmemoize);
@@ -3187,7 +3187,7 @@
 	        taskQueueLength = 0,
 	        nextHandle = 1,
 	        nextIndexToProcess = 0;
-	
+
 	    if (window['MutationObserver']) {
 	        // Chrome 27+, Firefox 14+, IE 11+, Opera 15+, Safari 6.1+
 	        // From https://github.com/petkaantonov/bluebird * Copyright (c) 2014 Petka Antonov * License: MIT
@@ -3214,13 +3214,13 @@
 	            setTimeout(callback, 0);
 	        };
 	    }
-	
+
 	    function processTasks() {
 	        if (taskQueueLength) {
 	            // Each mark represents the end of a logical group of tasks and the number of these groups is
 	            // limited to prevent unchecked recursion.
 	            var mark = taskQueueLength, countMarks = 0;
-	
+
 	            // nextIndexToProcess keeps track of where we are in the queue; processTasks can be called recursively without issue
 	            for (var task; nextIndexToProcess < taskQueueLength; ) {
 	                if (task = taskQueue[nextIndexToProcess++]) {
@@ -3241,50 +3241,50 @@
 	            }
 	        }
 	    }
-	
+
 	    function scheduledProcess() {
 	        processTasks();
-	
+
 	        // Reset the queue
 	        nextIndexToProcess = taskQueueLength = taskQueue.length = 0;
 	    }
-	
+
 	    function scheduleTaskProcessing() {
 	        ko.tasks['scheduler'](scheduledProcess);
 	    }
-	
+
 	    var tasks = {
 	        'scheduler': scheduler,     // Allow overriding the scheduler
-	
+
 	        schedule: function (func) {
 	            if (!taskQueueLength) {
 	                scheduleTaskProcessing();
 	            }
-	
+
 	            taskQueue[taskQueueLength++] = func;
 	            return nextHandle++;
 	        },
-	
+
 	        cancel: function (handle) {
 	            var index = handle - (nextHandle - taskQueueLength);
 	            if (index >= nextIndexToProcess && index < taskQueueLength) {
 	                taskQueue[index] = null;
 	            }
 	        },
-	
+
 	        // For testing only: reset the queue and return the previous queue length
 	        'resetForTesting': function () {
 	            var length = taskQueueLength - nextIndexToProcess;
 	            nextIndexToProcess = taskQueueLength = taskQueue.length = 0;
 	            return length;
 	        },
-	
+
 	        runEarly: processTasks
 	    };
-	
+
 	    return tasks;
 	})();
-	
+
 	ko.exportSymbol('tasks', ko.tasks);
 	ko.exportSymbol('tasks.schedule', ko.tasks.schedule);
 	//ko.exportSymbol('tasks.cancel', ko.tasks.cancel);  "cancel" isn't minified
@@ -3292,11 +3292,11 @@
 	ko.extenders = {
 	    'throttle': function(target, timeout) {
 	        // Throttling means two things:
-	
+
 	        // (1) For dependent observables, we throttle *evaluations* so that, no matter how fast its dependencies
 	        //     notify updates, the target doesn't re-evaluate (and hence doesn't notify) faster than a certain rate
 	        target['throttleEvaluation'] = timeout;
-	
+
 	        // (2) For writable targets (observables, or writable dependent observables), we throttle *writes*
 	        //     so the target cannot change value synchronously or faster than a certain rate
 	        var writeTimeoutInstance = null;
@@ -3310,31 +3310,31 @@
 	            }
 	        });
 	    },
-	
+
 	    'rateLimit': function(target, options) {
 	        var timeout, method, limitFunction;
-	
+
 	        if (typeof options == 'number') {
 	            timeout = options;
 	        } else {
 	            timeout = options['timeout'];
 	            method = options['method'];
 	        }
-	
+
 	        // rateLimit supersedes deferred updates
 	        target._deferUpdates = false;
-	
+
 	        limitFunction = method == 'notifyWhenChangesStop' ?  debounce : throttle;
 	        target.limit(function(callback) {
 	            return limitFunction(callback, timeout);
 	        });
 	    },
-	
+
 	    'deferred': function(target, options) {
 	        if (options !== true) {
 	            throw new Error('The \'deferred\' extender only accepts the value \'true\', because it is not supported to turn deferral off once enabled.')
 	        }
-	
+
 	        if (!target._deferUpdates) {
 	            target._deferUpdates = true;
 	            target.limit(function (callback) {
@@ -3347,20 +3347,20 @@
 	            });
 	        }
 	    },
-	
+
 	    'notify': function(target, notifyWhen) {
 	        target["equalityComparer"] = notifyWhen == "always" ?
 	            null :  // null equalityComparer means to always notify
 	            valuesArePrimitiveAndEqual;
 	    }
 	};
-	
+
 	var primitiveTypes = { 'undefined':1, 'boolean':1, 'number':1, 'string':1 };
 	function valuesArePrimitiveAndEqual(a, b) {
 	    var oldValueIsPrimitive = (a === null) || (typeof(a) in primitiveTypes);
 	    return oldValueIsPrimitive ? (a === b) : false;
 	}
-	
+
 	function throttle(callback, timeout) {
 	    var timeoutInstance;
 	    return function () {
@@ -3372,7 +3372,7 @@
 	        }
 	    };
 	}
-	
+
 	function debounce(callback, timeout) {
 	    var timeoutInstance;
 	    return function () {
@@ -3380,7 +3380,7 @@
 	        timeoutInstance = ko.utils.setTimeout(callback, timeout);
 	    };
 	}
-	
+
 	function applyExtenders(requestedExtenders) {
 	    var target = this;
 	    if (requestedExtenders) {
@@ -3393,9 +3393,9 @@
 	    }
 	    return target;
 	}
-	
+
 	ko.exportSymbol('extenders', ko.extenders);
-	
+
 	ko.subscription = function (target, callback, disposeCallback) {
 	    this._target = target;
 	    this.callback = callback;
@@ -3407,14 +3407,14 @@
 	    this.isDisposed = true;
 	    this.disposeCallback();
 	};
-	
+
 	ko.subscribable = function () {
 	    ko.utils.setPrototypeOfOrExtend(this, ko_subscribable_fn);
 	    ko_subscribable_fn.init(this);
 	}
-	
+
 	var defaultEvent = "change";
-	
+
 	// Moved out of "limit" to avoid the extra closure
 	function limitNotifySubscribers(value, event) {
 	    if (!event || event === defaultEvent) {
@@ -3425,35 +3425,35 @@
 	        this._origNotifySubscribers(value, event);
 	    }
 	}
-	
+
 	var ko_subscribable_fn = {
 	    init: function(instance) {
 	        instance._subscriptions = {};
 	        instance._versionNumber = 1;
 	    },
-	
+
 	    subscribe: function (callback, callbackTarget, event) {
 	        var self = this;
-	
+
 	        event = event || defaultEvent;
 	        var boundCallback = callbackTarget ? callback.bind(callbackTarget) : callback;
-	
+
 	        var subscription = new ko.subscription(self, boundCallback, function () {
 	            ko.utils.arrayRemoveItem(self._subscriptions[event], subscription);
 	            if (self.afterSubscriptionRemove)
 	                self.afterSubscriptionRemove(event);
 	        });
-	
+
 	        if (self.beforeSubscriptionAdd)
 	            self.beforeSubscriptionAdd(event);
-	
+
 	        if (!self._subscriptions[event])
 	            self._subscriptions[event] = [];
 	        self._subscriptions[event].push(subscription);
-	
+
 	        return subscription;
 	    },
-	
+
 	    "notifySubscribers": function (valueToNotify, event) {
 	        event = event || defaultEvent;
 	        if (event === defaultEvent) {
@@ -3473,31 +3473,31 @@
 	            }
 	        }
 	    },
-	
+
 	    getVersion: function () {
 	        return this._versionNumber;
 	    },
-	
+
 	    hasChanged: function (versionToCheck) {
 	        return this.getVersion() !== versionToCheck;
 	    },
-	
+
 	    updateVersion: function () {
 	        ++this._versionNumber;
 	    },
-	
+
 	    limit: function(limitFunction) {
 	        var self = this, selfIsObservable = ko.isObservable(self),
 	            ignoreBeforeChange, previousValue, pendingValue, beforeChange = 'beforeChange';
-	
+
 	        if (!self._origNotifySubscribers) {
 	            self._origNotifySubscribers = self["notifySubscribers"];
 	            self["notifySubscribers"] = limitNotifySubscribers;
 	        }
-	
+
 	        var finish = limitFunction(function() {
 	            self._notificationIsPending = false;
-	
+
 	            // If an observable provided a reference to itself, access it to get the latest value.
 	            // This allows computed observables to delay calculating their value until needed.
 	            if (selfIsObservable && pendingValue === self) {
@@ -3508,7 +3508,7 @@
 	                self._origNotifySubscribers(previousValue = pendingValue);
 	            }
 	        });
-	
+
 	        self._limitChange = function(value) {
 	            self._notificationIsPending = ignoreBeforeChange = true;
 	            pendingValue = value;
@@ -3521,11 +3521,11 @@
 	            }
 	        };
 	    },
-	
+
 	    hasSubscriptionsForEvent: function(event) {
 	        return this._subscriptions[event] && this._subscriptions[event].length;
 	    },
-	
+
 	    getSubscriptionsCount: function (event) {
 	        if (event) {
 	            return this._subscriptions[event] && this._subscriptions[event].length || 0;
@@ -3538,40 +3538,40 @@
 	            return total;
 	        }
 	    },
-	
+
 	    isDifferent: function(oldValue, newValue) {
 	        return !this['equalityComparer'] || !this['equalityComparer'](oldValue, newValue);
 	    },
-	
+
 	    extend: applyExtenders
 	};
-	
+
 	ko.exportProperty(ko_subscribable_fn, 'subscribe', ko_subscribable_fn.subscribe);
 	ko.exportProperty(ko_subscribable_fn, 'extend', ko_subscribable_fn.extend);
 	ko.exportProperty(ko_subscribable_fn, 'getSubscriptionsCount', ko_subscribable_fn.getSubscriptionsCount);
-	
+
 	// For browsers that support proto assignment, we overwrite the prototype of each
 	// observable instance. Since observables are functions, we need Function.prototype
 	// to still be in the prototype chain.
 	if (ko.utils.canSetPrototype) {
 	    ko.utils.setPrototypeOf(ko_subscribable_fn, Function.prototype);
 	}
-	
+
 	ko.subscribable['fn'] = ko_subscribable_fn;
-	
-	
+
+
 	ko.isSubscribable = function (instance) {
 	    return instance != null && typeof instance.subscribe == "function" && typeof instance["notifySubscribers"] == "function";
 	};
-	
+
 	ko.exportSymbol('subscribable', ko.subscribable);
 	ko.exportSymbol('isSubscribable', ko.isSubscribable);
-	
+
 	ko.computedContext = ko.dependencyDetection = (function () {
 	    var outerFrames = [],
 	        currentFrame,
 	        lastId = 0;
-	
+
 	    // Return a unique ID that can be assigned to an observable for dependency tracking.
 	    // Theoretically, you could eventually overflow the number storage size, resulting
 	    // in duplicate IDs. But in JavaScript, the largest exact integral value is 2^53
@@ -3581,21 +3581,21 @@
 	    function getId() {
 	        return ++lastId;
 	    }
-	
+
 	    function begin(options) {
 	        outerFrames.push(currentFrame);
 	        currentFrame = options;
 	    }
-	
+
 	    function end() {
 	        currentFrame = outerFrames.pop();
 	    }
-	
+
 	    return {
 	        begin: begin,
-	
+
 	        end: end,
-	
+
 	        registerDependency: function (subscribable) {
 	            if (currentFrame) {
 	                if (!ko.isSubscribable(subscribable))
@@ -3603,7 +3603,7 @@
 	                currentFrame.callback.call(currentFrame.callbackTarget, subscribable, subscribable._id || (subscribable._id = getId()));
 	            }
 	        },
-	
+
 	        ignore: function (callback, callbackTarget, callbackArgs) {
 	            try {
 	                begin();
@@ -3612,31 +3612,31 @@
 	                end();
 	            }
 	        },
-	
+
 	        getDependenciesCount: function () {
 	            if (currentFrame)
 	                return currentFrame.computed.getDependenciesCount();
 	        },
-	
+
 	        isInitial: function() {
 	            if (currentFrame)
 	                return currentFrame.isInitial;
 	        }
 	    };
 	})();
-	
+
 	ko.exportSymbol('computedContext', ko.computedContext);
 	ko.exportSymbol('computedContext.getDependenciesCount', ko.computedContext.getDependenciesCount);
 	ko.exportSymbol('computedContext.isInitial', ko.computedContext.isInitial);
-	
+
 	ko.exportSymbol('ignoreDependencies', ko.ignoreDependencies = ko.dependencyDetection.ignore);
 	var observableLatestValue = ko.utils.createSymbolOrString('_latestValue');
-	
+
 	ko.observable = function (initialValue) {
 	    function observable() {
 	        if (arguments.length > 0) {
 	            // Write
-	
+
 	            // Ignore writes if the value hasn't changed
 	            if (observable.isDifferent(observable[observableLatestValue], arguments[0])) {
 	                observable.valueWillMutate();
@@ -3651,26 +3651,26 @@
 	            return observable[observableLatestValue];
 	        }
 	    }
-	
+
 	    observable[observableLatestValue] = initialValue;
-	
+
 	    // Inherit from 'subscribable'
 	    if (!ko.utils.canSetPrototype) {
 	        // 'subscribable' won't be on the prototype chain unless we put it there directly
 	        ko.utils.extend(observable, ko.subscribable['fn']);
 	    }
 	    ko.subscribable['fn'].init(observable);
-	
+
 	    // Inherit from 'observable'
 	    ko.utils.setPrototypeOfOrExtend(observable, observableFn);
-	
+
 	    if (ko.options['deferUpdates']) {
 	        ko.extenders['deferred'](observable, true);
 	    }
-	
+
 	    return observable;
 	}
-	
+
 	// Define prototype for observables
 	var observableFn = {
 	    'equalityComparer': valuesArePrimitiveAndEqual,
@@ -3678,22 +3678,22 @@
 	    valueHasMutated: function () { this['notifySubscribers'](this[observableLatestValue]); },
 	    valueWillMutate: function () { this['notifySubscribers'](this[observableLatestValue], 'beforeChange'); }
 	};
-	
+
 	// Note that for browsers that don't support proto assignment, the
 	// inheritance chain is created manually in the ko.observable constructor
 	if (ko.utils.canSetPrototype) {
 	    ko.utils.setPrototypeOf(observableFn, ko.subscribable['fn']);
 	}
-	
+
 	var protoProperty = ko.observable.protoProperty = '__ko_proto__';
 	observableFn[protoProperty] = ko.observable;
-	
+
 	ko.hasPrototype = function(instance, prototype) {
 	    if ((instance === null) || (instance === undefined) || (instance[protoProperty] === undefined)) return false;
 	    if (instance[protoProperty] === prototype) return true;
 	    return ko.hasPrototype(instance[protoProperty], prototype); // Walk the prototype chain
 	};
-	
+
 	ko.isObservable = function (instance) {
 	    return ko.hasPrototype(instance, ko.observable);
 	}
@@ -3707,7 +3707,7 @@
 	    // Anything else
 	    return false;
 	}
-	
+
 	ko.exportSymbol('observable', ko.observable);
 	ko.exportSymbol('isObservable', ko.isObservable);
 	ko.exportSymbol('isWriteableObservable', ko.isWriteableObservable);
@@ -3718,15 +3718,15 @@
 	ko.exportProperty(observableFn, 'valueWillMutate', observableFn.valueWillMutate);
 	ko.observableArray = function (initialValues) {
 	    initialValues = initialValues || [];
-	
+
 	    if (typeof initialValues != 'object' || !('length' in initialValues))
 	        throw new Error("The argument passed when initializing an observable array must be an array, or null, or undefined.");
-	
+
 	    var result = ko.observable(initialValues);
 	    ko.utils.setPrototypeOfOrExtend(result, ko.observableArray['fn']);
 	    return result.extend({'trackArrayChanges':true});
 	};
-	
+
 	ko.observableArray['fn'] = {
 	    'remove': function (valueOrPredicate) {
 	        var underlyingArray = this.peek();
@@ -3748,7 +3748,7 @@
 	        }
 	        return removedValues;
 	    },
-	
+
 	    'removeAll': function (arrayOfValues) {
 	        // If you passed zero args, we remove everything
 	        if (arrayOfValues === undefined) {
@@ -3766,7 +3766,7 @@
 	            return ko.utils.arrayIndexOf(arrayOfValues, value) >= 0;
 	        });
 	    },
-	
+
 	    'destroy': function (valueOrPredicate) {
 	        var underlyingArray = this.peek();
 	        var predicate = typeof valueOrPredicate == "function" && !ko.isObservable(valueOrPredicate) ? valueOrPredicate : function (value) { return value === valueOrPredicate; };
@@ -3778,12 +3778,12 @@
 	        }
 	        this.valueHasMutated();
 	    },
-	
+
 	    'destroyAll': function (arrayOfValues) {
 	        // If you passed zero args, we destroy everything
 	        if (arrayOfValues === undefined)
 	            return this['destroy'](function() { return true });
-	
+
 	        // If you passed an arg, we interpret it as an array of entries to destroy
 	        if (!arrayOfValues)
 	            return [];
@@ -3791,12 +3791,12 @@
 	            return ko.utils.arrayIndexOf(arrayOfValues, value) >= 0;
 	        });
 	    },
-	
+
 	    'indexOf': function (item) {
 	        var underlyingArray = this();
 	        return ko.utils.arrayIndexOf(underlyingArray, item);
 	    },
-	
+
 	    'replace': function(oldItem, newItem) {
 	        var index = this['indexOf'](oldItem);
 	        if (index >= 0) {
@@ -3806,13 +3806,13 @@
 	        }
 	    }
 	};
-	
+
 	// Note that for browsers that don't support proto assignment, the
 	// inheritance chain is created manually in the ko.observableArray constructor
 	if (ko.utils.canSetPrototype) {
 	    ko.utils.setPrototypeOf(ko.observableArray['fn'], ko.observable['fn']);
 	}
-	
+
 	// Populate ko.observableArray.fn with read/write functions from native arrays
 	// Important: Do not add any additional functions here that may reasonably be used to *read* data from the array
 	// because we'll eval them without causing subscriptions, so ko.computed output could end up getting stale
@@ -3829,7 +3829,7 @@
 	        return methodCallResult === underlyingArray ? this : methodCallResult;
 	    };
 	});
-	
+
 	// Populate ko.observableArray.fn with read-only functions from native arrays
 	ko.utils.arrayForEach(["slice"], function (methodName) {
 	    ko.observableArray['fn'][methodName] = function () {
@@ -3837,7 +3837,7 @@
 	        return underlyingArray[methodName].apply(underlyingArray, arguments);
 	    };
 	});
-	
+
 	ko.exportSymbol('observableArray', ko.observableArray);
 	var arrayChangeEventName = 'arrayChange';
 	ko.extenders['trackArrayChanges'] = function(target, options) {
@@ -3847,7 +3847,7 @@
 	        ko.utils.extend(target.compareArrayOptions, options);
 	    }
 	    target.compareArrayOptions['sparse'] = true;
-	
+
 	    // Only modify the target observable once
 	    if (target.cacheDiffForKnownOperation) {
 	        return;
@@ -3858,7 +3858,7 @@
 	        pendingNotifications = 0,
 	        underlyingBeforeSubscriptionAddFunction = target.beforeSubscriptionAdd,
 	        underlyingAfterSubscriptionRemoveFunction = target.afterSubscriptionRemove;
-	
+
 	    // Watch "subscribe" calls, and for array change events, ensure change tracking is enabled
 	    target.beforeSubscriptionAdd = function (event) {
 	        if (underlyingBeforeSubscriptionAddFunction)
@@ -3876,15 +3876,15 @@
 	            trackingChanges = false;
 	        }
 	    };
-	
+
 	    function trackChanges() {
 	        // Calling 'trackChanges' multiple times is the same as calling it once
 	        if (trackingChanges) {
 	            return;
 	        }
-	
+
 	        trackingChanges = true;
-	
+
 	        // Intercept "notifySubscribers" to track how many times it was called.
 	        var underlyingNotifySubscribersFunction = target['notifySubscribers'];
 	        target['notifySubscribers'] = function(valueToNotify, event) {
@@ -3893,7 +3893,7 @@
 	            }
 	            return underlyingNotifySubscribersFunction.apply(this, arguments);
 	        };
-	
+
 	        // Each time the array changes value, capture a clone so that on the next
 	        // change it's possible to produce a diff
 	        var previousContents = [].concat(target.peek() || []);
@@ -3901,23 +3901,23 @@
 	        arrayChangeSubscription = target.subscribe(function(currentContents) {
 	            // Make a copy of the current contents and ensure it's an array
 	            currentContents = [].concat(currentContents || []);
-	
+
 	            // Compute the diff and issue notifications, but only if someone is listening
 	            if (target.hasSubscriptionsForEvent(arrayChangeEventName)) {
 	                var changes = getChanges(previousContents, currentContents);
 	            }
-	
+
 	            // Eliminate references to the old, removed items, so they can be GCed
 	            previousContents = currentContents;
 	            cachedDiff = null;
 	            pendingNotifications = 0;
-	
+
 	            if (changes && changes.length) {
 	                target['notifySubscribers'](changes, arrayChangeEventName);
 	            }
 	        });
 	    }
-	
+
 	    function getChanges(previousContents, currentContents) {
 	        // We try to re-use cached diffs.
 	        // The scenarios where pendingNotifications > 1 are when using rate-limiting or the Deferred Updates
@@ -3926,10 +3926,10 @@
 	        if (!cachedDiff || pendingNotifications > 1) {
 	            cachedDiff = ko.utils.compareArrays(previousContents, currentContents, target.compareArrayOptions);
 	        }
-	
+
 	        return cachedDiff;
 	    }
-	
+
 	    target.cacheDiffForKnownOperation = function(rawArray, operationName, args) {
 	        // Only run if we're currently tracking changes for this observable array
 	        // and there aren't any pending deferred notifications.
@@ -3940,7 +3940,7 @@
 	            arrayLength = rawArray.length,
 	            argsLength = args.length,
 	            offset = 0;
-	
+
 	        function pushDiff(status, value, index) {
 	            return diff[diff.length] = { 'status': status, 'value': value, 'index': index };
 	        }
@@ -3952,7 +3952,7 @@
 	                    pushDiff('added', args[index], offset + index);
 	                }
 	                break;
-	
+
 	            case 'pop':
 	                offset = arrayLength - 1;
 	            case 'shift':
@@ -3960,7 +3960,7 @@
 	                    pushDiff('deleted', rawArray[offset], offset);
 	                }
 	                break;
-	
+
 	            case 'splice':
 	                // Negative start index means 'from end of array'. After that we clamp to [0...arrayLength].
 	                // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
@@ -3977,7 +3977,7 @@
 	                }
 	                ko.utils.findMovesInArrayComparison(deletions, additions);
 	                break;
-	
+
 	            default:
 	                return;
 	        }
@@ -3985,7 +3985,7 @@
 	    };
 	};
 	var computedState = ko.utils.createSymbolOrString('_state');
-	
+
 	ko.computed = ko.dependentObservable = function (evaluatorFunctionOrOptions, evaluatorFunctionTarget, options) {
 	    if (typeof evaluatorFunctionOrOptions === "object") {
 	        // Single-parameter syntax - everything is on this "options" param
@@ -3999,7 +3999,7 @@
 	    }
 	    if (typeof options["read"] != "function")
 	        throw Error("Pass a function that returns the value of the ko.computed");
-	
+
 	    var writeFunction = options["write"];
 	    var state = {
 	        latestValue: undefined,
@@ -4018,7 +4018,7 @@
 	        dependenciesCount: 0,
 	        evaluationTimeoutInstance: null
 	    };
-	
+
 	    function computedObservable() {
 	        if (arguments.length > 0) {
 	            if (typeof writeFunction === "function") {
@@ -4037,20 +4037,20 @@
 	            return state.latestValue;
 	        }
 	    }
-	
+
 	    computedObservable[computedState] = state;
 	    computedObservable.hasWriteFunction = typeof writeFunction === "function";
-	
+
 	    // Inherit from 'subscribable'
 	    if (!ko.utils.canSetPrototype) {
 	        // 'subscribable' won't be on the prototype chain unless we put it there directly
 	        ko.utils.extend(computedObservable, ko.subscribable['fn']);
 	    }
 	    ko.subscribable['fn'].init(computedObservable);
-	
+
 	    // Inherit from 'computed'
 	    ko.utils.setPrototypeOfOrExtend(computedObservable, computedFn);
-	
+
 	    if (options['pure']) {
 	        state.pure = true;
 	        state.isSleeping = true;     // Starts off sleeping; will awake on the first subscription
@@ -4058,22 +4058,22 @@
 	    } else if (options['deferEvaluation']) {
 	        ko.utils.extend(computedObservable, deferEvaluationOverrides);
 	    }
-	
+
 	    if (ko.options['deferUpdates']) {
 	        ko.extenders['deferred'](computedObservable, true);
 	    }
-	
+
 	    if (DEBUG) {
 	        // #1731 - Aid debugging by exposing the computed's options
 	        computedObservable["_options"] = options;
 	    }
-	
+
 	    if (state.disposeWhenNodeIsRemoved) {
 	        // Since this computed is associated with a DOM node, and we don't want to dispose the computed
 	        // until the DOM node is *removed* from the document (as opposed to never having been in the document),
 	        // we'll prevent disposal until "disposeWhen" first returns false.
 	        state.suppressDisposalUntilDisposeWhenReturnsFalse = true;
-	
+
 	        // disposeWhenNodeIsRemoved: true can be used to opt into the "only dispose after first false result"
 	        // behaviour even if there's no specific node to watch. In that case, clear the option so we don't try
 	        // to watch for a non-node's disposal. This technique is intended for KO's internal use only and shouldn't
@@ -4082,12 +4082,12 @@
 	            state.disposeWhenNodeIsRemoved = null;
 	        }
 	    }
-	
+
 	    // Evaluate, unless sleeping or deferEvaluation is true
 	    if (!state.isSleeping && !options['deferEvaluation']) {
 	        computedObservable.evaluateImmediate();
 	    }
-	
+
 	    // Attach a DOM node disposal callback so that the computed will be proactively disposed as soon as the node is
 	    // removed using ko.removeNode. But skip if isActive is false (there will never be any dependencies to dispose).
 	    if (state.disposeWhenNodeIsRemoved && computedObservable.isActive()) {
@@ -4095,17 +4095,17 @@
 	            computedObservable.dispose();
 	        });
 	    }
-	
+
 	    return computedObservable;
 	};
-	
+
 	// Utility function that disposes a given dependencyTracking entry
 	function computedDisposeDependencyCallback(id, entryToDispose) {
 	    if (entryToDispose !== null && entryToDispose.dispose) {
 	        entryToDispose.dispose();
 	    }
 	}
-	
+
 	// This function gets called each time a dependency is detected while evaluating a computed.
 	// It's factored out as a shared function to avoid creating unnecessary function instances during evaluation.
 	function computedBeginDependencyDetectionCallback(subscribable, id) {
@@ -4123,7 +4123,7 @@
 	        }
 	    }
 	}
-	
+
 	var computedFn = {
 	    "equalityComparer": valuesArePrimitiveAndEqual,
 	    getDependenciesCount: function () {
@@ -4133,7 +4133,7 @@
 	        if (this[computedState].pure && target === this) {
 	            throw Error("A 'pure' computed must not be called recursively");
 	        }
-	
+
 	        this[computedState].dependencyTracking[id] = trackingObj;
 	        trackingObj._order = this[computedState].dependenciesCount++;
 	        trackingObj._version = target.getVersion();
@@ -4197,7 +4197,7 @@
 	        var computedObservable = this,
 	            state = computedObservable[computedState],
 	            disposeWhen = state.disposeWhen;
-	
+
 	        if (state.isBeingEvaluated) {
 	            // If the evaluation of a ko.computed causes side effects, it's possible that it will trigger its own re-evaluation.
 	            // This is not desirable (it's hard for a developer to realise a chain of dependencies might cause this, and they almost
@@ -4205,12 +4205,12 @@
 	            // their own re-evaluation. Further discussion at https://github.com/SteveSanderson/knockout/pull/387
 	            return;
 	        }
-	
+
 	        // Do not evaluate (and possibly capture new dependencies) if disposed
 	        if (state.isDisposed) {
 	            return;
 	        }
-	
+
 	        if (state.disposeWhenNodeIsRemoved && !ko.utils.domNodeIsAttachedToDocument(state.disposeWhenNodeIsRemoved) || disposeWhen && disposeWhen()) {
 	            // See comment above about suppressDisposalUntilDisposeWhenReturnsFalse
 	            if (!state.suppressDisposalUntilDisposeWhenReturnsFalse) {
@@ -4221,14 +4221,14 @@
 	            // It just did return false, so we can stop suppressing now
 	            state.suppressDisposalUntilDisposeWhenReturnsFalse = false;
 	        }
-	
+
 	        state.isBeingEvaluated = true;
 	        try {
 	            this.evaluateImmediate_CallReadWithDependencyDetection(notifyChange);
 	        } finally {
 	            state.isBeingEvaluated = false;
 	        }
-	
+
 	        if (!state.dependenciesCount) {
 	            computedObservable.dispose();
 	        }
@@ -4237,10 +4237,10 @@
 	        // This function is really just part of the evaluateImmediate logic. You would never call it from anywhere else.
 	        // Factoring it out into a separate function means it can be independent of the try/catch block in evaluateImmediate,
 	        // which contributes to saving about 40% off the CPU overhead of computed evaluation (on V8 at least).
-	
+
 	        var computedObservable = this,
 	            state = computedObservable[computedState];
-	
+
 	        // Initially, we assume that none of the subscriptions are still being used (i.e., all are candidates for disposal).
 	        // Then, during evaluation, we cross off any that are in fact still being used.
 	        var isInitial = state.pure ? undefined : !state.dependenciesCount,   // If we're evaluating when there are no previous dependencies, it must be the first time
@@ -4249,33 +4249,33 @@
 	                disposalCandidates: state.dependencyTracking,
 	                disposalCount: state.dependenciesCount
 	            };
-	
+
 	        ko.dependencyDetection.begin({
 	            callbackTarget: dependencyDetectionContext,
 	            callback: computedBeginDependencyDetectionCallback,
 	            computed: computedObservable,
 	            isInitial: isInitial
 	        });
-	
+
 	        state.dependencyTracking = {};
 	        state.dependenciesCount = 0;
-	
+
 	        var newValue = this.evaluateImmediate_CallReadThenEndDependencyDetection(state, dependencyDetectionContext);
-	
+
 	        if (computedObservable.isDifferent(state.latestValue, newValue)) {
 	            if (!state.isSleeping) {
 	                computedObservable["notifySubscribers"](state.latestValue, "beforeChange");
 	            }
-	
+
 	            state.latestValue = newValue;
-	
+
 	            if (state.isSleeping) {
 	                computedObservable.updateVersion();
 	            } else if (notifyChange) {
 	                computedObservable["notifySubscribers"](state.latestValue);
 	            }
 	        }
-	
+
 	        if (isInitial) {
 	            computedObservable["notifySubscribers"](state.latestValue, "awake");
 	        }
@@ -4285,18 +4285,18 @@
 	        // You'd never call it from anywhere else. Factoring it out means that evaluateImmediate_CallReadWithDependencyDetection
 	        // can be independent of try/finally blocks, which contributes to saving about 40% off the CPU
 	        // overhead of computed evaluation (on V8 at least).
-	
+
 	        try {
 	            var readFunction = state.readFunction;
 	            return state.evaluatorFunctionTarget ? readFunction.call(state.evaluatorFunctionTarget) : readFunction();
 	        } finally {
 	            ko.dependencyDetection.end();
-	
+
 	            // For each subscription no longer being used, remove it from the active subscriptions list and dispose it
 	            if (dependencyDetectionContext.disposalCount && !state.isSleeping) {
 	                ko.utils.objectForEach(dependencyDetectionContext.disposalCandidates, computedDisposeDependencyCallback);
 	            }
-	
+
 	            state.isStale = false;
 	        }
 	    },
@@ -4313,9 +4313,9 @@
 	        ko.subscribable['fn'].limit.call(this, limitFunction);
 	        this._evalDelayed = function () {
 	            this._limitBeforeChange(this[computedState].latestValue);
-	
+
 	            this[computedState].isStale = true; // Mark as dirty
-	
+
 	            // Pass the observable to the "limit" code, which will access it when
 	            // it's time to do the notification.
 	            this._limitChange(this);
@@ -4340,7 +4340,7 @@
 	        state.disposeWhenNodeIsRemoved = null;
 	    }
 	};
-	
+
 	var pureComputedOverrides = {
 	    beforeSubscriptionAdd: function (event) {
 	        // If asleep, wake up the computed by subscribing to any dependencies.
@@ -4401,7 +4401,7 @@
 	        return ko.subscribable['fn'].getVersion.call(this);
 	    }
 	};
-	
+
 	var deferEvaluationOverrides = {
 	    beforeSubscriptionAdd: function (event) {
 	        // This will force a computed with deferEvaluation to evaluate when the first subscription is registered.
@@ -4410,27 +4410,27 @@
 	        }
 	    }
 	};
-	
+
 	// Note that for browsers that don't support proto assignment, the
 	// inheritance chain is created manually in the ko.computed constructor
 	if (ko.utils.canSetPrototype) {
 	    ko.utils.setPrototypeOf(computedFn, ko.subscribable['fn']);
 	}
-	
+
 	// Set the proto chain values for ko.hasPrototype
 	var protoProp = ko.observable.protoProperty; // == "__ko_proto__"
 	ko.computed[protoProp] = ko.observable;
 	computedFn[protoProp] = ko.computed;
-	
+
 	ko.isComputed = function (instance) {
 	    return ko.hasPrototype(instance, ko.computed);
 	};
-	
+
 	ko.isPureComputed = function (instance) {
 	    return ko.hasPrototype(instance, ko.computed)
 	        && instance[computedState] && instance[computedState].pure;
 	};
-	
+
 	ko.exportSymbol('computed', ko.computed);
 	ko.exportSymbol('dependentObservable', ko.computed);    // export ko.dependentObservable for backwards compatibility (1.x)
 	ko.exportSymbol('isComputed', ko.isComputed);
@@ -4440,7 +4440,7 @@
 	ko.exportProperty(computedFn, 'dispose', computedFn.dispose);
 	ko.exportProperty(computedFn, 'isActive', computedFn.isActive);
 	ko.exportProperty(computedFn, 'getDependenciesCount', computedFn.getDependenciesCount);
-	
+
 	ko.pureComputed = function (evaluatorFunctionOrOptions, evaluatorFunctionTarget) {
 	    if (typeof evaluatorFunctionOrOptions === 'function') {
 	        return ko.computed(evaluatorFunctionOrOptions, evaluatorFunctionTarget, {'pure':true});
@@ -4451,14 +4451,14 @@
 	    }
 	}
 	ko.exportSymbol('pureComputed', ko.pureComputed);
-	
+
 	(function() {
 	    var maxNestedObservableDepth = 10; // Escape the (unlikely) pathalogical case where an observable's current value is itself (or similar reference cycle)
-	
+
 	    ko.toJS = function(rootObject) {
 	        if (arguments.length == 0)
 	            throw new Error("When calling ko.toJS, pass the object you want to convert.");
-	
+
 	        // We just unwrap everything at every level in the object graph
 	        return mapJsObjectGraph(rootObject, function(valueToMap) {
 	            // Loop because an observable's value might in turn be another observable wrapper
@@ -4467,26 +4467,26 @@
 	            return valueToMap;
 	        });
 	    };
-	
+
 	    ko.toJSON = function(rootObject, replacer, space) {     // replacer and space are optional
 	        var plainJavaScriptObject = ko.toJS(rootObject);
 	        return ko.utils.stringifyJson(plainJavaScriptObject, replacer, space);
 	    };
-	
+
 	    function mapJsObjectGraph(rootObject, mapInputCallback, visitedObjects) {
 	        visitedObjects = visitedObjects || new objectLookup();
-	
+
 	        rootObject = mapInputCallback(rootObject);
 	        var canHaveProperties = (typeof rootObject == "object") && (rootObject !== null) && (rootObject !== undefined) && (!(rootObject instanceof RegExp)) && (!(rootObject instanceof Date)) && (!(rootObject instanceof String)) && (!(rootObject instanceof Number)) && (!(rootObject instanceof Boolean));
 	        if (!canHaveProperties)
 	            return rootObject;
-	
+
 	        var outputProperties = rootObject instanceof Array ? [] : {};
 	        visitedObjects.save(rootObject, outputProperties);
-	
+
 	        visitPropertiesOrArrayEntries(rootObject, function(indexer) {
 	            var propertyValue = mapInputCallback(rootObject[indexer]);
-	
+
 	            switch (typeof propertyValue) {
 	                case "boolean":
 	                case "number":
@@ -4503,15 +4503,15 @@
 	                    break;
 	            }
 	        });
-	
+
 	        return outputProperties;
 	    }
-	
+
 	    function visitPropertiesOrArrayEntries(rootObject, visitorCallback) {
 	        if (rootObject instanceof Array) {
 	            for (var i = 0; i < rootObject.length; i++)
 	                visitorCallback(i);
-	
+
 	            // For arrays, also respect toJSON property for custom mappings (fixes #278)
 	            if (typeof rootObject['toJSON'] == 'function')
 	                visitorCallback('toJSON');
@@ -4521,12 +4521,12 @@
 	            }
 	        }
 	    };
-	
+
 	    function objectLookup() {
 	        this.keys = [];
 	        this.values = [];
 	    };
-	
+
 	    objectLookup.prototype = {
 	        constructor: objectLookup,
 	        save: function(key, value) {
@@ -4544,12 +4544,12 @@
 	        }
 	    };
 	})();
-	
+
 	ko.exportSymbol('toJS', ko.toJS);
 	ko.exportSymbol('toJSON', ko.toJSON);
 	(function () {
 	    var hasDomDataExpandoProperty = '__ko__hasDomDataOptionValue__';
-	
+
 	    // Normally, SELECT elements and their OPTIONs can only take value of type 'string' (because the values
 	    // are stored on DOM attributes). ko.selectExtensions provides a way for SELECTs/OPTIONs to have values
 	    // that are arbitrary objects. This is very convenient when implementing things like cascading dropdowns.
@@ -4568,7 +4568,7 @@
 	                    return element.value;
 	            }
 	        },
-	
+
 	        writeValue: function(element, value, allowUnset) {
 	            switch (ko.utils.tagNameLower(element)) {
 	                case 'option':
@@ -4584,7 +4584,7 @@
 	                            // Store arbitrary object using DomData
 	                            ko.utils.domData.set(element, ko.bindingHandlers.options.optionValueDomDataKey, value);
 	                            element[hasDomDataExpandoProperty] = true;
-	
+
 	                            // Special treatment of numbers is just for backward compatibility. KO 1.2.1 wrote numerical values to element.value.
 	                            element.value = typeof value === "number" ? value : "";
 	                            break;
@@ -4615,27 +4615,27 @@
 	        }
 	    };
 	})();
-	
+
 	ko.exportSymbol('selectExtensions', ko.selectExtensions);
 	ko.exportSymbol('selectExtensions.readValue', ko.selectExtensions.readValue);
 	ko.exportSymbol('selectExtensions.writeValue', ko.selectExtensions.writeValue);
 	ko.expressionRewriting = (function () {
 	    var javaScriptReservedWords = ["true", "false", "null", "undefined"];
-	
+
 	    // Matches something that can be assigned to--either an isolated identifier or something ending with a property accessor
 	    // This is designed to be simple and avoid false negatives, but could produce false positives (e.g., a+b.c).
 	    // This also will not properly handle nested brackets (e.g., obj1[obj2['prop']]; see #911).
 	    var javaScriptAssignmentTarget = /^(?:[$_a-z][$\w]*|(.+)(\.\s*[$_a-z][$\w]*|\[.+\]))$/i;
-	
+
 	    function getWriteableValue(expression) {
 	        if (ko.utils.arrayIndexOf(javaScriptReservedWords, expression) >= 0)
 	            return false;
 	        var match = expression.match(javaScriptAssignmentTarget);
 	        return match === null ? false : match[1] ? ('Object(' + match[1] + ')' + match[2]) : expression;
 	    }
-	
+
 	    // The following regular expressions will be used to split an object-literal string into tokens
-	
+
 	        // These two match strings, either with double quotes or single quotes
 	    var stringDouble = '"(?:[^"\\\\]|\\\\.)*"',
 	        stringSingle = "'(?:[^'\\\\]|\\\\.)*'",
@@ -4653,28 +4653,28 @@
 	        // not matched by "everyThingElse", but will also match any other single character that wasn't already
 	        // matched (for example: in "a: 1, b: 2", each of the non-space characters will be matched by oneNotSpace).
 	        oneNotSpace = '[^\\s]',
-	
+
 	        // Create the actual regular expression by or-ing the above strings. The order is important.
 	        bindingToken = RegExp(stringDouble + '|' + stringSingle + '|' + stringRegexp + '|' + everyThingElse + '|' + oneNotSpace, 'g'),
-	
+
 	        // Match end of previous token to determine whether a slash is a division or regex.
 	        divisionLookBehind = /[\])"'A-Za-z0-9_$]+$/,
 	        keywordRegexLookBehind = {'in':1,'return':1,'typeof':1};
-	
+
 	    function parseObjectLiteral(objectLiteralString) {
 	        // Trim leading and trailing spaces from the string
 	        var str = ko.utils.stringTrim(objectLiteralString);
-	
+
 	        // Trim braces '{' surrounding the whole object literal
 	        if (str.charCodeAt(0) === 123) str = str.slice(1, -1);
-	
+
 	        // Split into tokens
 	        var result = [], toks = str.match(bindingToken), key, values = [], depth = 0;
-	
+
 	        if (toks) {
 	            // Append a comma so that we don't need a separate code block to deal with the last item
 	            toks.push(',');
-	
+
 	            for (var i = 0, tok; tok = toks[i]; ++i) {
 	                var c = tok.charCodeAt(0);
 	                // A comma signals the end of a key/value pair if depth is zero
@@ -4718,13 +4718,13 @@
 	        }
 	        return result;
 	    }
-	
+
 	    // Two-way bindings include a write function that allow the handler to update the value even if it's not an observable.
 	    var twoWayBindings = {};
-	
+
 	    function preProcessBindings(bindingsStringOrKeyValueArray, bindingOptions) {
 	        bindingOptions = bindingOptions || {};
-	
+
 	        function processKeyValue(key, val) {
 	            var writableVal;
 	            function callPreprocessHook(obj) {
@@ -4733,7 +4733,7 @@
 	            if (!bindingParams) {
 	                if (!callPreprocessHook(ko['getBindingHandler'](key)))
 	                    return;
-	
+
 	                if (twoWayBindings[key] && (writableVal = getWriteableValue(val))) {
 	                    // For two-way bindings, provide a write method in case the value
 	                    // isn't a writable observable.
@@ -4746,40 +4746,40 @@
 	            }
 	            resultStrings.push("'" + key + "':" + val);
 	        }
-	
+
 	        var resultStrings = [],
 	            propertyAccessorResultStrings = [],
 	            makeValueAccessors = bindingOptions['valueAccessors'],
 	            bindingParams = bindingOptions['bindingParams'],
 	            keyValueArray = typeof bindingsStringOrKeyValueArray === "string" ?
 	                parseObjectLiteral(bindingsStringOrKeyValueArray) : bindingsStringOrKeyValueArray;
-	
+
 	        ko.utils.arrayForEach(keyValueArray, function(keyValue) {
 	            processKeyValue(keyValue.key || keyValue['unknown'], keyValue.value);
 	        });
-	
+
 	        if (propertyAccessorResultStrings.length)
 	            processKeyValue('_ko_property_writers', "{" + propertyAccessorResultStrings.join(",") + " }");
-	
+
 	        return resultStrings.join(",");
 	    }
-	
+
 	    return {
 	        bindingRewriteValidators: [],
-	
+
 	        twoWayBindings: twoWayBindings,
-	
+
 	        parseObjectLiteral: parseObjectLiteral,
-	
+
 	        preProcessBindings: preProcessBindings,
-	
+
 	        keyValueArrayContainsKey: function(keyValueArray, key) {
 	            for (var i = 0; i < keyValueArray.length; i++)
 	                if (keyValueArray[i]['key'] == key)
 	                    return true;
 	            return false;
 	        },
-	
+
 	        // Internal, private KO utility for updating model properties from within bindings
 	        // property:            If the property being updated is (or might be) an observable, pass it here
 	        //                      If it turns out to be a writable observable, it will be written to directly
@@ -4800,12 +4800,12 @@
 	        }
 	    };
 	})();
-	
+
 	ko.exportSymbol('expressionRewriting', ko.expressionRewriting);
 	ko.exportSymbol('expressionRewriting.bindingRewriteValidators', ko.expressionRewriting.bindingRewriteValidators);
 	ko.exportSymbol('expressionRewriting.parseObjectLiteral', ko.expressionRewriting.parseObjectLiteral);
 	ko.exportSymbol('expressionRewriting.preProcessBindings', ko.expressionRewriting.preProcessBindings);
-	
+
 	// Making bindings explicitly declare themselves as "two way" isn't ideal in the long term (it would be better if
 	// all bindings could use an official 'property writer' API without needing to declare that they might). However,
 	// since this is not, and has never been, a public API (_ko_property_writers was never documented), it's acceptable
@@ -4814,7 +4814,7 @@
 	// undocumented feature that makes it relatively easy to upgrade to KO 3.0. However, this is still not an official
 	// public API, and we reserve the right to remove it at any time if we create a real public property writers API.
 	ko.exportSymbol('expressionRewriting._twoWayBindings', ko.expressionRewriting.twoWayBindings);
-	
+
 	// For backward compatibility, define the following aliases. (Previously, these function names were misleading because
 	// they referred to JSON specifically, even though they actually work with arbitrary JavaScript object literal expressions.)
 	ko.exportSymbol('jsonExpressionRewriting', ko.expressionRewriting);
@@ -4827,24 +4827,24 @@
 	    //
 	    // The point of all this is to support containerless templates (e.g., <!-- ko foreach:someCollection -->blah<!-- /ko -->)
 	    // without having to scatter special cases all over the binding and templating code.
-	
+
 	    // IE 9 cannot reliably read the "nodeValue" property of a comment node (see https://github.com/SteveSanderson/knockout/issues/186)
 	    // but it does give them a nonstandard alternative property called "text" that it can read reliably. Other browsers don't have that property.
 	    // So, use node.text where available, and node.nodeValue elsewhere
 	    var commentNodesHaveTextProperty = document && document.createComment("test").text === "<!--test-->";
-	
+
 	    var startCommentRegex = commentNodesHaveTextProperty ? /^<!--\s*ko(?:\s+([\s\S]+))?\s*-->$/ : /^\s*ko(?:\s+([\s\S]+))?\s*$/;
 	    var endCommentRegex =   commentNodesHaveTextProperty ? /^<!--\s*\/ko\s*-->$/ : /^\s*\/ko\s*$/;
 	    var htmlTagsWithOptionallyClosingChildren = { 'ul': true, 'ol': true };
-	
+
 	    function isStartComment(node) {
 	        return (node.nodeType == 8) && startCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
 	    }
-	
+
 	    function isEndComment(node) {
 	        return (node.nodeType == 8) && endCommentRegex.test(commentNodesHaveTextProperty ? node.text : node.nodeValue);
 	    }
-	
+
 	    function getVirtualChildren(startComment, allowUnbalanced) {
 	        var currentNode = startComment;
 	        var depth = 1;
@@ -4855,9 +4855,9 @@
 	                if (depth === 0)
 	                    return children;
 	            }
-	
+
 	            children.push(currentNode);
-	
+
 	            if (isStartComment(currentNode))
 	                depth++;
 	        }
@@ -4865,7 +4865,7 @@
 	            throw new Error("Cannot find closing comment tag to match: " + startComment.nodeValue);
 	        return null;
 	    }
-	
+
 	    function getMatchingEndComment(startComment, allowUnbalanced) {
 	        var allVirtualChildren = getVirtualChildren(startComment, allowUnbalanced);
 	        if (allVirtualChildren) {
@@ -4875,7 +4875,7 @@
 	        } else
 	            return null; // Must have no matching end comment, and allowUnbalanced is true
 	    }
-	
+
 	    function getUnbalancedChildTags(node) {
 	        // e.g., from <div>OK</div><!-- ko blah --><span>Another</span>, returns: <!-- ko blah --><span>Another</span>
 	        //       from <div>OK</div><!-- /ko --><!-- /ko -->,             returns: <!-- /ko --><!-- /ko -->
@@ -4897,14 +4897,14 @@
 	        }
 	        return captureRemaining;
 	    }
-	
+
 	    ko.virtualElements = {
 	        allowedBindings: {},
-	
+
 	        childNodes: function(node) {
 	            return isStartComment(node) ? getVirtualChildren(node) : node.childNodes;
 	        },
-	
+
 	        emptyNode: function(node) {
 	            if (!isStartComment(node))
 	                ko.utils.emptyDomNode(node);
@@ -4914,7 +4914,7 @@
 	                    ko.removeNode(virtualChildren[i]);
 	            }
 	        },
-	
+
 	        setDomNodeChildren: function(node, childNodes) {
 	            if (!isStartComment(node))
 	                ko.utils.setDomNodeChildren(node, childNodes);
@@ -4925,7 +4925,7 @@
 	                    endCommentNode.parentNode.insertBefore(childNodes[i], endCommentNode);
 	            }
 	        },
-	
+
 	        prepend: function(containerNode, nodeToPrepend) {
 	            if (!isStartComment(containerNode)) {
 	                if (containerNode.firstChild)
@@ -4937,7 +4937,7 @@
 	                containerNode.parentNode.insertBefore(nodeToPrepend, containerNode.nextSibling);
 	            }
 	        },
-	
+
 	        insertAfter: function(containerNode, nodeToInsert, insertAfterNode) {
 	            if (!insertAfterNode) {
 	                ko.virtualElements.prepend(containerNode, nodeToInsert);
@@ -4952,7 +4952,7 @@
 	                containerNode.parentNode.insertBefore(nodeToInsert, insertAfterNode.nextSibling);
 	            }
 	        },
-	
+
 	        firstChild: function(node) {
 	            if (!isStartComment(node))
 	                return node.firstChild;
@@ -4960,7 +4960,7 @@
 	                return null;
 	            return node.nextSibling;
 	        },
-	
+
 	        nextSibling: function(node) {
 	            if (isStartComment(node))
 	                node = getMatchingEndComment(node);
@@ -4968,21 +4968,21 @@
 	                return null;
 	            return node.nextSibling;
 	        },
-	
+
 	        hasBindingValue: isStartComment,
-	
+
 	        virtualNodeBindingValue: function(node) {
 	            var regexMatch = (commentNodesHaveTextProperty ? node.text : node.nodeValue).match(startCommentRegex);
 	            return regexMatch ? regexMatch[1] : null;
 	        },
-	
+
 	        normaliseVirtualElementDomStructure: function(elementVerified) {
 	            // Workaround for https://github.com/SteveSanderson/knockout/issues/155
 	            // (IE <= 8 or IE 9 quirks mode parses your HTML weirdly, treating closing </li> tags as if they don't exist, thereby moving comment nodes
 	            // that are direct descendants of <ul> into the preceding <li>)
 	            if (!htmlTagsWithOptionallyClosingChildren[ko.utils.tagNameLower(elementVerified)])
 	                return;
-	
+
 	            // Scan immediate children to see if they contain unbalanced comment tags. If they do, those comment tags
 	            // must be intended to appear *after* that child, so move them there.
 	            var childNode = elementVerified.firstChild;
@@ -5016,11 +5016,11 @@
 	ko.exportSymbol('virtualElements.setDomNodeChildren', ko.virtualElements.setDomNodeChildren);
 	(function() {
 	    var defaultBindingAttributeName = "data-bind";
-	
+
 	    ko.bindingProvider = function() {
 	        this.bindingCache = {};
 	    };
-	
+
 	    ko.utils.extend(ko.bindingProvider.prototype, {
 	        'nodeHasBindings': function(node) {
 	            switch (node.nodeType) {
@@ -5032,19 +5032,19 @@
 	                default: return false;
 	            }
 	        },
-	
+
 	        'getBindings': function(node, bindingContext) {
 	            var bindingsString = this['getBindingsString'](node, bindingContext),
 	                parsedBindings = bindingsString ? this['parseBindingsString'](bindingsString, bindingContext, node) : null;
 	            return ko.components.addBindingsForCustomElement(parsedBindings, node, bindingContext, /* valueAccessors */ false);
 	        },
-	
+
 	        'getBindingAccessors': function(node, bindingContext) {
 	            var bindingsString = this['getBindingsString'](node, bindingContext),
 	                parsedBindings = bindingsString ? this['parseBindingsString'](bindingsString, bindingContext, node, { 'valueAccessors': true }) : null;
 	            return ko.components.addBindingsForCustomElement(parsedBindings, node, bindingContext, /* valueAccessors */ true);
 	        },
-	
+
 	        // The following function is only used internally by this default provider.
 	        // It's not part of the interface definition for a general binding provider.
 	        'getBindingsString': function(node, bindingContext) {
@@ -5054,7 +5054,7 @@
 	                default: return null;
 	            }
 	        },
-	
+
 	        // The following function is only used internally by this default provider.
 	        // It's not part of the interface definition for a general binding provider.
 	        'parseBindingsString': function(bindingsString, bindingContext, node, options) {
@@ -5067,15 +5067,15 @@
 	            }
 	        }
 	    });
-	
+
 	    ko.bindingProvider['instance'] = new ko.bindingProvider();
-	
+
 	    function createBindingsStringEvaluatorViaCache(bindingsString, cache, options) {
 	        var cacheKey = bindingsString + (options && options['valueAccessors'] || '');
 	        return cache[cacheKey]
 	            || (cache[cacheKey] = createBindingsStringEvaluator(bindingsString, options));
 	    }
-	
+
 	    function createBindingsStringEvaluator(bindingsString, options) {
 	        // Build the source for a function that evaluates "expression"
 	        // For each scope variable, add an extra level of "with" nesting
@@ -5085,11 +5085,11 @@
 	        return new Function("$context", "$element", functionBody);
 	    }
 	})();
-	
+
 	ko.exportSymbol('bindingProvider', ko.bindingProvider);
 	(function () {
 	    ko.bindingHandlers = {};
-	
+
 	    // The following element types will not be recursed into during binding.
 	    var bindingDoesNotRecurseIntoElementTypes = {
 	        // Don't want bindings that operate on text nodes to mutate <script> and <textarea> contents,
@@ -5101,16 +5101,16 @@
 	        'textarea': true,
 	        'template': true
 	    };
-	
+
 	    // Use an overridable method for retrieving binding handlers so that a plugins may support dynamically created handlers
 	    ko['getBindingHandler'] = function(bindingKey) {
 	        return ko.bindingHandlers[bindingKey];
 	    };
-	
+
 	    // The ko.bindingContext constructor is only called directly to create the root context. For child
 	    // contexts, use bindingContext.createChildContext or bindingContext.extend.
 	    ko.bindingContext = function(dataItemOrAccessor, parentContext, dataItemAlias, extendCallback) {
-	
+
 	        // The binding context object includes static properties for the current, parent, and root view models.
 	        // If a view model is actually stored in an observable, the corresponding binding context object, and
 	        // any child contexts, must be updated when the view model is changed.
@@ -5121,16 +5121,16 @@
 	            // context to be updated.
 	            var dataItemOrObservable = isFunc ? dataItemOrAccessor() : dataItemOrAccessor,
 	                dataItem = ko.utils.unwrapObservable(dataItemOrObservable);
-	
+
 	            if (parentContext) {
 	                // When a "parent" context is given, register a dependency on the parent context. Thus whenever the
 	                // parent context is updated, this context will also be updated.
 	                if (parentContext._subscribable)
 	                    parentContext._subscribable();
-	
+
 	                // Copy $root and any custom properties from the parent context
 	                ko.utils.extend(self, parentContext);
-	
+
 	                // Because the above copy overwrites our own properties, we need to reset them.
 	                // During the first execution, "subscribable" isn't set, so don't bother doing the update then.
 	                if (subscribable) {
@@ -5139,7 +5139,7 @@
 	            } else {
 	                self['$parents'] = [];
 	                self['$root'] = dataItem;
-	
+
 	                // Export 'ko' in the binding context so it will be available in bindings and templates
 	                // even if 'ko' isn't exported as a global, such as when using an AMD loader.
 	                // See https://github.com/SteveSanderson/knockout/issues/490
@@ -5149,39 +5149,39 @@
 	            self['$data'] = dataItem;
 	            if (dataItemAlias)
 	                self[dataItemAlias] = dataItem;
-	
+
 	            // The extendCallback function is provided when creating a child context or extending a context.
 	            // It handles the specific actions needed to finish setting up the binding context. Actions in this
 	            // function could also add dependencies to this binding context.
 	            if (extendCallback)
 	                extendCallback(self, parentContext, dataItem);
-	
+
 	            return self['$data'];
 	        }
 	        function disposeWhen() {
 	            return nodes && !ko.utils.anyDomNodeIsAttachedToDocument(nodes);
 	        }
-	
+
 	        var self = this,
 	            isFunc = typeof(dataItemOrAccessor) == "function" && !ko.isObservable(dataItemOrAccessor),
 	            nodes,
 	            subscribable = ko.dependentObservable(updateContext, null, { disposeWhen: disposeWhen, disposeWhenNodeIsRemoved: true });
-	
+
 	        // At this point, the binding context has been initialized, and the "subscribable" computed observable is
 	        // subscribed to any observables that were accessed in the process. If there is nothing to track, the
 	        // computed will be inactive, and we can safely throw it away. If it's active, the computed is stored in
 	        // the context object.
 	        if (subscribable.isActive()) {
 	            self._subscribable = subscribable;
-	
+
 	            // Always notify because even if the model ($data) hasn't changed, other context properties might have changed
 	            subscribable['equalityComparer'] = null;
-	
+
 	            // We need to be able to dispose of this computed observable when it's no longer needed. This would be
 	            // easy if we had a single node to watch, but binding contexts can be used by many different nodes, and
 	            // we cannot assume that those nodes have any relation to each other. So instead we track any node that
 	            // the context is attached to, and dispose the computed when all of those nodes have been cleaned.
-	
+
 	            // Add properties to *subscribable* instead of *self* because any properties added to *self* may be overwritten on updates
 	            nodes = [];
 	            subscribable._addNode = function(node) {
@@ -5196,7 +5196,7 @@
 	            };
 	        }
 	    }
-	
+
 	    // Extend the binding context hierarchy with a new view model object. If the parent context is watching
 	    // any observables, the new child context will automatically get a dependency on the parent context.
 	    // But this does not mean that the $data value of the child context will also get updated. If the child
@@ -5213,7 +5213,7 @@
 	                extendCallback(self);
 	        });
 	    };
-	
+
 	    // Extend the binding context with new custom properties. This doesn't change the context hierarchy.
 	    // Similarly to "child" contexts, provide a function here to make sure that the correct values are set
 	    // when an observable view model is updated.
@@ -5227,19 +5227,19 @@
 	            ko.utils.extend(self, typeof(properties) == "function" ? properties() : properties);
 	        });
 	    };
-	
+
 	    // Returns the valueAccesor function for a binding value
 	    function makeValueAccessor(value) {
 	        return function() {
 	            return value;
 	        };
 	    }
-	
+
 	    // Returns the value of a valueAccessor function
 	    function evaluateValueAccessor(valueAccessor) {
 	        return valueAccessor();
 	    }
-	
+
 	    // Given a function that returns bindings, create and return a new object that contains
 	    // binding value-accessors functions. Each accessor function calls the original function
 	    // so that it always gets the latest value and all dependencies are captured. This is used
@@ -5251,7 +5251,7 @@
 	            };
 	        });
 	    }
-	
+
 	    // Given a bindings function or object, create and return a new object that contains
 	    // binding value-accessors functions. This is used by ko.applyBindingsToNode.
 	    function makeBindingAccessors(bindings, context, node) {
@@ -5261,25 +5261,25 @@
 	            return ko.utils.objectMap(bindings, makeValueAccessor);
 	        }
 	    }
-	
+
 	    // This function is used if the binding provider doesn't include a getBindingAccessors function.
 	    // It must be called with 'this' set to the provider instance.
 	    function getBindingsAndMakeAccessors(node, context) {
 	        return makeAccessorsFromFunction(this['getBindings'].bind(this, node, context));
 	    }
-	
+
 	    function validateThatBindingIsAllowedForVirtualElements(bindingName) {
 	        var validator = ko.virtualElements.allowedBindings[bindingName];
 	        if (!validator)
 	            throw new Error("The binding '" + bindingName + "' cannot be used with virtual elements")
 	    }
-	
+
 	    function applyBindingsToDescendantsInternal (bindingContext, elementOrVirtualElement, bindingContextsMayDifferFromDomParentElement) {
 	        var currentChild,
 	            nextInQueue = ko.virtualElements.firstChild(elementOrVirtualElement),
 	            provider = ko.bindingProvider['instance'],
 	            preprocessNode = provider['preprocessNode'];
-	
+
 	        // Preprocessing allows a binding provider to mutate a node before bindings are applied to it. For example it's
 	        // possible to insert new siblings after it, and/or replace the node with a different one. This can be used to
 	        // implement custom binding syntaxes, such as {{ value }} for string interpolation, or custom element types that
@@ -5292,17 +5292,17 @@
 	            // Reset nextInQueue for the next loop
 	            nextInQueue = ko.virtualElements.firstChild(elementOrVirtualElement);
 	        }
-	
+
 	        while (currentChild = nextInQueue) {
 	            // Keep a record of the next child *before* applying bindings, in case the binding removes the current child from its position
 	            nextInQueue = ko.virtualElements.nextSibling(currentChild);
 	            applyBindingsToNodeAndDescendantsInternal(bindingContext, currentChild, bindingContextsMayDifferFromDomParentElement);
 	        }
 	    }
-	
+
 	    function applyBindingsToNodeAndDescendantsInternal (bindingContext, nodeVerified, bindingContextMayDifferFromDomParentElement) {
 	        var shouldBindDescendants = true;
-	
+
 	        // Perf optimisation: Apply bindings only if...
 	        // (1) We need to store the binding context on this node (because it may differ from the DOM parent node's binding context)
 	        //     Note that we can't store binding contexts on non-elements (e.g., text nodes), as IE doesn't allow expando properties for those
@@ -5310,12 +5310,12 @@
 	        var isElement = (nodeVerified.nodeType === 1);
 	        if (isElement) // Workaround IE <= 8 HTML parsing weirdness
 	            ko.virtualElements.normaliseVirtualElementDomStructure(nodeVerified);
-	
+
 	        var shouldApplyBindings = (isElement && bindingContextMayDifferFromDomParentElement)             // Case (1)
 	                               || ko.bindingProvider['instance']['nodeHasBindings'](nodeVerified);       // Case (2)
 	        if (shouldApplyBindings)
 	            shouldBindDescendants = applyBindingsToNodeInternal(nodeVerified, null, bindingContext, bindingContextMayDifferFromDomParentElement)['shouldBindDescendants'];
-	
+
 	        if (shouldBindDescendants && !bindingDoesNotRecurseIntoElementTypes[ko.utils.tagNameLower(nodeVerified)]) {
 	            // We're recursing automatically into (real or virtual) child nodes without changing binding contexts. So,
 	            //  * For children of a *real* element, the binding context is certainly the same as on their DOM .parentNode,
@@ -5326,10 +5326,10 @@
 	            applyBindingsToDescendantsInternal(bindingContext, nodeVerified, /* bindingContextsMayDifferFromDomParentElement: */ !isElement);
 	        }
 	    }
-	
+
 	    var boundElementDomDataKey = ko.utils.domData.nextKey();
-	
-	
+
+
 	    function topologicalSortBindings(bindings) {
 	        // Depth-first sort
 	        var result = [],                // The list of key/handler pairs that we will return
@@ -5359,10 +5359,10 @@
 	                bindingsConsidered[bindingKey] = true;
 	            }
 	        });
-	
+
 	        return result;
 	    }
-	
+
 	    function applyBindingsToNodeInternal(node, sourceBindings, bindingContext, bindingContextMayDifferFromDomParentElement) {
 	        // Prevent multiple applyBindings calls for the same node, except when a binding value is specified
 	        var alreadyBound = ko.utils.domData.get(node, boundElementDomDataKey);
@@ -5372,13 +5372,13 @@
 	            }
 	            ko.utils.domData.set(node, boundElementDomDataKey, true);
 	        }
-	
+
 	        // Optimization: Don't store the binding context on this node if it's definitely the same as on node.parentNode, because
 	        // we can easily recover it just by scanning up the node's ancestors in the DOM
 	        // (note: here, parent node means "real DOM parent" not "virtual parent", as there's no O(1) way to find the virtual parent)
 	        if (!alreadyBound && bindingContextMayDifferFromDomParentElement)
 	            ko.storedBindingContextForNode(node, bindingContext);
-	
+
 	        // Use bindings if given, otherwise fall back on asking the bindings provider to give us some bindings
 	        var bindings;
 	        if (sourceBindings && typeof sourceBindings !== 'function') {
@@ -5386,7 +5386,7 @@
 	        } else {
 	            var provider = ko.bindingProvider['instance'],
 	                getBindings = provider['getBindingAccessors'] || getBindingsAndMakeAccessors;
-	
+
 	            // Get the binding from the provider within a computed observable so that we can update the bindings whenever
 	            // the binding context is updated or if the binding provider accesses observables.
 	            var bindingsUpdater = ko.dependentObservable(
@@ -5399,11 +5399,11 @@
 	                },
 	                null, { disposeWhenNodeIsRemoved: node }
 	            );
-	
+
 	            if (!bindings || !bindingsUpdater.isActive())
 	                bindingsUpdater = null;
 	        }
-	
+
 	        var bindingHandlerThatControlsDescendantBindings;
 	        if (bindings) {
 	            // Return the value accessor for a given binding. When bindings are static (won't be updated because of a binding
@@ -5417,7 +5417,7 @@
 	                } : function(bindingKey) {
 	                    return bindings[bindingKey];
 	                };
-	
+
 	            // Use of allBindings as a function is maintained for backwards compatibility, but its use is deprecated
 	            function allBindings() {
 	                return ko.utils.objectMap(bindingsUpdater ? bindingsUpdater() : bindings, evaluateValueAccessor);
@@ -5429,10 +5429,10 @@
 	            allBindings['has'] = function(key) {
 	                return key in bindings;
 	            };
-	
+
 	            // First put the bindings into the right order
 	            var orderedBindings = topologicalSortBindings(bindings);
-	
+
 	            // Go through the sorted bindings, calling init and update for each
 	            ko.utils.arrayForEach(orderedBindings, function(bindingKeyAndHandler) {
 	                // Note that topologicalSortBindings has already filtered out any nonexistent binding handlers,
@@ -5440,17 +5440,17 @@
 	                var handlerInitFn = bindingKeyAndHandler.handler["init"],
 	                    handlerUpdateFn = bindingKeyAndHandler.handler["update"],
 	                    bindingKey = bindingKeyAndHandler.key;
-	
+
 	                if (node.nodeType === 8) {
 	                    validateThatBindingIsAllowedForVirtualElements(bindingKey);
 	                }
-	
+
 	                try {
 	                    // Run init, ignoring any dependencies
 	                    if (typeof handlerInitFn == "function") {
 	                        ko.dependencyDetection.ignore(function() {
 	                            var initResult = handlerInitFn(node, getValueAccessor(bindingKey), allBindings, bindingContext['$data'], bindingContext);
-	
+
 	                            // If this binding handler claims to control descendant bindings, make a note of this
 	                            if (initResult && initResult['controlsDescendantBindings']) {
 	                                if (bindingHandlerThatControlsDescendantBindings !== undefined)
@@ -5459,7 +5459,7 @@
 	                            }
 	                        });
 	                    }
-	
+
 	                    // Run update in its own computed wrapper
 	                    if (typeof handlerUpdateFn == "function") {
 	                        ko.dependentObservable(
@@ -5476,12 +5476,12 @@
 	                }
 	            });
 	        }
-	
+
 	        return {
 	            'shouldBindDescendants': bindingHandlerThatControlsDescendantBindings === undefined
 	        };
 	    };
-	
+
 	    var storedBindingContextDomDataKey = ko.utils.domData.nextKey();
 	    ko.storedBindingContextForNode = function (node, bindingContext) {
 	        if (arguments.length == 2) {
@@ -5492,42 +5492,42 @@
 	            return ko.utils.domData.get(node, storedBindingContextDomDataKey);
 	        }
 	    }
-	
+
 	    function getBindingContext(viewModelOrBindingContext) {
 	        return viewModelOrBindingContext && (viewModelOrBindingContext instanceof ko.bindingContext)
 	            ? viewModelOrBindingContext
 	            : new ko.bindingContext(viewModelOrBindingContext);
 	    }
-	
+
 	    ko.applyBindingAccessorsToNode = function (node, bindings, viewModelOrBindingContext) {
 	        if (node.nodeType === 1) // If it's an element, workaround IE <= 8 HTML parsing weirdness
 	            ko.virtualElements.normaliseVirtualElementDomStructure(node);
 	        return applyBindingsToNodeInternal(node, bindings, getBindingContext(viewModelOrBindingContext), true);
 	    };
-	
+
 	    ko.applyBindingsToNode = function (node, bindings, viewModelOrBindingContext) {
 	        var context = getBindingContext(viewModelOrBindingContext);
 	        return ko.applyBindingAccessorsToNode(node, makeBindingAccessors(bindings, context, node), context);
 	    };
-	
+
 	    ko.applyBindingsToDescendants = function(viewModelOrBindingContext, rootNode) {
 	        if (rootNode.nodeType === 1 || rootNode.nodeType === 8)
 	            applyBindingsToDescendantsInternal(getBindingContext(viewModelOrBindingContext), rootNode, true);
 	    };
-	
+
 	    ko.applyBindings = function (viewModelOrBindingContext, rootNode) {
 	        // If jQuery is loaded after Knockout, we won't initially have access to it. So save it here.
 	        if (!jQueryInstance && window['jQuery']) {
 	            jQueryInstance = window['jQuery'];
 	        }
-	
+
 	        if (rootNode && (rootNode.nodeType !== 1) && (rootNode.nodeType !== 8))
 	            throw new Error("ko.applyBindings: first parameter should be your view model; second parameter should be a DOM node");
 	        rootNode = rootNode || window.document.body; // Make "rootNode" parameter optional
-	
+
 	        applyBindingsToNodeAndDescendantsInternal(getBindingContext(viewModelOrBindingContext), rootNode, true);
 	    };
-	
+
 	    // Retrieving binding context from arbitrary nodes
 	    ko.contextFor = function(node) {
 	        // We can only do something meaningful for elements and comment nodes (in particular, not text nodes, as IE can't store domdata for them)
@@ -5545,7 +5545,7 @@
 	        var context = ko.contextFor(node);
 	        return context ? context['$data'] : undefined;
 	    };
-	
+
 	    ko.exportSymbol('bindingHandlers', ko.bindingHandlers);
 	    ko.exportSymbol('applyBindings', ko.applyBindings);
 	    ko.exportSymbol('applyBindingsToDescendants', ko.applyBindingsToDescendants);
@@ -5557,7 +5557,7 @@
 	(function(undefined) {
 	    var loadingSubscribablesCache = {}, // Tracks component loads that are currently in flight
 	        loadedDefinitionsCache = {};    // Tracks component loads that have already completed
-	
+
 	    ko.components = {
 	        get: function(componentName, callback) {
 	            var cachedDefinition = getObjectOwnProperty(loadedDefinitionsCache, componentName);
@@ -5577,18 +5577,18 @@
 	                loadComponentAndNotify(componentName, callback);
 	            }
 	        },
-	
+
 	        clearCachedDefinition: function(componentName) {
 	            delete loadedDefinitionsCache[componentName];
 	        },
-	
+
 	        _getFirstResultFromLoaders: getFirstResultFromLoaders
 	    };
-	
+
 	    function getObjectOwnProperty(obj, propName) {
 	        return obj.hasOwnProperty(propName) ? obj[propName] : undefined;
 	    }
-	
+
 	    function loadComponentAndNotify(componentName, callback) {
 	        var subscribable = getObjectOwnProperty(loadingSubscribablesCache, componentName),
 	            completedAsync;
@@ -5596,12 +5596,12 @@
 	            // It's not started loading yet. Start loading, and when it's done, move it to loadedDefinitionsCache.
 	            subscribable = loadingSubscribablesCache[componentName] = new ko.subscribable();
 	            subscribable.subscribe(callback);
-	
+
 	            beginLoadingComponent(componentName, function(definition, config) {
 	                var isSynchronousComponent = !!(config && config['synchronous']);
 	                loadedDefinitionsCache[componentName] = { definition: definition, isSynchronousComponent: isSynchronousComponent };
 	                delete loadingSubscribablesCache[componentName];
-	
+
 	                // For API consistency, all loads complete asynchronously. However we want to avoid
 	                // adding an extra task schedule if it's unnecessary (i.e., the completion is already
 	                // async).
@@ -5623,7 +5623,7 @@
 	            subscribable.subscribe(callback);
 	        }
 	    }
-	
+
 	    function beginLoadingComponent(componentName, callback) {
 	        getFirstResultFromLoaders('getConfig', [componentName], function(config) {
 	            if (config) {
@@ -5640,13 +5640,13 @@
 	            }
 	        });
 	    }
-	
+
 	    function getFirstResultFromLoaders(methodName, argsExceptCallback, callback, candidateLoaders) {
 	        // On the first call in the stack, start with the full set of loaders
 	        if (!candidateLoaders) {
 	            candidateLoaders = ko.components['loaders'].slice(0); // Use a copy, because we'll be mutating this array
 	        }
-	
+
 	        // Try the next candidate
 	        var currentCandidateLoader = candidateLoaders.shift();
 	        if (currentCandidateLoader) {
@@ -5664,13 +5664,13 @@
 	                            getFirstResultFromLoaders(methodName, argsExceptCallback, callback, candidateLoaders);
 	                        }
 	                    }));
-	
+
 	                // Currently, loaders may not return anything synchronously. This leaves open the possibility
 	                // that we'll extend the API to support synchronous return values in the future. It won't be
 	                // a breaking change, because currently no loader is allowed to return anything except undefined.
 	                if (synchronousReturnValue !== undefined) {
 	                    wasAborted = true;
-	
+
 	                    // Method to suppress exceptions will remain undocumented. This is only to keep
 	                    // KO's specs running tidily, since we can observe the loading got aborted without
 	                    // having exceptions cluttering up the console too.
@@ -5687,17 +5687,17 @@
 	            callback(null);
 	        }
 	    }
-	
+
 	    // Reference the loaders via string name so it's possible for developers
 	    // to replace the whole array by assigning to ko.components.loaders
 	    ko.components['loaders'] = [];
-	
+
 	    ko.exportSymbol('components', ko.components);
 	    ko.exportSymbol('components.get', ko.components.get);
 	    ko.exportSymbol('components.clearCachedDefinition', ko.components.clearCachedDefinition);
 	})();
 	(function(undefined) {
-	
+
 	    // The default loader is responsible for two things:
 	    // 1. Maintaining the default in-memory registry of component configuration objects
 	    //    (i.e., the thing you're writing to when you call ko.components.register(someName, ...))
@@ -5707,30 +5707,30 @@
 	    // Custom loaders may override either of these facilities, i.e.,
 	    // 1. To supply configuration objects from some other source (e.g., conventions)
 	    // 2. Or, to resolve configuration objects by loading viewmodels/templates via arbitrary logic.
-	
+
 	    var defaultConfigRegistry = {};
-	
+
 	    ko.components.register = function(componentName, config) {
 	        if (!config) {
 	            throw new Error('Invalid configuration for ' + componentName);
 	        }
-	
+
 	        if (ko.components.isRegistered(componentName)) {
 	            throw new Error('Component ' + componentName + ' is already registered');
 	        }
-	
+
 	        defaultConfigRegistry[componentName] = config;
 	    };
-	
+
 	    ko.components.isRegistered = function(componentName) {
 	        return defaultConfigRegistry.hasOwnProperty(componentName);
 	    };
-	
+
 	    ko.components.unregister = function(componentName) {
 	        delete defaultConfigRegistry[componentName];
 	        ko.components.clearCachedDefinition(componentName);
 	    };
-	
+
 	    ko.components.defaultLoader = {
 	        'getConfig': function(componentName, callback) {
 	            var result = defaultConfigRegistry.hasOwnProperty(componentName)
@@ -5738,25 +5738,25 @@
 	                : null;
 	            callback(result);
 	        },
-	
+
 	        'loadComponent': function(componentName, config, callback) {
 	            var errorCallback = makeErrorCallback(componentName);
 	            possiblyGetConfigFromAmd(errorCallback, config, function(loadedConfig) {
 	                resolveConfig(componentName, errorCallback, loadedConfig, callback);
 	            });
 	        },
-	
+
 	        'loadTemplate': function(componentName, templateConfig, callback) {
 	            resolveTemplate(makeErrorCallback(componentName), templateConfig, callback);
 	        },
-	
+
 	        'loadViewModel': function(componentName, viewModelConfig, callback) {
 	            resolveViewModel(makeErrorCallback(componentName), viewModelConfig, callback);
 	        }
 	    };
-	
+
 	    var createViewModelKey = 'createViewModel';
-	
+
 	    // Takes a config object of the form { template: ..., viewModel: ... }, and asynchronously convert it
 	    // into the standard component definition format:
 	    //    { template: <ArrayOfDomNodes>, createViewModel: function(params, componentInfo) { ... } }.
@@ -5773,7 +5773,7 @@
 	            },
 	            templateConfig = config['template'],
 	            viewModelConfig = config['viewModel'];
-	
+
 	        if (templateConfig) {
 	            possiblyGetConfigFromAmd(errorCallback, templateConfig, function(loadedConfig) {
 	                ko.components._getFirstResultFromLoaders('loadTemplate', [componentName, loadedConfig], function(resolvedTemplate) {
@@ -5784,7 +5784,7 @@
 	        } else {
 	            tryIssueCallback();
 	        }
-	
+
 	        if (viewModelConfig) {
 	            possiblyGetConfigFromAmd(errorCallback, viewModelConfig, function(loadedConfig) {
 	                ko.components._getFirstResultFromLoaders('loadViewModel', [componentName, loadedConfig], function(resolvedViewModel) {
@@ -5796,7 +5796,7 @@
 	            tryIssueCallback();
 	        }
 	    }
-	
+
 	    function resolveTemplate(errorCallback, templateConfig, callback) {
 	        if (typeof templateConfig === 'string') {
 	            // Markup - parse it
@@ -5827,7 +5827,7 @@
 	            errorCallback('Unknown template value: ' + templateConfig);
 	        }
 	    }
-	
+
 	    function resolveViewModel(errorCallback, viewModelConfig, callback) {
 	        if (typeof viewModelConfig === 'function') {
 	            // Constructor - convert to standard factory function format
@@ -5853,7 +5853,7 @@
 	            errorCallback('Unknown viewModel value: ' + viewModelConfig);
 	        }
 	    }
-	
+
 	    function cloneNodesFromTemplateSourceElement(elemInstance) {
 	        switch (ko.utils.tagNameLower(elemInstance)) {
 	            case 'script':
@@ -5867,12 +5867,12 @@
 	                    return ko.utils.cloneNodes(elemInstance.content.childNodes);
 	                }
 	        }
-	
+
 	        // Regular elements such as <div>, and <template> elements on old browsers that don't really
 	        // understand <template> and just treat it as a regular container
 	        return ko.utils.cloneNodes(elemInstance.childNodes);
 	    }
-	
+
 	    function isDomElement(obj) {
 	        if (window['HTMLElement']) {
 	            return obj instanceof HTMLElement;
@@ -5880,7 +5880,7 @@
 	            return obj && obj.tagName && obj.nodeType === 1;
 	        }
 	    }
-	
+
 	    function isDocumentFragment(obj) {
 	        if (window['DocumentFragment']) {
 	            return obj instanceof DocumentFragment;
@@ -5888,7 +5888,7 @@
 	            return obj && obj.nodeType === 11;
 	        }
 	    }
-	
+
 	    function possiblyGetConfigFromAmd(errorCallback, config, callback) {
 	        if (typeof config['require'] === 'string') {
 	            // The config is the value of an AMD module
@@ -5901,24 +5901,24 @@
 	            callback(config);
 	        }
 	    }
-	
+
 	    function makeErrorCallback(componentName) {
 	        return function (message) {
 	            throw new Error('Component \'' + componentName + '\': ' + message);
 	        };
 	    }
-	
+
 	    ko.exportSymbol('components.register', ko.components.register);
 	    ko.exportSymbol('components.isRegistered', ko.components.isRegistered);
 	    ko.exportSymbol('components.unregister', ko.components.unregister);
-	
+
 	    // Expose the default loader so that developers can directly ask it for configuration
 	    // or to resolve configuration
 	    ko.exportSymbol('components.defaultLoader', ko.components.defaultLoader);
-	
+
 	    // By default, the default loader is the only registered component loader
 	    ko.components['loaders'].push(ko.components.defaultLoader);
-	
+
 	    // Privately expose the underlying config registry for use in old-IE shim
 	    ko.components._allRegisteredComponents = defaultConfigRegistry;
 	})();
@@ -5934,7 +5934,7 @@
 	            }
 	        }
 	    };
-	
+
 	    ko.components.addBindingsForCustomElement = function(allBindings, node, bindingContext, valueAccessors) {
 	        // Determine if it's really a custom element matching a component
 	        if (node.nodeType === 1) {
@@ -5942,28 +5942,28 @@
 	            if (componentName) {
 	                // It does represent a component, so add a component binding for it
 	                allBindings = allBindings || {};
-	
+
 	                if (allBindings['component']) {
 	                    // Avoid silently overwriting some other 'component' binding that may already be on the element
 	                    throw new Error('Cannot use the "component" binding on a custom element matching a component');
 	                }
-	
+
 	                var componentBindingValue = { 'name': componentName, 'params': getComponentParamsFromCustomElement(node, bindingContext) };
-	
+
 	                allBindings['component'] = valueAccessors
 	                    ? function() { return componentBindingValue; }
 	                    : componentBindingValue;
 	            }
 	        }
-	
+
 	        return allBindings;
 	    }
-	
+
 	    var nativeBindingProviderInstance = new ko.bindingProvider();
-	
+
 	    function getComponentParamsFromCustomElement(elem, bindingContext) {
 	        var paramsAttribute = elem.getAttribute('params');
-	
+
 	        if (paramsAttribute) {
 	            var params = nativeBindingProviderInstance['parseBindingsString'](paramsAttribute, bindingContext, elem, { 'valueAccessors': true, 'bindingParams': true }),
 	                rawParamComputedValues = ko.utils.objectMap(params, function(paramValue, paramName) {
@@ -5992,14 +5992,14 @@
 	                        });
 	                    }
 	                });
-	
+
 	            // Give access to the raw computeds, as long as that wouldn't overwrite any custom param also called '$raw'
 	            // This is in case the developer wants to react to outer (binding) observability separately from inner
 	            // (model value) observability, or in case the model value observable has subobservables.
 	            if (!result.hasOwnProperty('$raw')) {
 	                result['$raw'] = rawParamComputedValues;
 	            }
-	
+
 	            return result;
 	        } else {
 	            // For consistency, absence of a "params" attribute is treated the same as the presence of
@@ -6008,10 +6008,10 @@
 	            return { '$raw': {} };
 	        }
 	    }
-	
+
 	    // --------------------------------------------------------------------------------
 	    // Compatibility code for older (pre-HTML5) IE browsers
-	
+
 	    if (ko.utils.ieVersion < 9) {
 	        // Whenever you preregister a component, enable it as a custom element in the current document
 	        ko.components['register'] = (function(originalFunction) {
@@ -6020,7 +6020,7 @@
 	                return originalFunction.apply(this, arguments);
 	            }
 	        })(ko.components['register']);
-	
+
 	        // Whenever you create a document fragment, enable all preregistered component names as custom elements
 	        // This is needed to make innerShiv/jQuery HTML parsing correctly handle the custom elements
 	        document.createDocumentFragment = (function(originalFunction) {
@@ -6037,9 +6037,9 @@
 	        })(document.createDocumentFragment);
 	    }
 	})();(function(undefined) {
-	
+
 	    var componentLoadingOperationUniqueId = 0;
-	
+
 	    ko.bindingHandlers['component'] = {
 	        'init': function(element, valueAccessor, ignored1, ignored2, bindingContext) {
 	            var currentViewModel,
@@ -6054,34 +6054,34 @@
 	                    currentLoadingOperationId = null;
 	                },
 	                originalChildNodes = ko.utils.makeArray(ko.virtualElements.childNodes(element));
-	
+
 	            ko.utils.domNodeDisposal.addDisposeCallback(element, disposeAssociatedComponentViewModel);
-	
+
 	            ko.computed(function () {
 	                var value = ko.utils.unwrapObservable(valueAccessor()),
 	                    componentName, componentParams;
-	
+
 	                if (typeof value === 'string') {
 	                    componentName = value;
 	                } else {
 	                    componentName = ko.utils.unwrapObservable(value['name']);
 	                    componentParams = ko.utils.unwrapObservable(value['params']);
 	                }
-	
+
 	                if (!componentName) {
 	                    throw new Error('No component name specified');
 	                }
-	
+
 	                var loadingOperationId = currentLoadingOperationId = ++componentLoadingOperationUniqueId;
 	                ko.components.get(componentName, function(componentDefinition) {
 	                    // If this is not the current load operation for this element, ignore it.
 	                    if (currentLoadingOperationId !== loadingOperationId) {
 	                        return;
 	                    }
-	
+
 	                    // Clean up previous state
 	                    disposeAssociatedComponentViewModel();
-	
+
 	                    // Instantiate and bind new component. Implicitly this cleans any old DOM nodes.
 	                    if (!componentDefinition) {
 	                        throw new Error('Unknown component \'' + componentName + '\'');
@@ -6096,30 +6096,30 @@
 	                    ko.applyBindingsToDescendants(childBindingContext, element);
 	                });
 	            }, null, { disposeWhenNodeIsRemoved: element });
-	
+
 	            return { 'controlsDescendantBindings': true };
 	        }
 	    };
-	
+
 	    ko.virtualElements.allowedBindings['component'] = true;
-	
+
 	    function cloneTemplateIntoElement(componentName, componentDefinition, element) {
 	        var template = componentDefinition['template'];
 	        if (!template) {
 	            throw new Error('Component \'' + componentName + '\' has no template');
 	        }
-	
+
 	        var clonedNodesArray = ko.utils.cloneNodes(template);
 	        ko.virtualElements.setDomNodeChildren(element, clonedNodesArray);
 	    }
-	
+
 	    function createViewModel(componentDefinition, element, originalChildNodes, componentParams) {
 	        var componentViewModelFactory = componentDefinition['createViewModel'];
 	        return componentViewModelFactory
 	            ? componentViewModelFactory.call(componentDefinition, componentParams, { 'element': element, 'templateNodes': originalChildNodes })
 	            : componentParams; // Template-only component
 	    }
-	
+
 	})();
 	var attrHtmlToJavascriptMap = { 'class': 'className', 'for': 'htmlFor' };
 	ko.bindingHandlers['attr'] = {
@@ -6127,14 +6127,14 @@
 	        var value = ko.utils.unwrapObservable(valueAccessor()) || {};
 	        ko.utils.objectForEach(value, function(attrName, attrValue) {
 	            attrValue = ko.utils.unwrapObservable(attrValue);
-	
+
 	            // To cover cases like "attr: { checked:someProp }", we want to remove the attribute entirely
 	            // when someProp is a "no value"-like value (strictly null, false, or undefined)
 	            // (because the absence of the "checked" attr is how to mark an element as not checked, etc.)
 	            var toRemove = (attrValue === false) || (attrValue === null) || (attrValue === undefined);
 	            if (toRemove)
 	                element.removeAttribute(attrName);
-	
+
 	            // In IE <= 7 and IE8 Quirks Mode, you have to use the Javascript property name instead of the
 	            // HTML attribute name for certain attributes. IE8 Standards Mode supports the correct behavior,
 	            // but instead of figuring out the mode, we'll just set the attribute through the Javascript
@@ -6148,7 +6148,7 @@
 	            } else if (!toRemove) {
 	                element.setAttribute(attrName, attrValue.toString());
 	            }
-	
+
 	            // Treat "name" specially - although you can think of it as an attribute, it also needs
 	            // special handling on older versions of IE (https://github.com/SteveSanderson/knockout/pull/333)
 	            // Deliberately being case-sensitive here because XHTML would regard "Name" as a different thing
@@ -6160,7 +6160,7 @@
 	    }
 	};
 	(function() {
-	
+
 	ko.bindingHandlers['checked'] = {
 	    'after': ['value', 'attr'],
 	    'init': function (element, valueAccessor, allBindings) {
@@ -6171,27 +6171,27 @@
 	            } else if (allBindings['has']('value')) {
 	                return ko.utils.unwrapObservable(allBindings.get('value'));
 	            }
-	
+
 	            return element.value;
 	        });
-	
+
 	        function updateModel() {
 	            // This updates the model value from the view value.
 	            // It runs in response to DOM events (click) and changes in checkedValue.
 	            var isChecked = element.checked,
 	                elemValue = useCheckedValue ? checkedValue() : isChecked;
-	
+
 	            // When we're first setting up this computed, don't change any model state.
 	            if (ko.computedContext.isInitial()) {
 	                return;
 	            }
-	
+
 	            // We can ignore unchecked radio buttons, because some other radio
 	            // button will be getting checked, and that one can take care of updating state.
 	            if (isRadio && !isChecked) {
 	                return;
 	            }
-	
+
 	            var modelValue = ko.dependencyDetection.ignore(valueAccessor);
 	            if (valueIsArray) {
 	                var writableValue = rawValueIsNonArrayObservable ? modelValue.peek() : modelValue;
@@ -6203,7 +6203,7 @@
 	                        ko.utils.addOrRemoveItem(writableValue, elemValue, true);
 	                        ko.utils.addOrRemoveItem(writableValue, oldElemValue, false);
 	                    }
-	
+
 	                    oldElemValue = elemValue;
 	                } else {
 	                    // When we're responding to the user having checked/unchecked a checkbox,
@@ -6217,12 +6217,12 @@
 	                ko.expressionRewriting.writeValueToProperty(modelValue, allBindings, 'checked', elemValue, true);
 	            }
 	        };
-	
+
 	        function updateView() {
 	            // This updates the view value from the model value.
 	            // It runs in response to changes in the bound (checked) value.
 	            var modelValue = ko.utils.unwrapObservable(valueAccessor());
-	
+
 	            if (valueIsArray) {
 	                // When a checkbox is bound to an array, being checked represents its value being present in that array
 	                element.checked = ko.utils.arrayIndexOf(modelValue, checkedValue()) >= 0;
@@ -6234,45 +6234,45 @@
 	                element.checked = (checkedValue() === modelValue);
 	            }
 	        };
-	
+
 	        var isCheckbox = element.type == "checkbox",
 	            isRadio = element.type == "radio";
-	
+
 	        // Only bind to check boxes and radio buttons
 	        if (!isCheckbox && !isRadio) {
 	            return;
 	        }
-	
+
 	        var rawValue = valueAccessor(),
 	            valueIsArray = isCheckbox && (ko.utils.unwrapObservable(rawValue) instanceof Array),
 	            rawValueIsNonArrayObservable = !(valueIsArray && rawValue.push && rawValue.splice),
 	            oldElemValue = valueIsArray ? checkedValue() : undefined,
 	            useCheckedValue = isRadio || valueIsArray;
-	
+
 	        // IE 6 won't allow radio buttons to be selected unless they have a name
 	        if (isRadio && !element.name)
 	            ko.bindingHandlers['uniqueName']['init'](element, function() { return true });
-	
+
 	        // Set up two computeds to update the binding:
-	
+
 	        // The first responds to changes in the checkedValue value and to element clicks
 	        ko.computed(updateModel, null, { disposeWhenNodeIsRemoved: element });
 	        ko.utils.registerEventHandler(element, "click", updateModel);
-	
+
 	        // The second responds to changes in the model value (the one associated with the checked binding)
 	        ko.computed(updateView, null, { disposeWhenNodeIsRemoved: element });
-	
+
 	        rawValue = undefined;
 	    }
 	};
 	ko.expressionRewriting.twoWayBindings['checked'] = true;
-	
+
 	ko.bindingHandlers['checkedValue'] = {
 	    'update': function (element, valueAccessor) {
 	        element.value = ko.utils.unwrapObservable(valueAccessor());
 	    }
 	};
-	
+
 	})();var classesWrittenByBindingKey = '__ko__cssValue';
 	ko.bindingHandlers['css'] = {
 	    'update': function (element, valueAccessor) {
@@ -6299,7 +6299,7 @@
 	            element.disabled = true;
 	    }
 	};
-	
+
 	ko.bindingHandlers['disable'] = {
 	    'update': function (element, valueAccessor) {
 	        ko.bindingHandlers['enable']['update'](element, function() { return !ko.utils.unwrapObservable(valueAccessor()) });
@@ -6319,7 +6319,7 @@
 	        }
 	    }
 	}
-	
+
 	ko.bindingHandlers['event'] = {
 	    'init' : function (element, valueAccessor, allBindings, viewModel, bindingContext) {
 	        var eventsToHandle = valueAccessor() || {};
@@ -6330,7 +6330,7 @@
 	                    var handlerFunction = valueAccessor()[eventName];
 	                    if (!handlerFunction)
 	                        return;
-	
+
 	                    try {
 	                        // Take all the event args, and prefix with the viewmodel
 	                        var argsForHandler = ko.utils.makeArray(arguments);
@@ -6345,7 +6345,7 @@
 	                                event.returnValue = false;
 	                        }
 	                    }
-	
+
 	                    var bubble = allBindings.get(eventName + 'Bubble') !== false;
 	                    if (!bubble) {
 	                        event.cancelBubble = true;
@@ -6364,13 +6364,13 @@
 	        return function() {
 	            var modelValue = valueAccessor(),
 	                unwrappedValue = ko.utils.peekObservable(modelValue);    // Unwrap without setting a dependency here
-	
+
 	            // If unwrappedValue is the array, pass in the wrapped value on its own
 	            // The value will be unwrapped and tracked within the template binding
 	            // (See https://github.com/SteveSanderson/knockout/issues/523)
 	            if ((!unwrappedValue) || typeof unwrappedValue.length == "number")
 	                return { 'foreach': modelValue, 'templateEngine': ko.nativeTemplateEngine.instance };
-	
+
 	            // If unwrappedValue.data is the array, preserve all relevant options and unwrap again value so we get updates
 	            ko.utils.unwrapObservable(modelValue);
 	            return {
@@ -6420,14 +6420,14 @@
 	            }
 	            var modelValue = valueAccessor();
 	            ko.expressionRewriting.writeValueToProperty(modelValue, allBindings, 'hasfocus', isFocused, true);
-	
+
 	            //cache the latest value, so we can avoid unnecessarily calling focus/blur in the update function
 	            element[hasfocusLastValue] = isFocused;
 	            element[hasfocusUpdatingProperty] = false;
 	        };
 	        var handleElementFocusIn = handleElementFocusChange.bind(null, true);
 	        var handleElementFocusOut = handleElementFocusChange.bind(null, false);
-	
+
 	        ko.utils.registerEventHandler(element, "focus", handleElementFocusIn);
 	        ko.utils.registerEventHandler(element, "focusin", handleElementFocusIn); // For IE
 	        ko.utils.registerEventHandler(element, "blur",  handleElementFocusOut);
@@ -6435,24 +6435,24 @@
 	    },
 	    'update': function(element, valueAccessor) {
 	        var value = !!ko.utils.unwrapObservable(valueAccessor());
-	
+
 	        if (!element[hasfocusUpdatingProperty] && element[hasfocusLastValue] !== value) {
 	            value ? element.focus() : element.blur();
-	
+
 	            // In IE, the blur method doesn't always cause the element to lose focus (for example, if the window is not in focus).
 	            // Setting focus to the body element does seem to be reliable in IE, but should only be used if we know that the current
 	            // element was focused already.
 	            if (!value && element[hasfocusLastValue]) {
 	                element.ownerDocument.body.focus();
 	            }
-	
+
 	            // For IE, which doesn't reliably fire "focus" or "blur" events synchronously
 	            ko.dependencyDetection.ignore(ko.utils.triggerEvent, null, [element, value ? "focusin" : "focusout"]);
 	        }
 	    }
 	};
 	ko.expressionRewriting.twoWayBindings['hasfocus'] = true;
-	
+
 	ko.bindingHandlers['hasFocus'] = ko.bindingHandlers['hasfocus']; // Make "hasFocus" an alias
 	ko.expressionRewriting.twoWayBindings['hasFocus'] = true;
 	ko.bindingHandlers['html'] = {
@@ -6476,13 +6476,13 @@
 	                    shouldDisplay = !isNot !== !dataValue, // equivalent to isNot ? !dataValue : !!dataValue
 	                    isFirstRender = !savedNodes,
 	                    needsRefresh = isFirstRender || isWith || (shouldDisplay !== didDisplayOnLastUpdate);
-	
+
 	                if (needsRefresh) {
 	                    // Save a copy of the inner nodes on the initial update, but only if we have dependencies.
 	                    if (isFirstRender && ko.computedContext.getDependenciesCount()) {
 	                        savedNodes = ko.utils.cloneNodes(ko.virtualElements.childNodes(element), true /* shouldCleanNodes */);
 	                    }
-	
+
 	                    if (shouldDisplay) {
 	                        if (!isFirstRender) {
 	                            ko.virtualElements.setDomNodeChildren(element, ko.utils.cloneNodes(savedNodes));
@@ -6491,7 +6491,7 @@
 	                    } else {
 	                        ko.virtualElements.emptyNode(element);
 	                    }
-	
+
 	                    didDisplayOnLastUpdate = shouldDisplay;
 	                }
 	            }, null, { disposeWhenNodeIsRemoved: element });
@@ -6501,7 +6501,7 @@
 	    ko.expressionRewriting.bindingRewriteValidators[bindingKey] = false; // Can't rewrite control flow bindings
 	    ko.virtualElements.allowedBindings[bindingKey] = true;
 	}
-	
+
 	// Construct the actual binding handlers
 	makeWithIfBinding('if');
 	makeWithIfBinding('ifnot', false /* isWith */, true /* isNot */);
@@ -6515,12 +6515,12 @@
 	    'init': function(element) {
 	        if (ko.utils.tagNameLower(element) !== "select")
 	            throw new Error("options binding applies only to SELECT elements");
-	
+
 	        // Remove all existing <option>s.
 	        while (element.length > 0) {
 	            element.remove(0);
 	        }
-	
+
 	        // Ensures that the binding processor doesn't try to bind the options
 	        return { 'controlsDescendantBindings': true };
 	    },
@@ -6528,7 +6528,7 @@
 	        function selectedOptions() {
 	            return ko.utils.arrayFilter(element.options, function (node) { return node.selected; });
 	        }
-	
+
 	        var selectWasPreviouslyEmpty = element.length == 0,
 	            multiple = element.multiple,
 	            previousScrollTop = (!selectWasPreviouslyEmpty && multiple) ? element.scrollTop : null,
@@ -6539,7 +6539,7 @@
 	            captionValue,
 	            filteredArray,
 	            previousSelectedValues = [];
-	
+
 	        if (!valueAllowUnset) {
 	            if (multiple) {
 	                previousSelectedValues = ko.utils.arrayMap(selectedOptions(), ko.selectExtensions.readValue);
@@ -6547,16 +6547,16 @@
 	                previousSelectedValues.push(ko.selectExtensions.readValue(element.options[element.selectedIndex]));
 	            }
 	        }
-	
+
 	        if (unwrappedArray) {
 	            if (typeof unwrappedArray.length == "undefined") // Coerce single value into array
 	                unwrappedArray = [unwrappedArray];
-	
+
 	            // Filter out any entries marked as destroyed
 	            filteredArray = ko.utils.arrayFilter(unwrappedArray, function(item) {
 	                return includeDestroyed || item === undefined || item === null || !ko.utils.unwrapObservable(item['_destroy']);
 	            });
-	
+
 	            // If caption is included, add it to the array
 	            if (allBindings['has']('optionsCaption')) {
 	                captionValue = ko.utils.unwrapObservable(allBindings.get('optionsCaption'));
@@ -6568,7 +6568,7 @@
 	        } else {
 	            // If a falsy value is provided (e.g. null), we'll simply empty the select element
 	        }
-	
+
 	        function applyToObject(object, predicate, defaultValue) {
 	            var predicateType = typeof predicate;
 	            if (predicateType == "function")    // Given a function; run it against the data value
@@ -6578,7 +6578,7 @@
 	            else                                // Given no optionsText arg; use the data value itself
 	                return defaultValue;
 	        }
-	
+
 	        // The following functions can run at two different times:
 	        // The first is when the whole array is being updated directly from this binding handler.
 	        // The second is when an observable value for a specific array entry is updated.
@@ -6597,21 +6597,21 @@
 	                // Apply a value to the option element
 	                var optionValue = applyToObject(arrayEntry, allBindings.get('optionsValue'), arrayEntry);
 	                ko.selectExtensions.writeValue(option, ko.utils.unwrapObservable(optionValue));
-	
+
 	                // Apply some text to the option element
 	                var optionText = applyToObject(arrayEntry, allBindings.get('optionsText'), optionValue);
 	                ko.utils.setTextContent(option, optionText);
 	            }
 	            return [option];
 	        }
-	
+
 	        // By using a beforeRemove callback, we delay the removal until after new items are added. This fixes a selection
 	        // problem in IE<=8 and Firefox. See https://github.com/knockout/knockout/issues/1208
 	        arrayToDomNodeChildrenOptions['beforeRemove'] =
 	            function (option) {
 	                element.removeChild(option);
 	            };
-	
+
 	        function setSelectionCallback(arrayEntry, newOptions) {
 	            if (itemUpdate && valueAllowUnset) {
 	                // The model value is authoritative, so make sure its value is the one selected
@@ -6622,14 +6622,14 @@
 	                // That's why we first added them without selection. Now it's time to set the selection.
 	                var isSelected = ko.utils.arrayIndexOf(previousSelectedValues, ko.selectExtensions.readValue(newOptions[0])) >= 0;
 	                ko.utils.setOptionNodeSelectionState(newOptions[0], isSelected);
-	
+
 	                // If this option was changed from being selected during a single-item update, notify the change
 	                if (itemUpdate && !isSelected) {
 	                    ko.dependencyDetection.ignore(ko.utils.triggerEvent, null, [element, "change"]);
 	                }
 	            }
 	        }
-	
+
 	        var callback = setSelectionCallback;
 	        if (allBindings['has']('optionsAfterRender') && typeof allBindings.get('optionsAfterRender') == "function") {
 	            callback = function(arrayEntry, newOptions) {
@@ -6637,9 +6637,9 @@
 	                ko.dependencyDetection.ignore(allBindings.get('optionsAfterRender'), null, [newOptions[0], arrayEntry !== captionPlaceholder ? arrayEntry : undefined]);
 	            }
 	        }
-	
+
 	        ko.utils.setDomNodeChildrenFromArrayMapping(element, filteredArray, optionForArrayItem, arrayToDomNodeChildrenOptions, callback);
-	
+
 	        ko.dependencyDetection.ignore(function () {
 	            if (valueAllowUnset) {
 	                // The model value is authoritative, so make sure its value is the one selected
@@ -6658,7 +6658,7 @@
 	                        ? (ko.selectExtensions.readValue(element.options[element.selectedIndex]) !== previousSelectedValues[0])
 	                        : (previousSelectedValues.length || element.selectedIndex >= 0);
 	                }
-	
+
 	                // Ensure consistency between model value and selected option.
 	                // If the dropdown was changed so that selection is no longer the same,
 	                // notify the value or selectedOptions binding.
@@ -6667,10 +6667,10 @@
 	                }
 	            }
 	        });
-	
+
 	        // Workaround for IE bug
 	        ko.utils.ensureSelectElementIsRenderedCorrectly(element);
-	
+
 	        if (previousScrollTop && Math.abs(previousScrollTop - element.scrollTop) > 20)
 	            element.scrollTop = previousScrollTop;
 	    }
@@ -6691,10 +6691,10 @@
 	    'update': function (element, valueAccessor) {
 	        if (ko.utils.tagNameLower(element) != "select")
 	            throw new Error("values binding applies only to SELECT elements");
-	
+
 	        var newValue = ko.utils.unwrapObservable(valueAccessor()),
 	            previousScrollTop = element.scrollTop;
-	
+
 	        if (newValue && typeof newValue.length == "number") {
 	            ko.utils.arrayForEach(element.getElementsByTagName("option"), function(node) {
 	                var isSelected = ko.utils.arrayIndexOf(newValue, ko.selectExtensions.readValue(node)) >= 0;
@@ -6703,7 +6703,7 @@
 	                }
 	            });
 	        }
-	
+
 	        element.scrollTop = previousScrollTop;
 	    }
 	};
@@ -6713,12 +6713,12 @@
 	        var value = ko.utils.unwrapObservable(valueAccessor() || {});
 	        ko.utils.objectForEach(value, function(styleName, styleValue) {
 	            styleValue = ko.utils.unwrapObservable(styleValue);
-	
+
 	            if (styleValue === null || styleValue === undefined || styleValue === false) {
 	                // Empty string removes the value, whereas null/undefined have no effect
 	                styleValue = "";
 	            }
-	
+
 	            element.style[styleName] = styleValue;
 	        });
 	    }
@@ -6754,21 +6754,21 @@
 	};
 	ko.virtualElements.allowedBindings['text'] = true;
 	(function () {
-	
+
 	if (window && window.navigator) {
 	    var parseVersion = function (matches) {
 	        if (matches) {
 	            return parseFloat(matches[1]);
 	        }
 	    };
-	
+
 	    // Detect various browser versions because some old versions don't fully support the 'input' event
 	    var operaVersion = window.opera && window.opera.version && parseInt(window.opera.version()),
 	        userAgent = window.navigator.userAgent,
 	        safariVersion = parseVersion(userAgent.match(/^(?:(?!chrome).)*version\/([^ ]*) safari/i)),
 	        firefoxVersion = parseVersion(userAgent.match(/Firefox\/([^ ]*)/));
 	}
-	
+
 	// IE 8 and 9 have bugs that prevent the normal events from firing when the value changes.
 	// But it does fire the 'selectionchange' event on many of those, presumably because the
 	// cursor is moving and that counts as the selection changing. The 'selectionchange' event is
@@ -6794,18 +6794,18 @@
 	        ko.utils.domData.set(element, selectionChangeHandlerName, handler);
 	    };
 	}
-	
+
 	ko.bindingHandlers['textInput'] = {
 	    'init': function (element, valueAccessor, allBindings) {
-	
+
 	        var previousElementValue = element.value,
 	            timeoutHandle,
 	            elementValueBeforeEvent;
-	
+
 	        var updateModel = function (event) {
 	            clearTimeout(timeoutHandle);
 	            elementValueBeforeEvent = timeoutHandle = undefined;
-	
+
 	            var elementValue = element.value;
 	            if (previousElementValue !== elementValue) {
 	                // Provide a way for tests to know exactly which event was processed
@@ -6814,7 +6814,7 @@
 	                ko.expressionRewriting.writeValueToProperty(valueAccessor(), allBindings, 'textInput', elementValue);
 	            }
 	        };
-	
+
 	        var deferUpdateModel = function (event) {
 	            if (!timeoutHandle) {
 	                // The elementValueBeforeEvent variable is set *only* during the brief gap between an
@@ -6826,23 +6826,23 @@
 	                timeoutHandle = ko.utils.setTimeout(handler, 4);
 	            }
 	        };
-	
+
 	        // IE9 will mess up the DOM if you handle events synchronously which results in DOM changes (such as other bindings);
 	        // so we'll make sure all updates are asynchronous
 	        var ieUpdateModel = ko.utils.ieVersion == 9 ? deferUpdateModel : updateModel;
-	
+
 	        var updateView = function () {
 	            var modelValue = ko.utils.unwrapObservable(valueAccessor());
-	
+
 	            if (modelValue === null || modelValue === undefined) {
 	                modelValue = '';
 	            }
-	
+
 	            if (elementValueBeforeEvent !== undefined && modelValue === elementValueBeforeEvent) {
 	                ko.utils.setTimeout(updateView, 4);
 	                return;
 	            }
-	
+
 	            // Update the element only if the element and model are different. On some browsers, updating the value
 	            // will move the cursor to the end of the input, which would be bad while the user is typing.
 	            if (element.value !== modelValue) {
@@ -6850,11 +6850,11 @@
 	                element.value = modelValue;
 	            }
 	        };
-	
+
 	        var onEvent = function (event, handler) {
 	            ko.utils.registerEventHandler(element, event, handler);
 	        };
-	
+
 	        if (DEBUG && ko.bindingHandlers['textInput']['_forceUpdateOn']) {
 	            // Provide a way for tests to specify exactly which events are bound
 	            ko.utils.arrayForEach(ko.bindingHandlers['textInput']['_forceUpdateOn'], function(eventName) {
@@ -6875,7 +6875,7 @@
 	                        ieUpdateModel(event);
 	                    }
 	                });
-	
+
 	                if (ko.utils.ieVersion == 8) {
 	                    // IE 8 has a bug where it fails to fire 'propertychange' on the first update following a value change from
 	                    // JavaScript code. It also doesn't fire if you clear the entire value. To fix this, we bind to the following
@@ -6896,7 +6896,7 @@
 	                // All other supported browsers support the 'input' event, which fires whenever the content of the element is changed
 	                // through the user interface.
 	                onEvent('input', updateModel);
-	
+
 	                if (safariVersion < 5 && ko.utils.tagNameLower(element) === "textarea") {
 	                    // Safari <5 doesn't fire the 'input' event for <textarea> elements (it does fire 'textInput'
 	                    // but only when typing). So we'll just catch as much as we can with keydown, cut, and paste.
@@ -6910,22 +6910,22 @@
 	                } else if (firefoxVersion < 4.0) {
 	                    // Firefox <= 3.6 doesn't fire the 'input' event when text is filled in through autocomplete
 	                    onEvent('DOMAutoComplete', updateModel);
-	
+
 	                    // Firefox <=3.5 doesn't fire the 'input' event when text is dropped into the input.
 	                    onEvent('dragdrop', updateModel);       // <3.5
 	                    onEvent('drop', updateModel);           // 3.5
 	                }
 	            }
 	        }
-	
+
 	        // Bind to the change event so that we can catch programmatic updates of the value that fire this event.
 	        onEvent('change', updateModel);
-	
+
 	        ko.computed(updateView, null, { disposeWhenNodeIsRemoved: element });
 	    }
 	};
 	ko.expressionRewriting.twoWayBindings['textInput'] = true;
-	
+
 	// textinput is an alias for textInput
 	ko.bindingHandlers['textinput'] = {
 	    // preprocess is the only way to set up a full alias
@@ -6933,7 +6933,7 @@
 	        addBinding('textInput', value);
 	    }
 	};
-	
+
 	})();ko.bindingHandlers['uniqueName'] = {
 	    'init': function (element, valueAccessor) {
 	        if (valueAccessor()) {
@@ -6951,20 +6951,20 @@
 	            ko.applyBindingAccessorsToNode(element, { 'checkedValue': valueAccessor });
 	            return;
 	        }
-	
+
 	        // Always catch "change" event; possibly other events too if asked
 	        var eventsToCatch = ["change"];
 	        var requestedEventsToCatch = allBindings.get("valueUpdate");
 	        var propertyChangedFired = false;
 	        var elementValueBeforeEvent = null;
-	
+
 	        if (requestedEventsToCatch) {
 	            if (typeof requestedEventsToCatch == "string") // Allow both individual event names, and arrays of event names
 	                requestedEventsToCatch = [requestedEventsToCatch];
 	            ko.utils.arrayPushAll(eventsToCatch, requestedEventsToCatch);
 	            eventsToCatch = ko.utils.arrayGetDistinctValues(eventsToCatch);
 	        }
-	
+
 	        var valueUpdateHandler = function() {
 	            elementValueBeforeEvent = null;
 	            propertyChangedFired = false;
@@ -6972,7 +6972,7 @@
 	            var elementValue = ko.selectExtensions.readValue(element);
 	            ko.expressionRewriting.writeValueToProperty(modelValue, allBindings, 'value', elementValue);
 	        }
-	
+
 	        // Workaround for https://github.com/SteveSanderson/knockout/issues/122
 	        // IE doesn't fire "change" events on textboxes if the user selects a value from its autocomplete list
 	        var ieAutoCompleteHackNeeded = ko.utils.ieVersion && element.tagName.toLowerCase() == "input" && element.type == "text"
@@ -6986,7 +6986,7 @@
 	                }
 	            });
 	        }
-	
+
 	        ko.utils.arrayForEach(eventsToCatch, function(eventName) {
 	            // The syntax "after<eventname>" means "run the handler asynchronously after the event"
 	            // This is useful, for example, to catch "keydown" events after the browser has updated the control
@@ -7008,18 +7008,18 @@
 	            }
 	            ko.utils.registerEventHandler(element, eventName, handler);
 	        });
-	
+
 	        var updateFromModel = function () {
 	            var newValue = ko.utils.unwrapObservable(valueAccessor());
 	            var elementValue = ko.selectExtensions.readValue(element);
-	
+
 	            if (elementValueBeforeEvent !== null && newValue === elementValueBeforeEvent) {
 	                ko.utils.setTimeout(updateFromModel, 0);
 	                return;
 	            }
-	
+
 	            var valueHasChanged = (newValue !== elementValue);
-	
+
 	            if (valueHasChanged) {
 	                if (ko.utils.tagNameLower(element) === "select") {
 	                    var allowUnset = allBindings.get('valueAllowUnset');
@@ -7027,7 +7027,7 @@
 	                        ko.selectExtensions.writeValue(element, newValue, allowUnset);
 	                    };
 	                    applyValueAction();
-	
+
 	                    if (!allowUnset && newValue !== ko.selectExtensions.readValue(element)) {
 	                        // If you try to set a model value that can't be represented in an already-populated dropdown, reject that change,
 	                        // because you're not allowed to have a model value that disagrees with a visible UI selection.
@@ -7043,7 +7043,7 @@
 	                }
 	            }
 	        };
-	
+
 	        ko.computed(updateFromModel, null, { disposeWhenNodeIsRemoved: element });
 	    },
 	    'update': function() {} // Keep for backwards compatibility with code that may have wrapped value binding
@@ -7087,17 +7087,17 @@
 	//     This is only necessary if you want to allow data-bind attributes to reference arbitrary template variables.
 	//     If you don't want to allow that, you can set the property 'allowTemplateRewriting' to false (like ko.nativeTemplateEngine does)
 	//     and then you don't need to override 'createJavaScriptEvaluatorBlock'.
-	
+
 	ko.templateEngine = function () { };
-	
+
 	ko.templateEngine.prototype['renderTemplateSource'] = function (templateSource, bindingContext, options, templateDocument) {
 	    throw new Error("Override renderTemplateSource");
 	};
-	
+
 	ko.templateEngine.prototype['createJavaScriptEvaluatorBlock'] = function (script) {
 	    throw new Error("Override createJavaScriptEvaluatorBlock");
 	};
-	
+
 	ko.templateEngine.prototype['makeTemplateSource'] = function(template, templateDocument) {
 	    // Named template
 	    if (typeof template == "string") {
@@ -7112,39 +7112,39 @@
 	    } else
 	        throw new Error("Unknown template type: " + template);
 	};
-	
+
 	ko.templateEngine.prototype['renderTemplate'] = function (template, bindingContext, options, templateDocument) {
 	    var templateSource = this['makeTemplateSource'](template, templateDocument);
 	    return this['renderTemplateSource'](templateSource, bindingContext, options, templateDocument);
 	};
-	
+
 	ko.templateEngine.prototype['isTemplateRewritten'] = function (template, templateDocument) {
 	    // Skip rewriting if requested
 	    if (this['allowTemplateRewriting'] === false)
 	        return true;
 	    return this['makeTemplateSource'](template, templateDocument)['data']("isRewritten");
 	};
-	
+
 	ko.templateEngine.prototype['rewriteTemplate'] = function (template, rewriterCallback, templateDocument) {
 	    var templateSource = this['makeTemplateSource'](template, templateDocument);
 	    var rewritten = rewriterCallback(templateSource['text']());
 	    templateSource['text'](rewritten);
 	    templateSource['data']("isRewritten", true);
 	};
-	
+
 	ko.exportSymbol('templateEngine', ko.templateEngine);
-	
+
 	ko.templateRewriting = (function () {
 	    var memoizeDataBindingAttributeSyntaxRegex = /(<([a-z]+\d*)(?:\s+(?!data-bind\s*=\s*)[a-z0-9\-]+(?:=(?:\"[^\"]*\"|\'[^\']*\'|[^>]*))?)*\s+)data-bind\s*=\s*(["'])([\s\S]*?)\3/gi;
 	    var memoizeVirtualContainerBindingSyntaxRegex = /<!--\s*ko\b\s*([\s\S]*?)\s*-->/g;
-	
+
 	    function validateDataBindValuesForRewriting(keyValueArray) {
 	        var allValidators = ko.expressionRewriting.bindingRewriteValidators;
 	        for (var i = 0; i < keyValueArray.length; i++) {
 	            var key = keyValueArray[i]['key'];
 	            if (allValidators.hasOwnProperty(key)) {
 	                var validator = allValidators[key];
-	
+
 	                if (typeof validator === "function") {
 	                    var possibleErrorMessage = validator(keyValueArray[i]['value']);
 	                    if (possibleErrorMessage)
@@ -7155,12 +7155,12 @@
 	            }
 	        }
 	    }
-	
+
 	    function constructMemoizedTagReplacement(dataBindAttributeValue, tagToRetain, nodeName, templateEngine) {
 	        var dataBindKeyValueArray = ko.expressionRewriting.parseObjectLiteral(dataBindAttributeValue);
 	        validateDataBindValuesForRewriting(dataBindKeyValueArray);
 	        var rewrittenDataBindAttributeValue = ko.expressionRewriting.preProcessBindings(dataBindKeyValueArray, {'valueAccessors':true});
-	
+
 	        // For no obvious reason, Opera fails to evaluate rewrittenDataBindAttributeValue unless it's wrapped in an additional
 	        // anonymous function, even though Opera's built-in debugger can evaluate it anyway. No other browser requires this
 	        // extra indirection.
@@ -7168,7 +7168,7 @@
 	            "ko.__tr_ambtns(function($context,$element){return(function(){return{ " + rewrittenDataBindAttributeValue + " } })()},'" + nodeName.toLowerCase() + "')";
 	        return templateEngine['createJavaScriptEvaluatorBlock'](applyBindingsToNextSiblingScript) + tagToRetain;
 	    }
-	
+
 	    return {
 	        ensureTemplateIsRewritten: function (template, templateEngine, templateDocument) {
 	            if (!templateEngine['isTemplateRewritten'](template, templateDocument))
@@ -7176,7 +7176,7 @@
 	                    return ko.templateRewriting.memoizeBindingAttributeSyntax(htmlString, templateEngine);
 	                }, templateDocument);
 	        },
-	
+
 	        memoizeBindingAttributeSyntax: function (htmlString, templateEngine) {
 	            return htmlString.replace(memoizeDataBindingAttributeSyntaxRegex, function () {
 	                return constructMemoizedTagReplacement(/* dataBindAttributeValue: */ arguments[4], /* tagToRetain: */ arguments[1], /* nodeName: */ arguments[2], templateEngine);
@@ -7184,7 +7184,7 @@
 	                return constructMemoizedTagReplacement(/* dataBindAttributeValue: */ arguments[1], /* tagToRetain: */ "<!-- ko -->", /* nodeName: */ "#comment", templateEngine);
 	            });
 	        },
-	
+
 	        applyMemoizedBindingsToNextSibling: function (bindings, nodeName) {
 	            return ko.memoization.memoize(function (domNode, bindingContext) {
 	                var nodeToBind = domNode.nextSibling;
@@ -7195,8 +7195,8 @@
 	        }
 	    }
 	})();
-	
-	
+
+
 	// Exported only because it has to be referenced by string lookup from within rewritten template
 	ko.exportSymbol('__tr_ambtns', ko.templateRewriting.applyMemoizedBindingsToNextSibling);
 	(function() {
@@ -7223,20 +7223,20 @@
 	    //
 	    // Once you've implemented a templateSource, make your template engine use it by subclassing whatever template engine you were
 	    // using and overriding "makeTemplateSource" to return an instance of your custom template source.
-	
+
 	    ko.templateSources = {};
-	
+
 	    // ---- ko.templateSources.domElement -----
-	
+
 	    // template types
 	    var templateScript = 1,
 	        templateTextArea = 2,
 	        templateTemplate = 3,
 	        templateElement = 4;
-	
+
 	    ko.templateSources.domElement = function(element) {
 	        this.domElement = element;
-	
+
 	        if (element) {
 	            var tagNameLower = ko.utils.tagNameLower(element);
 	            this.templateType =
@@ -7247,12 +7247,12 @@
 	                templateElement;
 	        }
 	    }
-	
+
 	    ko.templateSources.domElement.prototype['text'] = function(/* valueToWrite */) {
 	        var elemContentsProperty = this.templateType === templateScript ? "text"
 	                                 : this.templateType === templateTextArea ? "value"
 	                                 : "innerHTML";
-	
+
 	        if (arguments.length == 0) {
 	            return this.domElement[elemContentsProperty];
 	        } else {
@@ -7263,7 +7263,7 @@
 	                this.domElement[elemContentsProperty] = valueToWrite;
 	        }
 	    };
-	
+
 	    var dataDomDataPrefix = ko.utils.domData.nextKey() + "_";
 	    ko.templateSources.domElement.prototype['data'] = function(key /*, valueToWrite */) {
 	        if (arguments.length === 1) {
@@ -7272,7 +7272,7 @@
 	            ko.utils.domData.set(this.domElement, dataDomDataPrefix + key, arguments[1]);
 	        }
 	    };
-	
+
 	    var templatesDomDataKey = ko.utils.domData.nextKey();
 	    function getTemplateDomData(element) {
 	        return ko.utils.domData.get(element, templatesDomDataKey) || {};
@@ -7280,7 +7280,7 @@
 	    function setTemplateDomData(element, data) {
 	        ko.utils.domData.set(element, templatesDomDataKey, data);
 	    }
-	
+
 	    ko.templateSources.domElement.prototype['nodes'] = function(/* valueToWrite */) {
 	        var element = this.domElement;
 	        if (arguments.length == 0) {
@@ -7295,12 +7295,12 @@
 	            setTemplateDomData(element, {containerData: valueToWrite});
 	        }
 	    };
-	
+
 	    // ---- ko.templateSources.anonymousTemplate -----
 	    // Anonymous templates are normally saved/retrieved as DOM nodes through "nodes".
 	    // For compatibility, you can also read "text"; it will be serialized from the nodes on demand.
 	    // Writing to "text" is still supported, but then the template data will not be available as DOM nodes.
-	
+
 	    ko.templateSources.anonymousTemplate = function(element) {
 	        this.domElement = element;
 	    }
@@ -7317,7 +7317,7 @@
 	            setTemplateDomData(this.domElement, {textData: valueToWrite});
 	        }
 	    };
-	
+
 	    ko.exportSymbol('templateSources', ko.templateSources);
 	    ko.exportSymbol('templateSources.domElement', ko.templateSources.domElement);
 	    ko.exportSymbol('templateSources.anonymousTemplate', ko.templateSources.anonymousTemplate);
@@ -7329,7 +7329,7 @@
 	            throw new Error("templateEngine must inherit from ko.templateEngine");
 	        _templateEngine = templateEngine;
 	    }
-	
+
 	    function invokeForEachNodeInContinuousRange(firstNode, lastNode, action) {
 	        var node, nextInQueue = firstNode, firstOutOfRangeNode = ko.virtualElements.nextSibling(lastNode);
 	        while (nextInQueue && ((node = nextInQueue) !== firstOutOfRangeNode)) {
@@ -7337,21 +7337,21 @@
 	            action(node, nextInQueue);
 	        }
 	    }
-	
+
 	    function activateBindingsOnContinuousNodeArray(continuousNodeArray, bindingContext) {
 	        // To be used on any nodes that have been rendered by a template and have been inserted into some parent element
 	        // Walks through continuousNodeArray (which *must* be continuous, i.e., an uninterrupted sequence of sibling nodes, because
 	        // the algorithm for walking them relies on this), and for each top-level item in the virtual-element sense,
 	        // (1) Does a regular "applyBindings" to associate bindingContext with this node and to activate any non-memoized bindings
 	        // (2) Unmemoizes any memos in the DOM subtree (e.g., to activate bindings that had been memoized during template rewriting)
-	
+
 	        if (continuousNodeArray.length) {
 	            var firstNode = continuousNodeArray[0],
 	                lastNode = continuousNodeArray[continuousNodeArray.length - 1],
 	                parentNode = firstNode.parentNode,
 	                provider = ko.bindingProvider['instance'],
 	                preprocessNode = provider['preprocessNode'];
-	
+
 	            if (preprocessNode) {
 	                invokeForEachNodeInContinuousRange(firstNode, lastNode, function(node, nextNodeInRange) {
 	                    var nodePreviousSibling = node.previousSibling;
@@ -7363,7 +7363,7 @@
 	                            lastNode = newNodes[newNodes.length - 1] || nodePreviousSibling;
 	                    }
 	                });
-	
+
 	                // Because preprocessNode can change the nodes, including the first and last nodes, update continuousNodeArray to match.
 	                // We need the full set, including inner nodes, because the unmemoize step might remove the first node (and so the real
 	                // first node needs to be in the array).
@@ -7378,7 +7378,7 @@
 	                    ko.utils.fixUpContinuousNodeArray(continuousNodeArray, parentNode);
 	                }
 	            }
-	
+
 	            // Need to applyBindings *before* unmemoziation, because unmemoization might introduce extra nodes (that we don't want to re-bind)
 	            // whereas a regular applyBindings won't introduce new memoized nodes
 	            invokeForEachNodeInContinuousRange(firstNode, lastNode, function(node) {
@@ -7389,18 +7389,18 @@
 	                if (node.nodeType === 1 || node.nodeType === 8)
 	                    ko.memoization.unmemoizeDomNodeAndDescendants(node, [bindingContext]);
 	            });
-	
+
 	            // Make sure any changes done by applyBindings or unmemoize are reflected in the array
 	            ko.utils.fixUpContinuousNodeArray(continuousNodeArray, parentNode);
 	        }
 	    }
-	
+
 	    function getFirstNodeFromPossibleArray(nodeOrNodeArray) {
 	        return nodeOrNodeArray.nodeType ? nodeOrNodeArray
 	                                        : nodeOrNodeArray.length > 0 ? nodeOrNodeArray[0]
 	                                        : null;
 	    }
-	
+
 	    function executeTemplate(targetNodeOrNodeArray, renderMode, template, bindingContext, options) {
 	        options = options || {};
 	        var firstTargetNode = targetNodeOrNodeArray && getFirstNodeFromPossibleArray(targetNodeOrNodeArray);
@@ -7408,11 +7408,11 @@
 	        var templateEngineToUse = (options['templateEngine'] || _templateEngine);
 	        ko.templateRewriting.ensureTemplateIsRewritten(template, templateEngineToUse, templateDocument);
 	        var renderedNodesArray = templateEngineToUse['renderTemplate'](template, bindingContext, options, templateDocument);
-	
+
 	        // Loosely check result is an array of DOM nodes
 	        if ((typeof renderedNodesArray.length != "number") || (renderedNodesArray.length > 0 && typeof renderedNodesArray[0].nodeType != "number"))
 	            throw new Error("Template engine must return an array of DOM nodes");
-	
+
 	        var haveAddedNodesToParent = false;
 	        switch (renderMode) {
 	            case "replaceChildren":
@@ -7427,16 +7427,16 @@
 	            default:
 	                throw new Error("Unknown renderMode: " + renderMode);
 	        }
-	
+
 	        if (haveAddedNodesToParent) {
 	            activateBindingsOnContinuousNodeArray(renderedNodesArray, bindingContext);
 	            if (options['afterRender'])
 	                ko.dependencyDetection.ignore(options['afterRender'], null, [renderedNodesArray, bindingContext['$data']]);
 	        }
-	
+
 	        return renderedNodesArray;
 	    }
-	
+
 	    function resolveTemplateName(template, data, context) {
 	        // The template can be specified as:
 	        if (ko.isObservable(template)) {
@@ -7450,29 +7450,29 @@
 	            return template;
 	        }
 	    }
-	
+
 	    ko.renderTemplate = function (template, dataOrBindingContext, options, targetNodeOrNodeArray, renderMode) {
 	        options = options || {};
 	        if ((options['templateEngine'] || _templateEngine) == undefined)
 	            throw new Error("Set a template engine before calling renderTemplate");
 	        renderMode = renderMode || "replaceChildren";
-	
+
 	        if (targetNodeOrNodeArray) {
 	            var firstTargetNode = getFirstNodeFromPossibleArray(targetNodeOrNodeArray);
-	
+
 	            var whenToDispose = function () { return (!firstTargetNode) || !ko.utils.domNodeIsAttachedToDocument(firstTargetNode); }; // Passive disposal (on next evaluation)
 	            var activelyDisposeWhenNodeIsRemoved = (firstTargetNode && renderMode == "replaceNode") ? firstTargetNode.parentNode : firstTargetNode;
-	
+
 	            return ko.dependentObservable( // So the DOM is automatically updated when any dependency changes
 	                function () {
 	                    // Ensure we've got a proper binding context to work with
 	                    var bindingContext = (dataOrBindingContext && (dataOrBindingContext instanceof ko.bindingContext))
 	                        ? dataOrBindingContext
 	                        : new ko.bindingContext(ko.utils.unwrapObservable(dataOrBindingContext));
-	
+
 	                    var templateName = resolveTemplateName(template, bindingContext['$data'], bindingContext),
 	                        renderedNodesArray = executeTemplate(targetNodeOrNodeArray, renderMode, templateName, bindingContext, options);
-	
+
 	                    if (renderMode == "replaceNode") {
 	                        targetNodeOrNodeArray = renderedNodesArray;
 	                        firstTargetNode = getFirstNodeFromPossibleArray(targetNodeOrNodeArray);
@@ -7488,51 +7488,51 @@
 	            });
 	        }
 	    };
-	
+
 	    ko.renderTemplateForEach = function (template, arrayOrObservableArray, options, targetNode, parentBindingContext) {
 	        // Since setDomNodeChildrenFromArrayMapping always calls executeTemplateForArrayItem and then
 	        // activateBindingsCallback for added items, we can store the binding context in the former to use in the latter.
 	        var arrayItemContext;
-	
+
 	        // This will be called by setDomNodeChildrenFromArrayMapping to get the nodes to add to targetNode
 	        var executeTemplateForArrayItem = function (arrayValue, index) {
 	            // Support selecting template as a function of the data being rendered
 	            arrayItemContext = parentBindingContext['createChildContext'](arrayValue, options['as'], function(context) {
 	                context['$index'] = index;
 	            });
-	
+
 	            var templateName = resolveTemplateName(template, arrayValue, arrayItemContext);
 	            return executeTemplate(null, "ignoreTargetNode", templateName, arrayItemContext, options);
 	        }
-	
+
 	        // This will be called whenever setDomNodeChildrenFromArrayMapping has added nodes to targetNode
 	        var activateBindingsCallback = function(arrayValue, addedNodesArray, index) {
 	            activateBindingsOnContinuousNodeArray(addedNodesArray, arrayItemContext);
 	            if (options['afterRender'])
 	                options['afterRender'](addedNodesArray, arrayValue);
-	
+
 	            // release the "cache" variable, so that it can be collected by
 	            // the GC when its value isn't used from within the bindings anymore.
 	            arrayItemContext = null;
 	        };
-	
+
 	        return ko.dependentObservable(function () {
 	            var unwrappedArray = ko.utils.unwrapObservable(arrayOrObservableArray) || [];
 	            if (typeof unwrappedArray.length == "undefined") // Coerce single value into array
 	                unwrappedArray = [unwrappedArray];
-	
+
 	            // Filter out any entries marked as destroyed
 	            var filteredArray = ko.utils.arrayFilter(unwrappedArray, function(item) {
 	                return options['includeDestroyed'] || item === undefined || item === null || !ko.utils.unwrapObservable(item['_destroy']);
 	            });
-	
+
 	            // Call setDomNodeChildrenFromArrayMapping, ignoring any observables unwrapped within (most likely from a callback function).
 	            // If the array items are observables, though, they will be unwrapped in executeTemplateForArrayItem and managed within setDomNodeChildrenFromArrayMapping.
 	            ko.dependencyDetection.ignore(ko.utils.setDomNodeChildrenFromArrayMapping, null, [targetNode, filteredArray, executeTemplateForArrayItem, options, activateBindingsCallback]);
-	
+
 	        }, null, { disposeWhenNodeIsRemoved: targetNode });
 	    };
-	
+
 	    var templateComputedDomDataKey = ko.utils.domData.nextKey();
 	    function disposeOldComputedAndStoreNewOne(element, newComputed) {
 	        var oldComputed = ko.utils.domData.get(element, templateComputedDomDataKey);
@@ -7540,7 +7540,7 @@
 	            oldComputed.dispose();
 	        ko.utils.domData.set(element, templateComputedDomDataKey, (newComputed && newComputed.isActive()) ? newComputed : undefined);
 	    }
-	
+
 	    ko.bindingHandlers['template'] = {
 	        'init': function(element, valueAccessor) {
 	            // Support anonymous templates
@@ -7574,22 +7574,22 @@
 	                shouldDisplay = true,
 	                templateComputed = null,
 	                templateName;
-	
+
 	            if (typeof options == "string") {
 	                templateName = value;
 	                options = {};
 	            } else {
 	                templateName = options['name'];
-	
+
 	                // Support "if"/"ifnot" conditions
 	                if ('if' in options)
 	                    shouldDisplay = ko.utils.unwrapObservable(options['if']);
 	                if (shouldDisplay && 'ifnot' in options)
 	                    shouldDisplay = !ko.utils.unwrapObservable(options['ifnot']);
-	
+
 	                dataValue = ko.utils.unwrapObservable(options['data']);
 	            }
-	
+
 	            if ('foreach' in options) {
 	                // Render once for each data point (treating data set as empty if shouldDisplay==false)
 	                var dataArray = (shouldDisplay && options['foreach']) || [];
@@ -7603,27 +7603,27 @@
 	                    bindingContext;                                                        // Given no explicit 'data' value, we retain the same binding context
 	                templateComputed = ko.renderTemplate(templateName || element, innerBindingContext, options, element);
 	            }
-	
+
 	            // It only makes sense to have a single template computed per element (otherwise which one should have its output displayed?)
 	            disposeOldComputedAndStoreNewOne(element, templateComputed);
 	        }
 	    };
-	
+
 	    // Anonymous templates can't be rewritten. Give a nice error message if you try to do it.
 	    ko.expressionRewriting.bindingRewriteValidators['template'] = function(bindingValue) {
 	        var parsedBindingValue = ko.expressionRewriting.parseObjectLiteral(bindingValue);
-	
+
 	        if ((parsedBindingValue.length == 1) && parsedBindingValue[0]['unknown'])
 	            return null; // It looks like a string literal, not an object literal, so treat it as a named template (which is allowed for rewriting)
-	
+
 	        if (ko.expressionRewriting.keyValueArrayContainsKey(parsedBindingValue, "name"))
 	            return null; // Named templates can be rewritten, so return "no error"
 	        return "This template engine does not support anonymous templates nested within its templates";
 	    };
-	
+
 	    ko.virtualElements.allowedBindings['template'] = true;
 	})();
-	
+
 	ko.exportSymbol('setTemplateEngine', ko.setTemplateEngine);
 	ko.exportSymbol('renderTemplate', ko.renderTemplate);
 	// Go through the items that have been added and deleted and try to find matches between them.
@@ -7644,10 +7644,10 @@
 	        }
 	    }
 	};
-	
+
 	ko.utils.compareArrays = (function () {
 	    var statusNotInOld = 'added', statusNotInNew = 'deleted';
-	
+
 	    // Simple calculation based on Levenshtein distance.
 	    function compareArrays(oldArray, newArray, options) {
 	        // For backward compatibility, if the third arg is actually a bool, interpret
@@ -7655,13 +7655,13 @@
 	        options = (typeof options === 'boolean') ? { 'dontLimitMoves': options } : (options || {});
 	        oldArray = oldArray || [];
 	        newArray = newArray || [];
-	
+
 	        if (oldArray.length < newArray.length)
 	            return compareSmallArrayToBigArray(oldArray, newArray, statusNotInOld, statusNotInNew, options);
 	        else
 	            return compareSmallArrayToBigArray(newArray, oldArray, statusNotInNew, statusNotInOld, options);
 	    }
-	
+
 	    function compareSmallArrayToBigArray(smlArray, bigArray, statusNotInSml, statusNotInBig, options) {
 	        var myMin = Math.min,
 	            myMax = Math.max,
@@ -7672,7 +7672,7 @@
 	            maxDistance = smlIndexMax + bigIndexMax + 1,
 	            thisRow, lastRow,
 	            bigIndexMaxForRow, bigIndexMinForRow;
-	
+
 	        for (smlIndex = 0; smlIndex <= smlIndexMax; smlIndex++) {
 	            lastRow = thisRow;
 	            editDistanceMatrix.push(thisRow = []);
@@ -7692,7 +7692,7 @@
 	                }
 	            }
 	        }
-	
+
 	        var editScript = [], meMinusOne, notInSml = [], notInBig = [];
 	        for (smlIndex = smlIndexMax, bigIndex = bigIndexMax; smlIndex || bigIndex;) {
 	            meMinusOne = editDistanceMatrix[smlIndex][bigIndex] - 1;
@@ -7716,17 +7716,17 @@
 	                }
 	            }
 	        }
-	
+
 	        // Set a limit on the number of consecutive non-matching comparisons; having it a multiple of
 	        // smlIndexMax keeps the time complexity of this algorithm linear.
 	        ko.utils.findMovesInArrayComparison(notInBig, notInSml, !options['dontLimitMoves'] && smlIndexMax * 10);
-	
+
 	        return editScript.reverse();
 	    }
-	
+
 	    return compareArrays;
 	})();
-	
+
 	ko.exportSymbol('utils.compareArrays', ko.utils.compareArrays);
 	(function () {
 	    // Objective:
@@ -7735,23 +7735,23 @@
 	    // * Next time we're given the same combination of things (with the array possibly having mutated), update the container DOM node
 	    //   so that its children is again the concatenation of the mappings of the array elements, but don't re-map any array elements that we
 	    //   previously mapped - retain those nodes, and just insert/delete other ones
-	
+
 	    // "callbackAfterAddingNodes" will be invoked after any "mapping"-generated nodes are inserted into the container node
 	    // You can use this, for example, to activate bindings on those nodes.
-	
+
 	    function mapNodeAndRefreshWhenChanged(containerNode, mapping, valueToMap, callbackAfterAddingNodes, index) {
 	        // Map this array value inside a dependentObservable so we re-map when any dependency changes
 	        var mappedNodes = [];
 	        var dependentObservable = ko.dependentObservable(function() {
 	            var newMappedNodes = mapping(valueToMap, index, ko.utils.fixUpContinuousNodeArray(mappedNodes, containerNode)) || [];
-	
+
 	            // On subsequent evaluations, just replace the previously-inserted DOM nodes
 	            if (mappedNodes.length > 0) {
 	                ko.utils.replaceDomNodes(mappedNodes, newMappedNodes);
 	                if (callbackAfterAddingNodes)
 	                    ko.dependencyDetection.ignore(callbackAfterAddingNodes, null, [valueToMap, newMappedNodes, index]);
 	            }
-	
+
 	            // Replace the contents of the mappedNodes array, thereby updating the record
 	            // of which nodes would be deleted if valueToMap was itself later removed
 	            mappedNodes.length = 0;
@@ -7759,10 +7759,10 @@
 	        }, null, { disposeWhenNodeIsRemoved: containerNode, disposeWhen: function() { return !ko.utils.anyDomNodeIsAttachedToDocument(mappedNodes); } });
 	        return { mappedNodes : mappedNodes, dependentObservable : (dependentObservable.isActive() ? dependentObservable : undefined) };
 	    }
-	
+
 	    var lastMappingResultDomDataKey = ko.utils.domData.nextKey(),
 	        deletedItemDummyValue = ko.utils.domData.nextKey();
-	
+
 	    ko.utils.setDomNodeChildrenFromArrayMapping = function (domNode, array, mapping, options, callbackAfterAddingNodes) {
 	        // Compare the provided array against the previous one
 	        array = array || [];
@@ -7771,19 +7771,19 @@
 	        var lastMappingResult = ko.utils.domData.get(domNode, lastMappingResultDomDataKey) || [];
 	        var lastArray = ko.utils.arrayMap(lastMappingResult, function (x) { return x.arrayEntry; });
 	        var editScript = ko.utils.compareArrays(lastArray, array, options['dontLimitMoves']);
-	
+
 	        // Build the new mapping result
 	        var newMappingResult = [];
 	        var lastMappingResultIndex = 0;
 	        var newMappingResultIndex = 0;
-	
+
 	        var nodesToDelete = [];
 	        var itemsToProcess = [];
 	        var itemsForBeforeRemoveCallbacks = [];
 	        var itemsForMoveCallbacks = [];
 	        var itemsForAfterAddCallbacks = [];
 	        var mapData;
-	
+
 	        function itemMovedOrRetained(editScriptIndex, oldPosition) {
 	            mapData = lastMappingResult[oldPosition];
 	            if (newMappingResultIndex !== oldPosition)
@@ -7794,7 +7794,7 @@
 	            newMappingResult.push(mapData);
 	            itemsToProcess.push(mapData);
 	        }
-	
+
 	        function callCallback(callback, items) {
 	            if (callback) {
 	                for (var i = 0, n = items.length; i < n; i++) {
@@ -7806,20 +7806,20 @@
 	                }
 	            }
 	        }
-	
+
 	        for (var i = 0, editScriptItem, movedIndex; editScriptItem = editScript[i]; i++) {
 	            movedIndex = editScriptItem['moved'];
 	            switch (editScriptItem['status']) {
 	                case "deleted":
 	                    if (movedIndex === undefined) {
 	                        mapData = lastMappingResult[lastMappingResultIndex];
-	
+
 	                        // Stop tracking changes to the mapping for these nodes
 	                        if (mapData.dependentObservable) {
 	                            mapData.dependentObservable.dispose();
 	                            mapData.dependentObservable = undefined;
 	                        }
-	
+
 	                        // Queue these nodes for later removal
 	                        if (ko.utils.fixUpContinuousNodeArray(mapData.mappedNodes, domNode).length) {
 	                            if (options['beforeRemove']) {
@@ -7838,11 +7838,11 @@
 	                    }
 	                    lastMappingResultIndex++;
 	                    break;
-	
+
 	                case "retained":
 	                    itemMovedOrRetained(i, lastMappingResultIndex++);
 	                    break;
-	
+
 	                case "added":
 	                    if (movedIndex !== undefined) {
 	                        itemMovedOrRetained(i, movedIndex);
@@ -7856,42 +7856,42 @@
 	                    break;
 	            }
 	        }
-	
+
 	        // Store a copy of the array items we just considered so we can difference it next time
 	        ko.utils.domData.set(domNode, lastMappingResultDomDataKey, newMappingResult);
-	
+
 	        // Call beforeMove first before any changes have been made to the DOM
 	        callCallback(options['beforeMove'], itemsForMoveCallbacks);
-	
+
 	        // Next remove nodes for deleted items (or just clean if there's a beforeRemove callback)
 	        ko.utils.arrayForEach(nodesToDelete, options['beforeRemove'] ? ko.cleanNode : ko.removeNode);
-	
+
 	        // Next add/reorder the remaining items (will include deleted items if there's a beforeRemove callback)
 	        for (var i = 0, nextNode = ko.virtualElements.firstChild(domNode), lastNode, node; mapData = itemsToProcess[i]; i++) {
 	            // Get nodes for newly added items
 	            if (!mapData.mappedNodes)
 	                ko.utils.extend(mapData, mapNodeAndRefreshWhenChanged(domNode, mapping, mapData.arrayEntry, callbackAfterAddingNodes, mapData.indexObservable));
-	
+
 	            // Put nodes in the right place if they aren't there already
 	            for (var j = 0; node = mapData.mappedNodes[j]; nextNode = node.nextSibling, lastNode = node, j++) {
 	                if (node !== nextNode)
 	                    ko.virtualElements.insertAfter(domNode, node, lastNode);
 	            }
-	
+
 	            // Run the callbacks for newly added nodes (for example, to apply bindings, etc.)
 	            if (!mapData.initialized && callbackAfterAddingNodes) {
 	                callbackAfterAddingNodes(mapData.arrayEntry, mapData.mappedNodes, mapData.indexObservable);
 	                mapData.initialized = true;
 	            }
 	        }
-	
+
 	        // If there's a beforeRemove callback, call it after reordering.
 	        // Note that we assume that the beforeRemove callback will usually be used to remove the nodes using
 	        // some sort of animation, which is why we first reorder the nodes that will be removed. If the
 	        // callback instead removes the nodes right away, it would be more efficient to skip reordering them.
 	        // Perhaps we'll make that change in the future if this scenario becomes more common.
 	        callCallback(options['beforeRemove'], itemsForBeforeRemoveCallbacks);
-	
+
 	        // Replace the stored values of deleted items with a dummy value. This provides two benefits: it marks this item
 	        // as already "removed" so we won't call beforeRemove for it again, and it ensures that the item won't match up
 	        // with an actual item in the array and appear as "retained" or "moved".
@@ -7900,25 +7900,25 @@
 	                itemsForBeforeRemoveCallbacks[i].arrayEntry = deletedItemDummyValue;
 	            }
 	        }
-	
+
 	        // Finally call afterMove and afterAdd callbacks
 	        callCallback(options['afterMove'], itemsForMoveCallbacks);
 	        callCallback(options['afterAdd'], itemsForAfterAddCallbacks);
 	    }
 	})();
-	
+
 	ko.exportSymbol('utils.setDomNodeChildrenFromArrayMapping', ko.utils.setDomNodeChildrenFromArrayMapping);
 	ko.nativeTemplateEngine = function () {
 	    this['allowTemplateRewriting'] = false;
 	}
-	
+
 	ko.nativeTemplateEngine.prototype = new ko.templateEngine();
 	ko.nativeTemplateEngine.prototype.constructor = ko.nativeTemplateEngine;
 	ko.nativeTemplateEngine.prototype['renderTemplateSource'] = function (templateSource, bindingContext, options, templateDocument) {
 	    var useNodesIfAvailable = !(ko.utils.ieVersion < 9), // IE<9 cloneNode doesn't work properly
 	        templateNodesFunc = useNodesIfAvailable ? templateSource['nodes'] : null,
 	        templateNodes = templateNodesFunc ? templateSource['nodes']() : null;
-	
+
 	    if (templateNodes) {
 	        return ko.utils.makeArray(templateNodes.cloneNode(true).childNodes);
 	    } else {
@@ -7926,10 +7926,10 @@
 	        return ko.utils.parseHtmlFragment(templateText, templateDocument);
 	    }
 	};
-	
+
 	ko.nativeTemplateEngine.instance = new ko.nativeTemplateEngine();
 	ko.setTemplateEngine(ko.nativeTemplateEngine.instance);
-	
+
 	ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
 	(function() {
 	    ko.jqueryTmplTemplateEngine = function () {
@@ -7947,53 +7947,53 @@
 	                    return 2; // Final version of jquery.tmpl
 	                }
 	            } catch(ex) { /* Apparently not the version we were looking for */ }
-	
+
 	            return 1; // Any older version that we don't support
 	        })();
-	
+
 	        function ensureHasReferencedJQueryTemplates() {
 	            if (jQueryTmplVersion < 2)
 	                throw new Error("Your version of jQuery.tmpl is too old. Please upgrade to jQuery.tmpl 1.0.0pre or later.");
 	        }
-	
+
 	        function executeTemplate(compiledTemplate, data, jQueryTemplateOptions) {
 	            return jQueryInstance['tmpl'](compiledTemplate, data, jQueryTemplateOptions);
 	        }
-	
+
 	        this['renderTemplateSource'] = function(templateSource, bindingContext, options, templateDocument) {
 	            templateDocument = templateDocument || document;
 	            options = options || {};
 	            ensureHasReferencedJQueryTemplates();
-	
+
 	            // Ensure we have stored a precompiled version of this template (don't want to reparse on every render)
 	            var precompiled = templateSource['data']('precompiled');
 	            if (!precompiled) {
 	                var templateText = templateSource['text']() || "";
 	                // Wrap in "with($whatever.koBindingContext) { ... }"
 	                templateText = "{{ko_with $item.koBindingContext}}" + templateText + "{{/ko_with}}";
-	
+
 	                precompiled = jQueryInstance['template'](null, templateText);
 	                templateSource['data']('precompiled', precompiled);
 	            }
-	
+
 	            var data = [bindingContext['$data']]; // Prewrap the data in an array to stop jquery.tmpl from trying to unwrap any arrays
 	            var jQueryTemplateOptions = jQueryInstance['extend']({ 'koBindingContext': bindingContext }, options['templateOptions']);
-	
+
 	            var resultNodes = executeTemplate(precompiled, data, jQueryTemplateOptions);
 	            resultNodes['appendTo'](templateDocument.createElement("div")); // Using "appendTo" forces jQuery/jQuery.tmpl to perform necessary cleanup work
-	
+
 	            jQueryInstance['fragments'] = {}; // Clear jQuery's fragment cache to avoid a memory leak after a large number of template renders
 	            return resultNodes;
 	        };
-	
+
 	        this['createJavaScriptEvaluatorBlock'] = function(script) {
 	            return "{{ko_code ((function() { return " + script + " })()) }}";
 	        };
-	
+
 	        this['addTemplate'] = function(templateName, templateMarkup) {
 	            document.write("<script type='text/html' id='" + templateName + "'>" + templateMarkup + "<" + "/script>");
 	        };
-	
+
 	        if (jQueryTmplVersion > 0) {
 	            jQueryInstance['tmpl']['tag']['ko_code'] = {
 	                open: "__.push($1 || '');"
@@ -8004,21 +8004,21 @@
 	            };
 	        }
 	    };
-	
+
 	    ko.jqueryTmplTemplateEngine.prototype = new ko.templateEngine();
 	    ko.jqueryTmplTemplateEngine.prototype.constructor = ko.jqueryTmplTemplateEngine;
-	
+
 	    // Use this one by default *only if jquery.tmpl is referenced*
 	    var jqueryTmplTemplateEngineInstance = new ko.jqueryTmplTemplateEngine();
 	    if (jqueryTmplTemplateEngineInstance.jQueryTmplVersion > 0)
 	        ko.setTemplateEngine(jqueryTmplTemplateEngineInstance);
-	
+
 	    ko.exportSymbol('jqueryTmplTemplateEngine', ko.jqueryTmplTemplateEngine);
 	})();
 	}));
 	}());
 	})();
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(38)(module)))
 
 /***/ },
@@ -8046,4 +8046,3 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=popup-46de67f688c56b556b3b.js.map
