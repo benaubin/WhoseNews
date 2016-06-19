@@ -88,7 +88,8 @@
 	      title: "brand-request"
 	    }, function(res) {
 	      return callback({
-	        brand: res.brand
+	        brand: res != null ? res.brand : void 0,
+	        title: "brand"
 	      });
 	    });
 	  });

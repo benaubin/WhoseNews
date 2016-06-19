@@ -3,23 +3,26 @@ popupStyles = require '../styles/popup'
 ko = require 'knockout'
 
 $ ->
-  $('.business-info').hide()
-  $('.none').hide()
-
   throw "Something's not right" unless Materialize
   $(".button-collapse").sideNav()
 
-  # TODO: Find a way to do this cross browser
-  chrome.runtime.sendMessage title: "brand-request", (response) ->
-    $('.loading').hide()
-    if response?.brand
-      $('.business-info').show()
-      brand = Brand.fromJSON response.brand
-      console.log brand
-      console.log brand.parents()
-      BrandViewModel = ->
-        @brand = brand
-        @parents = brand.parents()
-      ko.applyBindings new BrandViewModel()
-    else
-      $('.none').show()
+  window.addEventListener "message", (message) ->
+    console.log "iframe got message", message
+    {data} = message
+    if data?.title == "brand"
+      $('.wn-cloak').hide().removeClass ".wn-cloak"
+      $('.loading').hide()
+      if data?.brand
+        $('.business-info').show()
+        brand = Brand.fromJSON data.brand
+        console.log brand
+        console.log brand.parents()
+        class BrandViewModel
+          constructor: ->
+            @brand = brand
+            @parents = brand.parents()
+        ko.applyBindings new BrandViewModel()
+      else
+        $('.none').show()
+  , false
+  window.parent.postMessage title: "brand-request", "*"

@@ -1,0 +1,11 @@
+.seamless {
+  background-color: transparent;
+  border: 0px none transparent;
+  overflow: visible;
+}
+html, body, .seamless {
+  height: 500px;
+  width: 400px;
+  padding: 0;
+  margin: 0;
+}

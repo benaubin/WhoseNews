@@ -17,12 +17,15 @@ browser_action:
   default_icon:
     19: "{{../shared/img/Whose-News-Icon-Small19.png}}"
     38: "{{../shared/img/Whose-News-Icon38.png}}"
-  default_popup: "{{../shared/views/popup/index.slim}}"
+  default_popup: "{{./views/popup/index}}"
   default_title: "Whose News: No news detected"
 
 permissions: []
 
 author: "Ben from BenSites.com, ess090502, and contributors"
+
+sandbox:
+  pages: ["{{../shared/views/popup/index}}"]
 
 background:
   scripts: [

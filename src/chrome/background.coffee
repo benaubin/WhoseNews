@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener (message, sender, sendResponse) ->
 getCurrentTabBrandInfo = (callback) ->
   chrome.tabs.query lastFocusedWindow: true, active: true, (tabs) ->
     chrome.tabs.sendMessage tabs[0].id, title: "brand-request", (res) ->
-      callback brand: res.brand
+      callback brand: res?.brand, title: "brand"
 
 
 
