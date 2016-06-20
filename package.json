@@ -1,6 +1,6 @@
 {
   "name": "whose-news",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An extension to tell you where your news comes from",
   "main": "src/node/node.js",
   "scripts": {

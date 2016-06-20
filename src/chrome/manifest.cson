@@ -1,7 +1,7 @@
 manifest_version: 2
 name: "Whose News"
 description: "An extension to tell you where your news comes from"
-version: "0.1.0"
+version: "0.1.1"
 
 icons:
   16: "{{../shared/img/Whose-News-Icon-Small16.png}}"
