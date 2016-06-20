@@ -1,0 +1,40 @@
+Brand = require '../../../brand'
+popupStyles = require '../styles/popup'
+angular = require 'angular'
+
+class App extends App
+  constructor: ->
+    return []
+
+class Main extends Controller
+  constructor: (BrandRequest) ->
+    BrandRequest().then (@brand) =>
+      @loaded = true
+      console.log "got brand into controller", @brand
+    , =>
+      @loaded = true
+      console.log "no brand"
+
+class BrandRequest extends Factory
+  constructor: ($q) ->
+    return ->
+      console.log "starting request..."
+      $q (resolve, reject) ->
+        id = (Math.random() + Math.random()) * Date.now()
+        console.log "iframe message id", id
+        window.addEventListener "message", (message) ->
+          console.log "iframe got message", message
+          {data} = message
+          if data?.title == "brand" && data?.id == id
+            console.log "iframe accepting message", message
+            if data?.brand
+              brand = Brand.fromJSON data.brand
+              console.log "Brand", brand
+              resolve brand
+            else
+              reject message
+        window.parent.postMessage title: "brand-request", id: id, "*"
+
+$ ->
+  throw "Something's not right" unless Materialize
+  $(".button-collapse").sideNav()

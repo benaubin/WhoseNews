@@ -49,13 +49,15 @@
 	holderStyles = __webpack_require__(1);
 
 	window.addEventListener("message", function(message) {
-	  var data;
+	  var data, id;
 	  data = message.data;
 	  console.log("got message", data);
 	  if ((data != null ? data.title : void 0) === "brand-request") {
+	    console.log("id", id = data.id);
 	    return chrome.runtime.sendMessage({
 	      title: "brand-request"
 	    }, function(data) {
+	      data.id = id;
 	      console.log("sending message", data);
 	      return document.getElementById("app").contentWindow.postMessage(data, '*');
 	    });

@@ -9,11 +9,12 @@ module.exports =
     loaders: ["html?interpolate", "slm"]
   loaders: [
       { test: /\.coffee$/, loader: "coffee-loader" }
+      { test: /\.coffee\.ng-classify$/, loaders: ["coffee-loader", "ng-classify-loader"] }
       { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee-loader?literate" }
       { test: /\.md$/, loaders: ["html?interpolate", "markdown"] }
       {
         test: /\.(slm|slim)/
-        loaders: [fileLoader('html'), "extricate", "interpolate", "slm"]
+        loaders: [fileLoader('html'), "extricate", "interpolate?prefix=[{{&suffix=}}]", "slm"]
       }
       {
         test: /\.(jpe?g|png|gif|svg)$/i
@@ -39,7 +40,8 @@ module.exports =
       ".web.js"
       ".js"
       '.cson'
-      '.coffee',
+      '.coffee'
+      '.coffee.ng-classify'
       '.slim'
       '.scss'
       'css'

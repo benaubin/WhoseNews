@@ -25,7 +25,7 @@ module.exports = class Brand
   parents: ->
     parents = []
     p = @
-    parents.concat p.parent while p = p.parent
+    parents.push p while p = p?.parent
     parents
   toJSON: ->
     # Create a json object with everything needed to reinitalize this object

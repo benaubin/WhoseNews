@@ -148,8 +148,8 @@
 	    var p, parents;
 	    parents = [];
 	    p = this;
-	    while (p = p.parent) {
-	      parents.concat(p.parent);
+	    while (p = p != null ? p.parent : void 0) {
+	      parents.push(p);
 	    }
 	    return parents;
 	  };
