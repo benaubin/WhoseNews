@@ -16,4 +16,3 @@ window.addEventListener "message", (message) ->
       console.log("sending message", data)
       # And send back the response, example: {title: "brand", id, brand}
       document.getElementById("app").contentWindow.postMessage data, '*'
-'
