@@ -1,12 +1,12 @@
 doctype html
 html
   head
-    script src="{{file!jquery/dist/jquery.js}}"
-    script src="{{file!materialize-css/bin/materialize.js}}"
-    script src="{{entry?name=popup-[hash].js!./scripts/popup}}"
+    script src="[{{file!jquery/dist/jquery.js}}]"
+    script src="[{{file!materialize-css/bin/materialize.js}}]"
+    script src="[{{entry?name=popup-[hash].js!./scripts/popup}}]"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
-  body
-    nav
+  body ng-app="app" ng-controller="mainController as main"
+    nav.blue-grey.darken-4
       div.nav-wrapper
         a.brand-logo href="#" Whose News
         a.button-collapse.hoverable data-activates="popup-main-nav"
@@ -19,27 +19,40 @@ html
           li
             a href="#/settings" Settings
     .container
-      .loading
-        p Loading.
-      .none.wn-cloak
-        p
-          b No media brand detected on this page.
-      .business-info.wn-cloak
-        ul class="collapsible popout" data-collapsible="accordion"
+      .loading ng-hide="main.loaded"
+        .progress
+          .indeterminate
+      p.flow-text.none.ng-cloak ng-show="main.loaded && !main.brand"
+        | No media brand detected on this page.
+      .business-info.ng-cloak ng-show="main.brand"
+        ul.collapsible.popout data-collapsible="accordion"
           li
             .collapsible-header.active
               i.material-icons web
-              span data-bind="text: brand.name"
-            div class="collapsible-body"
-              p data-bind="text: brand.description"
-          li
+              | {{main.brand.name}}
+            div.collapsible-body
+              p
+                | {{main.brand.description}}
+          li ng-repeat="company in main.brand.parents()"
             .collapsible-header
               i.material-icons business
-              | Unknown Co.
+              | {{company.name}}
+              span ng-if="company.shortName"
+                |  -&nbsp;
+                b
+                  | ({{company.shortName}})
             .collapsible-body
-              p Lorem ipsum dolor sit amet.
-          ul.tabs
-            li.tab.col.s3
-              a.action Investor 1
-            li.tab.col.s3
-              a.action Investor 2
+              p
+                | {{company.description}}
+              / When investors are ready:
+              / ul.collapsible data-collapsible="accordion"
+              /   li data-bind="foreach: investors"
+              /    .collapsible-header
+              /      i.material-icons business
+              /      span data-bind="text: name"
+              /      span data-bind="if: shortName"
+              /        |&nbsp;(
+              /        span data-bind="text: shortName"
+              /        |)
+              /    .collapsible-body
+              /      p data-bind="text: description"

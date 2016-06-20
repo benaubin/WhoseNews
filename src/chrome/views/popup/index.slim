@@ -1,8 +1,8 @@
 doctype html
 html
   head
-    script src="{{entry?name=popup-chrome-[hash].js!./popup}}"
+    script src="[{{entry?name=popup-chrome-[hash].js!./popup}}]"
     meta name="viewport" content="width=device-width, initial-scale=1.0"
     css:
   body
-    iframe.seamless#app src="{{../../../shared/views/popup/index}}" height="500" width="400"
+    iframe.seamless#app src="[{{../../../shared/views/popup/index}}]" height="500" width="400"
