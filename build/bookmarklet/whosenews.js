@@ -1881,7 +1881,7 @@
 
 
 	// module
-	exports.push([module.id, "#whose-news-holder {\n  position: fixed;\n  top: 50px;\n  right: 50px;\n  z-index: 10000000000000000;\n  height: 500px;\n  width: 400px;\n  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);\n}\n\n#whose-news-holder .seamless {\n  height: 500px;\n  width: 400px;\n  background-color: transparent;\n  border: 0px none transparent;\n  overflow: visible;\n}", ""]);
+	exports.push([module.id, "#whose-news-holder {\n  position: fixed;\n  top: 50px;\n  right: 50px;\n  z-index: 10000000000000000;\n  height: 500px;\n  width: 400px;\n  background: white;\n  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);\n}\n\n#whose-news-holder .seamless {\n  height: 500px;\n  width: 400px;\n  background-color: transparent;\n  border: 0px none transparent;\n  overflow: visible;\n}", ""]);
 
 	// exports
 
