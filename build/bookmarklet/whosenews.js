@@ -44,61 +44,56 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var appFrame, appWindow, body, corporations, h, holder, popupPath, scriptTag;
+	var appFrame, appWindow, body, corporations, holder, popupPath, scriptTag;
 
-	corporations = __webpack_require__(4);
-
-	popupPath = __webpack_require__(18);
-
-	body = document.getElementsByTagName('body')[0];
-
-	scriptTag = document.getElementById("whose-news-script");
-
-	if (h = document.getElementById('whose-news-holder')) {
-	  body.removeChild(h);
+	if (window.closeWhoseNews != null) {
+	  window.closeWhoseNews();
+	  document.getElementsByTagName('body')[0].removeChild(document.getElementById("whose-news-script"));
+	} else if (window.whoseNewsLoading) {
+	  document.getElementsByTagName('body')[0].removeChild(document.getElementById("whose-news-script"));
+	} else {
+	  window.whoseNewsLoading = true;
+	  corporations = __webpack_require__(4);
+	  popupPath = __webpack_require__(18);
+	  body = document.getElementsByTagName('body')[0];
+	  scriptTag = document.getElementById("whose-news-script");
+	  if (!__webpack_require__(19)) {
+	    throw "Missing css";
+	  }
+	  holder = document.createElement('div');
+	  holder.innerHTML = __webpack_require__(23);
+	  holder.id = 'whose-news-holder';
+	  body.appendChild(holder);
+	  appFrame = document.getElementById("whose-news-app");
+	  appWindow = appFrame.contentWindow;
+	  appFrame.src = scriptTag.getAttribute('data-origin') + '/' + popupPath;
+	  window.closeWhoseNews = function() {
+	    delete window.closeWhoseNews;
+	    body.removeChild(scriptTag);
+	    return body.removeChild(holder);
+	  };
+	  window.whoseNewsLoading = false;
+	  window.addEventListener("message", function(message) {
+	    var brand, data, id, response;
+	    data = message.data;
+	    console.log("got message", data);
+	    if ((data != null ? data.title : void 0) === "brand-request") {
+	      console.log("id", id = data.id);
+	      brand = corporations.brands().fromHostname(location.hostname);
+	      response = {
+	        title: 'brand',
+	        brand: brand.toJSON(),
+	        id: id
+	      };
+	      console.log("sending response", response);
+	      document.getElementById("whose-news-app").contentWindow.postMessage(response, '*');
+	    }
+	    if ((data != null ? data.title : void 0) === "open-url") {
+	      console.log("Opening url");
+	      return window.open(data.url);
+	    }
+	  });
 	}
-
-	if (!__webpack_require__(19)) {
-	  throw "Missing css";
-	}
-
-	holder = document.createElement('div');
-
-	holder.innerHTML = __webpack_require__(23);
-
-	holder.id = 'whose-news-holder';
-
-	body.appendChild(holder);
-
-	appFrame = document.getElementById("whose-news-app");
-
-	appWindow = appFrame.contentWindow;
-
-	appFrame.src = scriptTag.getAttribute('data-origin') + '/' + popupPath;
-
-	window.addEventListener("message", function(message) {
-	  var brand, data, id, response;
-	  data = message.data;
-	  console.log("got message", data);
-	  if ((data != null ? data.title : void 0) === "brand-request") {
-	    console.log("id", id = data.id);
-	    brand = corporations.brands().fromHostname(location.hostname);
-	    response = {
-	      title: 'brand',
-	      brand: brand.toJSON(),
-	      id: id
-	    };
-	    console.log("sending response", response);
-	    document.getElementById("whose-news-app").contentWindow.postMessage(response, '*');
-	  }
-	  if ((data != null ? data.title : void 0) === "open-url") {
-	    console.log("Opening url");
-	    window.open(data.url);
-	  }
-	  if ((data != null ? data.title : void 0) === "close") {
-	    return document.getElementsByTagName('body')[0].removeChild(holder);
-	  }
-	});
 
 
 /***/ },
