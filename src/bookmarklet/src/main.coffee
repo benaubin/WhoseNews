@@ -1,4 +1,13 @@
 corporations = require '../../shared/corporations'
+popupPath = require '../../shared/views/popup/index'
+
+# Set the body to a local variable
+body = document.getElementsByTagName('body')[0]
+# Set the script tag of Whose News to a local variable
+scriptTag = document.getElementById("whose-news-script")
+
+if h = document.getElementById 'whose-news-holder'
+  body.removeChild h
 
 # Require styles
 throw "Missing css" unless require './pagestyles'
@@ -9,7 +18,14 @@ holder.innerHTML = require '!!raw!extricate!interpolate?prefix=[{{&suffix=}}]!sl
 # Set the id of the container
 holder.id = 'whose-news-holder'
 # Append the holder to the body of the page
-document.getElementsByTagName('body')[0].appendChild holder
+body.appendChild holder
+
+# Set the app frame to a local variable
+appFrame = document.getElementById("whose-news-app")
+# Set the window to a local variable
+appWindow = appFrame.contentWindow
+
+appFrame.src = scriptTag.getAttribute('data-origin') + '/' + popupPath
 
 # Create an event listener for messages
 window.addEventListener "message", (message) ->
@@ -23,10 +39,10 @@ window.addEventListener "message", (message) ->
     # Get the brand
     brand = corporations.brands().fromHostname location.hostname
     # Create a response
-    response = {title: 'brand', id, brand}
-    # send response
+    response = {title: 'brand', brand: brand.toJSON(), id}
+    # Send response
     console.log("sending response", response)
-    document.getElementById("app").contentWindow.postMessage response, '*'
+    document.getElementById("whose-news-app").contentWindow.postMessage response, '*'
   if data?.title == "open-url"
     console.log "Opening url"
     window.open data.url

@@ -44,9 +44,19 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var corporations, holder;
+	var appFrame, appWindow, body, corporations, h, holder, popupPath, scriptTag;
 
-	corporations = __webpack_require__(5);
+	corporations = __webpack_require__(4);
+
+	popupPath = __webpack_require__(18);
+
+	body = document.getElementsByTagName('body')[0];
+
+	scriptTag = document.getElementById("whose-news-script");
+
+	if (h = document.getElementById('whose-news-holder')) {
+	  body.removeChild(h);
+	}
 
 	if (!__webpack_require__(19)) {
 	  throw "Missing css";
@@ -58,7 +68,13 @@
 
 	holder.id = 'whose-news-holder';
 
-	document.getElementsByTagName('body')[0].appendChild(holder);
+	body.appendChild(holder);
+
+	appFrame = document.getElementById("whose-news-app");
+
+	appWindow = appFrame.contentWindow;
+
+	appFrame.src = scriptTag.getAttribute('data-origin') + '/' + popupPath;
 
 	window.addEventListener("message", function(message) {
 	  var brand, data, id, response;
@@ -69,11 +85,11 @@
 	    brand = corporations.brands().fromHostname(location.hostname);
 	    response = {
 	      title: 'brand',
-	      id: id,
-	      brand: brand
+	      brand: brand.toJSON(),
+	      id: id
 	    };
 	    console.log("sending response", response);
-	    document.getElementById("app").contentWindow.postMessage(response, '*');
+	    document.getElementById("whose-news-app").contentWindow.postMessage(response, '*');
 	  }
 	  if ((data != null ? data.title : void 0) === "open-url") {
 	    console.log("Opening url");
@@ -89,15 +105,14 @@
 /* 1 */,
 /* 2 */,
 /* 3 */,
-/* 4 */,
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Corporation, corporations, corporationsData, data;
 
-	data = __webpack_require__(6);
+	data = __webpack_require__(5);
 
-	Corporation = __webpack_require__(7);
+	Corporation = __webpack_require__(6);
 
 	corporationsData = data.corporations;
 
@@ -107,7 +122,7 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -246,16 +261,16 @@
 	};
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Corporation, CorporationList, assert, objectAssign, ownershipTypes;
 
-	objectAssign = __webpack_require__(8);
+	objectAssign = __webpack_require__(7);
 
-	assert = __webpack_require__(9);
+	assert = __webpack_require__(8);
 
-	CorporationList = __webpack_require__(14);
+	CorporationList = __webpack_require__(13);
 
 	ownershipTypes = {
 	  subsidiary: 'subsidiaries',
@@ -290,7 +305,7 @@
 	      this.divisions = Corporation.extractFromObject(divisions, this, "division");
 	    }
 	    if (brands) {
-	      this.brands = __webpack_require__(17).extractFromObject(this, brands);
+	      this.brands = __webpack_require__(16).extractFromObject(this, brands);
 	    }
 	  }
 
@@ -355,7 +370,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -444,7 +459,7 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
@@ -515,7 +530,7 @@
 	// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 	// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var util = __webpack_require__(10);
+	var util = __webpack_require__(9);
 	var hasOwn = Object.prototype.hasOwnProperty;
 	var pSlice = Array.prototype.slice;
 	var functionsHaveNames = (function () {
@@ -941,7 +956,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -1469,7 +1484,7 @@
 	}
 	exports.isPrimitive = isPrimitive;
 
-	exports.isBuffer = __webpack_require__(12);
+	exports.isBuffer = __webpack_require__(11);
 
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -1513,7 +1528,7 @@
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(13);
+	exports.inherits = __webpack_require__(12);
 
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -1531,10 +1546,10 @@
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(11)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(10)))
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -1634,7 +1649,7 @@
 
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -1645,7 +1660,7 @@
 	}
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -1674,12 +1689,12 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var BrandsList;
 
-	BrandsList = __webpack_require__(15);
+	BrandsList = __webpack_require__(14);
 
 	module.exports = function(list) {
 	  (function() {
@@ -1694,12 +1709,12 @@
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayFind;
 
-	arrayFind = __webpack_require__(16);
+	arrayFind = __webpack_require__(15);
 
 	module.exports = function(list) {
 	  (function() {
@@ -1714,7 +1729,7 @@
 
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
 	var polyfill;
@@ -1753,18 +1768,18 @@
 
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Brand, BrandsList, Corporation, arrayFind, regExpEscape;
 
-	regExpEscape = __webpack_require__(18);
+	regExpEscape = __webpack_require__(17);
 
-	arrayFind = __webpack_require__(16);
+	arrayFind = __webpack_require__(15);
 
-	Corporation = __webpack_require__(7);
+	Corporation = __webpack_require__(6);
 
-	BrandsList = __webpack_require__(15);
+	BrandsList = __webpack_require__(14);
 
 	module.exports = Brand = (function() {
 	  Brand.extractFromObject = function(parent, data) {
@@ -1822,13 +1837,19 @@
 
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = function(s) {
 	  return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	};
 
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "index-db95cc2ec1f10b17d8e069b72a402f9e.slim.html";
 
 /***/ },
 /* 19 */
@@ -2182,7 +2203,7 @@
 /* 23 */
 /***/ function(module, exports) {
 
-	module.exports = "<iframe class=\"seamless\" height=\"500\" id=\"whose-news-app\" src=\"index-db95cc2ec1f10b17d8e069b72a402f9e.slim.html\" width=\"400\"></iframe>"
+	module.exports = "<iframe class=\"seamless\" height=\"500\" id=\"whose-news-app\" src=\"about:blank\" width=\"400\"></iframe>"
 
 /***/ }
 /******/ ]);

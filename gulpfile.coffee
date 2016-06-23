@@ -73,10 +73,7 @@ gulp.task 'bookmarklet', ['clean-bookmarklet'], (callback) ->
   gulp.src ['src/bookmarklet/installer/installer.coffee']
     .pipe named()
     .pipe gulpWebpack
-      plugins: [
-        new HtmlWebpackPlugin
-          template: 'src/bookmarklet/installer/installer.slim'
-      ]
+      entry: "!!file?name=[name].html!#{rawSlimLoader}!./src/bookmarklet/installer/installer.slim"
       target: 'web'
       resolve: resolve
       module:
@@ -84,6 +81,7 @@ gulp.task 'bookmarklet', ['clean-bookmarklet'], (callback) ->
       node:
         fs: 'empty'
     .pipe gulp.dest 'build/bookmarklet'
+
 gulp.task 'watch-bookmarklet', ['clean-bookmarklet'], (callback) ->
   gulp.src 'src/bookmarklet/installer/installer.slim'
     .pipe plumber()
