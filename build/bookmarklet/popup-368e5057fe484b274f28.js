@@ -75,6 +75,12 @@
 	        return console.log("no brand");
 	      };
 	    })(this));
+	    this.openURL = function(url) {
+	      return window.parent.postMessage({
+	        title: "open-url",
+	        url: url
+	      }, "*");
+	    };
 	  }
 
 	  return Main;
