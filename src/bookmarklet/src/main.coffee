@@ -40,16 +40,8 @@ else
   # Set the src of the iframe to the popup
   appFrame.src = scriptTag.getAttribute('data-context') + popupPath
 
-  # Create a function to close Whose News
-  window.closeWhoseNews = ->
-    delete window.closeWhoseNews
-    body.removeChild scriptTag
-    body.removeChild holder
-
-  # Unflag that Whose News is loading
-  window.whoseNewsLoading = false
   # Create an event listener for messages
-  window.addEventListener "message", (message) ->
+  messageListener = (message) ->
     # Get the data from the message
     {data} = message
     console.log "got message", data
@@ -67,3 +59,16 @@ else
     if data?.title == "open-url"
       console.log "Opening url"
       window.open data.url
+
+  # Add the event listener
+  window.addEventListener "message", messageListener
+
+  # Create a function to close Whose News
+  window.closeWhoseNews = ->
+    window.removeEventListener "message", messageListener
+    body.removeChild scriptTag
+    body.removeChild holder
+    delete window.closeWhoseNews
+
+  # Unflag that Whose News is loading
+  window.whoseNewsLoading = false
