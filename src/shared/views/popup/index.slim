@@ -33,6 +33,15 @@ html
             div.collapsible-body
               p
                 | {{main.brand.description}}
+              .collection
+                a.collection-item href="#" ng-click="main.openURL(main.brand.url)"
+                  i.material-icons.left link
+                  | Visit
+                a.collection-item href="#" ng-click="main.openURL(main.brand.wikipedia)"
+                  i.material-icons.left language
+                  | Wikipedia
+
+
           li ng-repeat="company in main.brand.parents()"
             .collapsible-header
               i.material-icons business
@@ -44,6 +53,13 @@ html
             .collapsible-body
               p
                 | {{company.description}}
+              .collection
+                a.collection-item href="#" ng-click="main.openURL(company.url)"
+                  i.material-icons.left link
+                  | Visit
+                a.collection-item href="#" ng-click="main.openURL(company.wikipedia)"
+                  i.material-icons.left language
+                  | Wikipedia
               / When investors are ready:
               / ul.collapsible data-collapsible="accordion"
               /   li data-bind="foreach: investors"
