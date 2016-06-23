@@ -60,7 +60,7 @@ else
       # Get the brand
       brand = corporations.brands().fromHostname location.hostname
       # Create a response
-      response = {title: 'brand', brand: brand.toJSON(), id}
+      response = {title: 'brand', brand: brand?.toJSON(), id}
       # Send response
       console.log("sending response", response)
       document.getElementById("whose-news-app").contentWindow.postMessage response, '*'
