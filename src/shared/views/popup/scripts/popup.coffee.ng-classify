@@ -15,6 +15,9 @@ class Main extends Controller
       @loaded = true
       console.log "no brand"
 
+    @openURL = (url) ->
+      window.parent.postMessage title: "open-url", url: url, "*"
+
 class BrandRequest extends Factory
   constructor: ($q) ->
     return ->

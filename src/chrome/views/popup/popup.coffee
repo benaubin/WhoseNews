@@ -16,3 +16,6 @@ window.addEventListener "message", (message) ->
       console.log("sending message", data)
       # And send back the response, example: {title: "brand", id, brand}
       document.getElementById("app").contentWindow.postMessage data, '*'
+  if data?.title == "open-url"
+    console.log "Opening url"
+    chrome.tabs.create url: data.url
