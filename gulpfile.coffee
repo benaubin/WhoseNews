@@ -29,6 +29,8 @@ gulp.task 'clean-chrome', ->
   ]
 gulp.task 'clean-bookmarklet', ->
   del ['build/bookmarklet/*']
+gulp.task 'clean-homepage', ->
+  del ['build/homepage/*']
 
 chromeWebpackConfig =
   target: 'web'
@@ -80,13 +82,13 @@ homepageWebpackConfig =
     loaders: loaders
   node:
     fs: 'empty'
-gulp.task 'homepage', [['clean-bookmarklet', 'bookmarklet-build']]
+gulp.task 'homepage', [['clean-homepage', 'homepage-build']]
 gulp.task 'homepage-build', (callback) ->
   gulp.src ['src/homepage/index.slim']
     .pipe named()
     .pipe gulpWebpack homepageWebpackConfig
     .pipe gulp.dest 'build/homepage'
-gulp.task 'watch-bookmarklet', ['clean-bookmarklet'], (callback) ->
+gulp.task 'watch-homepage', ['clean-bookmarklet'], (callback) ->
   gulp.src ['src/homepage/index.slim']
     .pipe named()
     .pipe gulpWebpack webpackWatch homepageWebpackConfig
