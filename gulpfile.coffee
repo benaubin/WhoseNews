@@ -10,7 +10,7 @@ zip = require 'gulp-vinyl-zip'
 
 {
   fileLoader,
-  slimToStringLoader
+  rawSlimLoader,
   resolve,
   loaders
 } = require('./webpack.config.helpers')
@@ -23,6 +23,9 @@ gulp.task 'clean-build', ->
 gulp.task 'clean-chrome', ->
   gulp.src('build/chrome/*', read: false).pipe clean()
   gulp.src('build/chrome.zip', read: false).pipe clean()
+
+gulp.task 'clean-bookmarklet', ->
+  gulp.src('build/bookmarklet/*', read: false).pipe clean()
 
 gulp.task 'chrome-build', ->
   gulp.src 'src/chrome/manifest.cson'
@@ -66,14 +69,31 @@ gulp.task 'data-pretty-json', ->
 
 gulp.task 'data', ['data-json', 'data-pretty-json']
 
-gulp.task 'bookmarklet', (callback) ->
-  gulp.src ['src/bookmarklet/bookmarklet.coffee']
+gulp.task 'bookmarklet', ['clean-bookmarklet'], (callback) ->
+  gulp.src ['src/bookmarklet/installer/installer.coffee']
     .pipe named()
     .pipe gulpWebpack
+      plugins: [
+        new HtmlWebpackPlugin
+          template: 'src/bookmarklet/installer/installer.slim'
+      ]
       target: 'web'
       resolve: resolve
       module:
-        loaders: loaders.concat slimToStringLoader
+        loaders: loaders
+      node:
+        fs: 'empty'
+    .pipe gulp.dest 'build/bookmarklet'
+gulp.task 'watch-bookmarklet', ['clean-bookmarklet'], (callback) ->
+  gulp.src 'src/bookmarklet/installer/installer.slim'
+    .pipe plumber()
+    .pipe gulpWebpack
+      entry: "!!file?name=[name].html!#{rawSlimLoader}!./src/bookmarklet/installer/installer.slim"
+      watch: true
+      target: 'web'
+      resolve: resolve
+      module:
+        loaders: loaders
       node:
         fs: 'empty'
     .pipe gulp.dest 'build/bookmarklet'

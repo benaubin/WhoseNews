@@ -1,0 +1,18 @@
+#whose-news-holder {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  z-index: 10000000000000000;
+  height: 500px;
+  width: 400px;
+  // Box Shadow (z-depth-5) from materilize-css
+  box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+}
+
+#whose-news-holder .seamless {
+  height: 500px;
+  width: 400px;
+  background-color: transparent;
+  border: 0px none transparent;
+  overflow: visible;
+}

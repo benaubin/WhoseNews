@@ -4,16 +4,18 @@ fileLoader = (extension, name = '[name]') ->
 
 module.exports =
   fileLoader: fileLoader
-  slimToStringLoader:
-    test: /(\.html)?\.(slm|slim)/
-    loaders: ["html?interpolate", "slm"]
+  rawSlimLoader: [
+      "extricate"
+      "interpolate?prefix=[{{&suffix=}}]"
+      "slm"
+    ].join('!')
   loaders: [
-      { test: /\.coffee$/, loader: "coffee-loader" }
+      { test: /\.coffee$/, loader: "coffee" }
       { test: /\.coffee\.ng-classify$/, loaders: ["coffee-loader", "ng-classify-loader"] }
       { test: /\.(coffee\.md|litcoffee)$/, loader: "coffee-loader?literate" }
       { test: /\.md$/, loaders: ["html?interpolate", "markdown"] }
       {
-        test: /\.(slm|slim)/
+        test: /\.sli?m$/
         loaders: [fileLoader('html'), "extricate", "interpolate?prefix=[{{&suffix=}}]", "slm"]
       }
       {
@@ -30,7 +32,7 @@ module.exports =
       { test: /\.css$/, loaders: ["style", "css", "resolve-url"] }
       { test: /\.json$/, loaders: ["json"] }
       { test: /\.yaml$/, loaders: ["json", "yaml"] }
-      { test: /\.cson$/, loaders: ["file?name=[name].json", "extricate", "interpolate", "cson?file"] },
+      { test: /\.cson$/, loaders: ["file?name=[name].json", "extricate", "interpolate", "cson?file"] }
       { test: /\.(eot|ttf|woff2?)$/, loader: fileLoader()}
     ]
   resolve:
@@ -45,4 +47,5 @@ module.exports =
       '.slim'
       '.scss'
       'css'
+      '.js.slim'
     ]
