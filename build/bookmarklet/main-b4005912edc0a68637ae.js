@@ -55,8 +55,10 @@
 	$ = __webpack_require__(4);
 
 	$(function() {
+	  var context;
 	  main = window.location.origin + relPathToAbs(main);
-	  bookmarkletScript += "addScript('" + main + "', '" + window.location.origin + "');";
+	  context = window.location.origin + relPathToAbs('');
+	  bookmarkletScript += "addScript('" + main + "', '" + context + "');";
 	  return $('.whose-news-bookmarklet').attr('href', 'javascript:' + bookmarkletScript);
 	});
 
@@ -65,7 +67,7 @@
 /* 1 */
 /***/ function(module, exports) {
 
-	module.exports = "var addScript;\n\naddScript = function(url, origin) {\n  var el;\n  el = document.createElement('script');\n  el.setAttribute('src', url);\n  el.id = \"whose-news-script\";\n  el.setAttribute('data-origin', origin);\n  return document.body.appendChild(el);\n};\n"
+	module.exports = "var addScript;\n\naddScript = function(url, origin) {\n  var el;\n  el = document.createElement('script');\n  el.setAttribute('src', url);\n  el.id = \"whose-news-script\";\n  el.setAttribute('data-context', origin);\n  return document.body.appendChild(el);\n};\n"
 
 /***/ },
 /* 2 */

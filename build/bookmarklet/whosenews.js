@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var appFrame, appWindow, body, corporations, holder, popupPath, scriptTag;
+	var appFrame, appWindow, body, corporations, holder, messageListener, popupPath, scriptTag;
 
 	if (window.closeWhoseNews != null) {
 	  window.closeWhoseNews();
@@ -66,14 +66,8 @@
 	  body.appendChild(holder);
 	  appFrame = document.getElementById("whose-news-app");
 	  appWindow = appFrame.contentWindow;
-	  appFrame.src = scriptTag.getAttribute('data-origin') + '/' + popupPath;
-	  window.closeWhoseNews = function() {
-	    delete window.closeWhoseNews;
-	    body.removeChild(scriptTag);
-	    return body.removeChild(holder);
-	  };
-	  window.whoseNewsLoading = false;
-	  window.addEventListener("message", function(message) {
+	  appFrame.src = scriptTag.getAttribute('data-context') + popupPath;
+	  messageListener = function(message) {
 	    var brand, data, id, response;
 	    data = message.data;
 	    console.log("got message", data);
@@ -82,7 +76,7 @@
 	      brand = corporations.brands().fromHostname(location.hostname);
 	      response = {
 	        title: 'brand',
-	        brand: brand.toJSON(),
+	        brand: brand != null ? brand.toJSON() : void 0,
 	        id: id
 	      };
 	      console.log("sending response", response);
@@ -92,7 +86,15 @@
 	      console.log("Opening url");
 	      return window.open(data.url);
 	    }
-	  });
+	  };
+	  window.addEventListener("message", messageListener);
+	  window.closeWhoseNews = function() {
+	    window.removeEventListener("message", messageListener);
+	    body.removeChild(scriptTag);
+	    body.removeChild(holder);
+	    return delete window.closeWhoseNews;
+	  };
+	  window.whoseNewsLoading = false;
 	}
 
 

@@ -1,10 +1,10 @@
-gulp = require 'gulp'
+gulp = require 'gulp-run-seq'
 gulpWebpack = require 'webpack-stream'
 webpack = require 'webpack'
 named = require 'vinyl-named'
 rename = require 'gulp-rename'
 yaml = require 'gulp-yaml'
-clean = require 'gulp-clean'
+del = require 'del'
 plumber = require 'gulp-plumber'
 zip = require 'gulp-vinyl-zip'
 
@@ -15,17 +15,20 @@ zip = require 'gulp-vinyl-zip'
   loaders
 } = require('./webpack.config.helpers')
 
-gulp.task "default", ["clean-build", "data", "bookmarklet", "chrome-build"]
+gulp.task "default", [["clean-build", ["bookmarklet-build", "chrome-build"]]]
 
-gulp.task 'clean-build', ['clean-chrome', 'clean-bookmarklet']
-
+gulp.task 'clean-build', ['clean-chrome', 'clean-bookmarklet', 'clean-data']
 gulp.task 'clean-chrome', ->
-  gulp.src('build/chrome/*', read: false).pipe clean()
-  gulp.src('build/chrome.zip', read: false).pipe clean()
-
+  del [
+    'build/chrome/*',
+    'build/chrome.zip'
+  ]
 gulp.task 'clean-bookmarklet', ->
-  gulp.src('build/bookmarklet/*', read: false).pipe clean()
+  del ['build/bookmarklet/*']
+gulp.task 'clean-data', ->
+  del ['build/data/*']
 
+gulp.task 'chrome', [['clean-chrome', 'chrome-build']]
 gulp.task 'chrome-build', ->
   gulp.src 'src/chrome/manifest.cson'
     .pipe plumber()
@@ -39,36 +42,9 @@ gulp.task 'chrome-build', ->
     .pipe gulp.dest 'build/chrome'
     .pipe zip.dest 'build/chrome.zip'
 
-gulp.task 'chrome', ['clean-chrome', 'chrome-build']
 
-gulp.task 'watch-chrome', ['clean-chrome'], ->
-  gulp.src 'src/chrome/manifest.cson'
-    .pipe plumber()
-    .pipe gulpWebpack
-      target: 'web'
-      watch: true
-      resolve: resolve
-      module:
-        loaders: loaders
-      devtool: 'sourcemaps'
-      node:
-        fs: 'empty'
-    .pipe gulp.dest 'build/chrome'
-
-gulp.task 'data-json', ->
-  gulp.src('./src/data.yml')
-  .pipe(yaml())
-  .pipe(gulp.dest('build/data'))
-
-gulp.task 'data-pretty-json', ->
-  gulp.src('./src/data.yml')
-  .pipe(yaml(spaces: 2))
-  .pipe(rename(suffix: "-pretty"))
-  .pipe(gulp.dest('build/data'))
-
-gulp.task 'data', ['data-json', 'data-pretty-json']
-
-gulp.task 'bookmarklet', ['clean-bookmarklet'], (callback) ->
+gulp.task 'bookmarklet', [['clean-bookmarklet', 'bookmarklet-build']]
+gulp.task 'bookmarklet-build', (callback) ->
   gulp.src ['src/bookmarklet/installer/installer.coffee']
     .pipe named()
     .pipe gulpWebpack
@@ -80,7 +56,6 @@ gulp.task 'bookmarklet', ['clean-bookmarklet'], (callback) ->
       node:
         fs: 'empty'
     .pipe gulp.dest 'build/bookmarklet'
-
 gulp.task 'watch-bookmarklet', ['clean-bookmarklet'], (callback) ->
   gulp.src 'src/bookmarklet/installer/installer.slim'
     .pipe plumber()
