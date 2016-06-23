@@ -38,7 +38,7 @@ else
   # Set the window to a local variable
   appWindow = appFrame.contentWindow
   # Set the src of the iframe to the popup
-  appFrame.src = scriptTag.getAttribute('data-origin') + '/' + popupPath
+  appFrame.src = scriptTag.getAttribute('data-context') + popupPath
 
   # Create a function to close Whose News
   window.closeWhoseNews = ->

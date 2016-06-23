@@ -6,5 +6,5 @@ addScript = (url, origin) ->
   el = document.createElement 'script'
   el.setAttribute 'src', url
   el.id = "whose-news-script"
-  el.setAttribute 'data-origin', origin
+  el.setAttribute 'data-context', origin
   document.body.appendChild el

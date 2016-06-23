@@ -5,6 +5,7 @@ $ = require 'jquery'
 
 $ ->
   main = window.location.origin + relPathToAbs(main)
-  bookmarkletScript += "addScript('#{main}', '#{window.location.origin}');"
+  context = window.location.origin + relPathToAbs('')
+  bookmarkletScript += "addScript('#{main}', '#{context}');"
 
   $('.whose-news-bookmarklet').attr('href', 'javascript:' + bookmarkletScript)
