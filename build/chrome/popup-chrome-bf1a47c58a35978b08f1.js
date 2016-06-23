@@ -54,12 +54,18 @@
 	  console.log("got message", data);
 	  if ((data != null ? data.title : void 0) === "brand-request") {
 	    console.log("id", id = data.id);
-	    return chrome.runtime.sendMessage({
+	    chrome.runtime.sendMessage({
 	      title: "brand-request"
 	    }, function(data) {
 	      data.id = id;
 	      console.log("sending message", data);
 	      return document.getElementById("app").contentWindow.postMessage(data, '*');
+	    });
+	  }
+	  if ((data != null ? data.title : void 0) === "open-url") {
+	    console.log("Opening url");
+	    return chrome.tabs.create({
+	      url: data.url
 	    });
 	  }
 	});

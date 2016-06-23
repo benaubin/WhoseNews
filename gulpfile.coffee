@@ -17,8 +17,7 @@ zip = require 'gulp-vinyl-zip'
 
 gulp.task "default", ["clean-build", "data", "bookmarklet", "chrome-build"]
 
-gulp.task 'clean-build', ->
-  gulp.src('build/*', read: false).pipe clean()
+gulp.task 'clean-build', ['clean-chrome', 'clean-bookmarklet']
 
 gulp.task 'clean-chrome', ->
   gulp.src('build/chrome/*', read: false).pipe clean()
