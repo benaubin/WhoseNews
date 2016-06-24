@@ -17,7 +17,7 @@ objectAssign = require 'object-assign'
 } = require('./webpack.config.helpers')
 
 webpackWatch = (config) ->
-  objectAssign watch: true, devtool: 'sourcemaps', config
+  objectAssign watch: true, config
 
 gulp.task "default", [["clean-build", ["bookmarklet-build", "chrome-build"]]]
 
@@ -88,7 +88,7 @@ gulp.task 'homepage-build', (callback) ->
     .pipe named()
     .pipe gulpWebpack homepageWebpackConfig
     .pipe gulp.dest 'build/homepage'
-gulp.task 'watch-homepage', ['clean-bookmarklet'], (callback) ->
+gulp.task 'watch-homepage', ['clean-homepage'], (callback) ->
   gulp.src ['src/homepage/index.slim']
     .pipe named()
     .pipe gulpWebpack webpackWatch homepageWebpackConfig

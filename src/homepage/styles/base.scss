@@ -1,0 +1,17 @@
+@import url("http://fonts.googleapis.com/icon?family=Material+Icons");
+@import "~materialize-css/sass/materialize";
+
+.seamless {
+  background-color: transparent;
+  border: 0px none transparent;
+  overflow: visible;
+}
+
+.hoverable {
+  cursor: pointer;
+}
+
+.center {
+  display: block;
+  margin: auto;
+}
