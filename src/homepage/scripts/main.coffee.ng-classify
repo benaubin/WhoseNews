@@ -1,0 +1,23 @@
+angular = require 'angular'
+
+throw "Styles not loaded" unless require '../styles/base.scss'
+
+class App extends App
+  constructor: ->
+    return []
+
+class Main extends Controller
+  constructor: ->
+    @chrome = chrome?
+    @installChrome = ->
+      console.log "installing"
+      chrome.webstore.install()
+$ ->
+  throw "Something's not right" unless Materialize
+  $(".button-collapse").sideNav()
+
+  $('#platform-grid').isotope({
+    itemSelector: '.col',
+    layoutMode: 'packery'
+  });
+  

@@ -1,0 +1,167 @@
+doctype html
+html
+  head
+    title Whose News
+    script src="[{{file!jquery/dist/jquery.js}}]"
+    script src="[{{file!materialize-css/bin/materialize.js}}]"
+    script src="[{{file!isotope-layout/dist/isotope.pkgd.min.js}}]"
+    script src="[{{file!isotope-packery/packery-mode.pkgd.min.js}}]"
+    script src="[{{entry?name=[name]-[hash].js!./scripts/main}}]"
+    link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/bbenggkmkempdpngmkbldkimcinmefik"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+  body ng-app="app" ng-controller="mainController as main"
+    .navbar-fixed
+      nav.blue-grey.darken-4
+        .nav-wrapper
+          .container
+            a.brand-logo href="#" Whose News
+            a.button-collapse.hoverable data-activates="main-nav"
+              i.material-icons menu
+            ul.right.hide-on-med-and-down
+              li
+                a href="#/" Home
+              li
+                a href="#installation" Installation
+              li
+                a href="#/settings" Settings
+          ul#main-nav.side-nav
+            li
+              a href="#/" Home
+            li
+              a href="#/installation" Installation
+            li
+              a href="#/settings" Settings
+    .container
+      .row
+        .col.s12.m6
+          h1 Whose News
+          p.flow-text
+            | Ever wondered who writes your news? No, not the brand, but the
+              corporations behind them? Like how Comcast owns The Verge (or other
+              surprisingly suspicious ownerships).
+              Whose News lets you know. Quickly, and right in your browser.
+              With all sorts of features designed to let you know of potential
+              conflict of intrests, you'll feel a bit safer reading the news.
+        .col.s12.m6
+          img src="[{{./img/chrome-screenshot.png}}]" width="100%"
+      hr
+      .row
+        h2
+          a.left#installation href="#installation"
+            i.material-icons link
+          | Installation
+        p.flow-text
+          | Whose News runs on a variety of different platforms, so you can just
+            pick one and install it.
+      .row
+        #platform-grid
+          .gutter-sizer
+          .col.s12.m6
+            .card
+              .card-image
+                img src="[{{./img/chrome-webstore-screenshot.png}}]"
+              .card-content
+                span.card-title.black-text Chrome Extension
+                p
+                  | The Chrome Extension is fully featured, which allows you to see
+                    who owns the site you read at a glance, among with many other
+                    more amazing parts of Whose News.
+              .card-reveal
+                span.card-title.grey-text.text-darken-4
+                  | Chrome Extension
+                  i.material-icons.right close
+                .ng-cloak ng-show="main.chrome"
+                  p To install Whose News for Chrome, just click the button below:
+                  .center
+                    a.waves-effect.waves-light.btn-large ng-click="main.installChrome()"
+                      | Install
+                p.ng-cloak ng-hide="main.chrome"
+                  | To install Whose News for Chrome, open this page in Chrome.
+              .card-action
+                a.activator href="#chrome-install" Install Now
+                a href="https://chrome.google.com/webstore/detail/whose-news/bbenggkmkempdpngmkbldkimcinmefik" Chrome Webstore
+          .col.s12.m6
+            .card.grey.lighten-4
+              /.card-image
+              /  img src="[{{./img/chrome-webstore-screenshot.png}}]"
+              .card-content
+                span.card-title.black-text Firefox Addon
+                p
+                  | The Firefox Addon is fully featured, which allows you to see
+                    who owns the site you read at a glance, among with many other
+                    more amazing parts of Whose News. (coming soon)
+              .card-action
+                a Mozilla Addons
+          .col.s12.m6
+            .card.grey.lighten-4
+              /.card-image
+              /  img src="[{{./img/chrome-webstore-screenshot.png}}]"
+              .card-content
+                span.card-title.black-text Safari Extension
+                p
+                  | The Safari Extension helps you see who owns the site you are
+                    on, among with many other more amazing parts of Whose News. (coming soon)
+              .card-action
+                a Safari Extensions Gallery
+          .col.s12.m6.l3
+            .card.grey.lighten-4
+              /.card-image
+              /  img src="[{{./img/chrome-webstore-screenshot.png}}]"
+              .card-content
+                span.card-title.black-text Online
+                p
+                  | Quickly check who owns a site without installing anything. (coming soon)
+              .card-action
+                a href="#try-it" Try it
+          .col.s12.m6.l3
+            .card.grey.lighten-4
+              /.card-image
+              /  img src="[{{./img/chrome-webstore-screenshot.png}}]"
+              .card-content
+                span.card-title.black-text iOS
+                p
+                  | Use a Share Action to check who owns a url, without leaving
+                    the app you're in. (coming soon)
+              .card-action
+                a App Store
+          .col.s12.m6.l3
+            .card
+              .card-image
+                img src="[{{./img/bookmarklet-screenshot.png}}]"
+              .card-content
+                span.card-title.black-text Bookmarklet
+                p
+                  | The bookmarklet lets you use Whose News without installing
+                    an extension to your browser. It's not as fully featured as
+                    an extension, but can work on any browser that supports modern
+                    Javascript.
+              .card-reveal
+                span.card-title.grey-text.text-darken-4
+                  | Bookmarklet
+                  i.material-icons.right close
+                p
+                  | To install the Whose News bookmarklet, just drag the icon
+                    below onto your browser's bookmarks bar.
+                iframe.seamless.center src="[{{../bookmarklet/installer/installer.slim}}]" width="64" height="64"
+              .card-action.hoverable.activator
+                a.activator Install Now
+          .col.s12.m6.l3
+            .card
+              .card-image
+                img src="[{{./img/node-screenshot.png}}]"
+              .card-content
+                span.card-title.black-text Node
+                p
+                  | Whose News for node.js allows developers to use our data
+                    to create anything. They could create a new interface, support
+                    a new browser, or do something no-one has thought of yet.
+              .card-reveal
+                span.card-title.grey-text.text-darken-4
+                  | NPM
+                  i.material-icons.right close
+                p
+                  | To install Whose News, install <code>whose-news</code> via npm.
+                code
+                  | npm install --save whose-news
+              .card-action
+                a.activator href="#node-install" Install Now
