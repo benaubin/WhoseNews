@@ -15,3 +15,9 @@ class Main extends Controller
 $ ->
   throw "Something's not right" unless Materialize
   $(".button-collapse").sideNav()
+
+  $('#platform-grid').isotope({
+    itemSelector: '.col',
+    layoutMode: 'packery'
+  });
+  
