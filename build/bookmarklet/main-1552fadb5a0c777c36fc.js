@@ -63,7 +63,8 @@
 	  main = window.location.origin + relPathToAbs(main);
 	  context = window.location.origin + relPathToAbs('');
 	  bookmarkletScript += "addScript('" + main + "', '" + context + "');";
-	  return $('.whose-news-bookmarklet').attr('href', 'javascript:' + bookmarkletScript);
+	  $('.whose-news-bookmarklet').attr('href', 'javascript:' + bookmarkletScript).removeClass('hide');
+	  return $('.spinner').hide();
 	});
 
 

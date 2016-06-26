@@ -10,4 +10,7 @@ $ ->
   context = window.location.origin + relPathToAbs('')
   bookmarkletScript += "addScript('#{main}', '#{context}');"
 
-  $('.whose-news-bookmarklet').attr('href', 'javascript:' + bookmarkletScript)
+  $('.whose-news-bookmarklet')
+    .attr('href', 'javascript:' + bookmarkletScript)
+    .removeClass('hide')
+  $('.spinner').hide()
