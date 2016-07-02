@@ -12,5 +12,8 @@ $ ->
 
   $('.whose-news-bookmarklet')
     .attr('href', 'javascript:' + bookmarkletScript)
+    .on('dragend', ->
+      window.parent?.postMessage title: "WhoseNews-Installed", platform: "bookmarklet", "*"
+    )
     .removeClass('hide')
   $('.spinner').hide()

@@ -86,10 +86,12 @@ gulp.task 'homepage', [['clean-homepage', 'homepage-build']]
 gulp.task 'homepage-build', (callback) ->
   gulp.src ['src/homepage/index.slim']
     .pipe named()
+    .pipe plumber()
     .pipe gulpWebpack homepageWebpackConfig
     .pipe gulp.dest 'build/homepage'
 gulp.task 'watch-homepage', ['clean-homepage'], (callback) ->
   gulp.src ['src/homepage/index.slim']
     .pipe named()
+    .pipe plumber()
     .pipe gulpWebpack webpackWatch homepageWebpackConfig
     .pipe gulp.dest 'build/homepage'

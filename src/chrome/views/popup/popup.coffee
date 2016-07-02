@@ -1,6 +1,6 @@
 holderStyles = require "../../../shared/views/popup/styles/popupHolder"
 
-# To impliment a sandboxed popup for angular, listen for messages
+# To implement a sandboxed popup for angular, listen for messages
 
 window.addEventListener "message", (message) ->
   {data} = message

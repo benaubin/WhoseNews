@@ -34,6 +34,7 @@ module.exports =
       { test: /\.yaml$/, loaders: ["json", "yaml"] }
       { test: /\.cson$/, loaders: ["file?name=[name].json", "extricate", "interpolate", "cson?file"] }
       { test: /\.(eot|ttf|woff2?)$/, loader: fileLoader()}
+      { test: /\.txt$/, loader: 'raw' }
     ]
   resolve:
     extensions: [
@@ -46,6 +47,7 @@ module.exports =
       '.coffee.ng-classify'
       '.slim'
       '.scss'
-      'css'
+      '.css'
       '.js.slim'
+      '.txt'
     ]

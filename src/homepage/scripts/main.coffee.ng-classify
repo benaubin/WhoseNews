@@ -1,4 +1,8 @@
 angular = require 'angular'
+swal = require 'sweetalert'
+chromeWebStoreLink = require '../../chrome/linktowebstore'
+popupPath = require '../../shared/views/popup/index'
+corporations = require '../../shared/corporations'
 
 throw "Styles not loaded" unless require '../styles/base.scss'
 
@@ -6,12 +10,70 @@ class App extends App
   constructor: ->
     return []
 
+class Config extends Config
+  constructor: ($sceProvider) ->
+    $sceProvider.enabled false
+
 class Main extends Controller
-  constructor: ->
+  constructor: ($scope) ->
     @chrome = chrome?
     @installChrome = ->
-      console.log "installing"
-      chrome.webstore.install()
+      console.log "installing", chromeWebStoreLink
+      try
+        chrome.webstore.install chromeWebStoreLink,
+          =>
+            window.postMessage title: "WhoseNews-Installed", platform: "chrome", "*"
+          , ->
+            swal 'Failed', "Didn't complete installing WhoseNews for Chrome", 'error'
+      catch e
+        swal 'Failed', "
+            Couldn't connect to the Chrome Webstore, check to make sure you are
+            on a verified site for the extension.
+          ", 'error'
+        throw e
+    @popupPath = popupPath
+    @url = "http://vox.com"
+    $scope.$watch 'main.url', =>
+      frame = document.getElementById("whose-news-app")
+      frame.src = frame.src
+    @chromeInstalled = false
+    @bookmarkletInstalled = JSON.parse localStorage.getItem "bookmarklet-installed"
+    @uninstallBookmarklet = ->
+      @bookmarkletInstalled = false
+      localStorage.setItem "bookmarklet-installed", false
+    window.addEventListener "message", (message) =>
+      console.log "Main Controller (", @, ") got message", message
+      { data } = message
+      if data?.title == 'WhoseNews-Installed'
+        platform = data?.platform
+        if platform and not JSON.parse localStorage.getItem "#{platform}-installed"
+          swal "Installed",
+            "Congrats on installing WhoseNews for #{platform}.",
+            "success"
+          localStorage.setItem "#{platform}-installed", true
+        switch platform
+          when 'bookmarklet'
+            @bookmarkletInstalled = true
+            window.closeWhoseNews?()
+          when 'chrome' then @chromeInstalled = true
+      # On messages with the title brand-request
+      if data?.title == "brand-request"
+        # Get the id (and save it to a local variable)
+        console.log "id", id = data.id
+        # Get the brand
+        brand = corporations.brands().fromHostname new URL(@url).hostname
+        # Create a response
+        response = {title: 'brand', brand: brand?.toJSON(), id}
+        # Send response
+        console.log("sending response", response)
+        document.getElementById("whose-news-app").contentWindow.postMessage response, '*'
+      if data?.title == "open-url"
+        console.log "Opening url"
+        window.open data.url
+      $scope.$apply()
+
+      @bookmarkletInstalled = message.platform == 'bookmarklet'
+      @chromeInstalled = message.platform == 'chrome'
 $ ->
   throw "Something's not right" unless Materialize
   $(".button-collapse").sideNav()
@@ -20,4 +82,3 @@ $ ->
     itemSelector: '.col',
     layoutMode: 'packery'
   });
-  

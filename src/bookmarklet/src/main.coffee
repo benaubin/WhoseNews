@@ -72,3 +72,5 @@ else
 
   # Unflag that Whose News is loading
   window.whoseNewsLoading = false
+
+  window.postMessage title: "WhoseNews-Installed", platform: "bookmarklet", "*"
