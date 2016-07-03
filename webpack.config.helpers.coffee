@@ -35,6 +35,7 @@ module.exports =
       { test: /\.cson$/, loaders: ["file?name=[name].json", "extricate", "interpolate", "cson?file"] }
       { test: /\.(eot|ttf|woff2?)$/, loader: fileLoader()}
       { test: /\.txt$/, loader: 'raw' }
+      { test: /\.plist$/, loaders: ['file?name=[name].plist', "extricate", "interpolate"] }
     ]
   resolve:
     extensions: [

@@ -1,0 +1,7 @@
+doctype html
+html
+  head
+    script src="[{{entry?name=popover-[hash].js!./scripts/main}}]"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+  body
+    iframe.seamless#app src="[{{../../shared/views/popup/index}}]" height="500" width="400"

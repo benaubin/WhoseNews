@@ -31,6 +31,8 @@ gulp.task 'clean-bookmarklet', ->
   del ['build/bookmarklet/*']
 gulp.task 'clean-homepage', ->
   del ['build/homepage/*']
+gulp.task 'clean-safari', ->
+  del ['build/WhoseNews.safariextension/*']
 
 chromeWebpackConfig =
   target: 'web'
@@ -95,3 +97,24 @@ gulp.task 'watch-homepage', ['clean-homepage'], (callback) ->
     .pipe plumber()
     .pipe gulpWebpack webpackWatch homepageWebpackConfig
     .pipe gulp.dest 'build/homepage'
+
+safariWebpackConfig =
+  target: 'web'
+  resolve: resolve
+  module:
+    loaders: loaders
+  node:
+    fs: 'empty'
+gulp.task 'safari', [['clean-safari', 'safari-build']]
+gulp.task 'safari-build', ->
+  gulp.src 'src/safari/*.plist'
+    .pipe plumber()
+    .pipe named()
+    .pipe gulpWebpack safariWebpackConfig
+    .pipe gulp.dest 'build/WhoseNews.safariextension'
+gulp.task 'watch-safari', ['clean-safari'], ->
+  gulp.src 'src/safari/*.plist'
+    .pipe plumber()
+    .pipe named()
+    .pipe gulpWebpack webpackWatch chromeWebpackConfig
+    .pipe gulp.dest 'build/WhoseNews.safariextension'
