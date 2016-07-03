@@ -8,6 +8,7 @@ del = require 'del'
 plumber = require 'gulp-plumber'
 zip = require 'gulp-vinyl-zip'
 objectAssign = require 'object-assign'
+xpi = require 'gulp-cfx-xpi'
 
 {
   fileLoader,
@@ -31,6 +32,8 @@ gulp.task 'clean-bookmarklet', ->
   del ['build/bookmarklet/*']
 gulp.task 'clean-homepage', ->
   del ['build/homepage/*']
+gulp.task 'clean-firefox', ->
+  del ['build/firefox/*']
 
 chromeWebpackConfig =
   target: 'web'
@@ -53,6 +56,21 @@ gulp.task 'watch-chrome', ['clean-chrome'], ->
     .pipe named()
     .pipe gulpWebpack webpackWatch chromeWebpackConfig
     .pipe gulp.dest 'build/chrome'
+
+gulp.task 'firefox', [['clean-firefox', 'firefox-build']]
+gulp.task 'firefox-build', ->
+  gulp.src 'src/firefox/manifest.cson'
+    .pipe plumber()
+    .pipe named()
+    .pipe gulpWebpack chromeWebpackConfig
+    .pipe gulp.dest 'build/firefox'
+    .pipe zip.dest 'build/firefox.zip'
+gulp.task 'firefox-chrome', ['clean-firefox'], ->
+  gulp.src 'src/firefox/manifest.cson'
+    .pipe plumber()
+    .pipe named()
+    .pipe gulpWebpack webpackWatch chromeWebpackConfig
+    .pipe gulp.dest 'build/firefox'
 
 bookmarkletWebpackConfig =
   entry: "!!file?name=[name].html!#{rawSlimLoader}!./src/bookmarklet/installer/installer.slim"
