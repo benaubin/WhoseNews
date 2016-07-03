@@ -46,8 +46,12 @@ we're excited to see what happens.
 
 # Progress
 
+- Chrome extension done.
+- Bookmarklet done.
+- Homepage done.
+- Online Try It done.
+
  - Database in progress.
- - Chrome extension coming soon.
 
 -------
 
