@@ -19,9 +19,9 @@ objectAssign = require 'object-assign'
 webpackWatch = (config) ->
   objectAssign watch: true, config
 
-gulp.task "default", [["clean-build", ["bookmarklet-build", "chrome-build"]]]
+gulp.task "default", [["clean-build", ["bookmarklet-build", "chrome-build", "homepage-build"]]]
 
-gulp.task 'clean-build', ['clean-chrome', 'clean-bookmarklet']
+gulp.task 'clean-build', ['clean-chrome', 'clean-bookmarklet', 'clean-homepage']
 gulp.task 'clean-chrome', ->
   del [
     'build/chrome/*',
