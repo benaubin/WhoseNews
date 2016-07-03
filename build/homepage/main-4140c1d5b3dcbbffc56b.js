@@ -32963,7 +32963,7 @@
 /* 15 */
 /***/ function(module, exports) {
 
-	module.exports = "https://chrome.google.com/webstore/detail/bbenggkmkempdpngmkbldkimcinmefik\n"
+	module.exports = "http://chrome.google.com/webstore/detail/bbenggkmkempdpngmkbldkimcinmefik"
 
 /***/ },
 /* 16 */
