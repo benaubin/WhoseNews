@@ -3,9 +3,13 @@ html
   head
     title Whose News Installer
     meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    link rel="stylesheet" href="[{{!!file?name=spinner-[hash].css!./spinner.css}}]"
   body
-    a.whose-news-bookmarklet
+    .spinner
+      .bounce1
+      .bounce2
+      .bounce3
+    a.whose-news-bookmarklet.hide
       img#install-icon src="[{{../../shared/img/Whose-News-Icon64.png}}]" alt='Whose News' height="64"
 
-    script src="[{{file!jquery/dist/jquery.js}}]"
     script src="[{{entry?name=[name]-[hash].js!./installer.coffee}}]"

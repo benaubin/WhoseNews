@@ -48,6 +48,11 @@
 
 	corporations = __webpack_require__(1);
 
+	window.postMessage({
+	  title: "WhoseNews-Installed",
+	  platform: "chrome"
+	}, "*");
+
 	if (brand = corporations.brands().fromHostname(location.hostname)) {
 	  message = {
 	    title: "brand",

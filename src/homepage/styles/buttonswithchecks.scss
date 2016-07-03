@@ -1,0 +1,35 @@
+.with-check {
+  .check {
+    transform: rotate(-90deg) scale(0.5);
+    i {
+      line-height: 60px;
+      color: #fff;
+      display: none;
+      font-size: 60px;
+    }
+  }
+  &.checked {
+    border: none;
+    background-color: #34ff92;
+    height: 60px;
+    width: 60px;
+    text-shadow: none;
+    padding: 0;
+    border-radius: 50%;
+    transition: padding 0.35s ease-in-out, border 0.35s ease-in-out, height 0.35s ease-in-out, width 0.35s ease-in-out, background-color 0.35s ease-in-out;
+    .content {
+      display: none;
+    }
+    .check {
+      transform: rotate(0) scale(1);
+      transition: transform 0.3s ease-in-out;
+      i {
+        display: block;
+      }
+    }
+  }
+}
+
+.usage-panel {
+  margin-top: 20px;
+}

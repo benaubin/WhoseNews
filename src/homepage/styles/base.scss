@@ -1,0 +1,58 @@
+@import url("http://fonts.googleapis.com/icon?family=Material+Icons");
+@import "~materialize-css/sass/materialize";
+@import "~sweetalert/dist/sweetalert";
+@import "buttonswithchecks";
+@import "chrometabs";
+
+#whose-news-holder {
+  display: none;
+}
+
+.seamless {
+  background-color: transparent;
+  border: 0px none transparent;
+  overflow: visible;
+}
+
+.hoverable {
+  cursor: pointer;
+}
+
+.center {
+  display: block;
+  margin: auto;
+}
+
+img.npmico {
+  max-width: 100%;
+}
+
+.icon-btn {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+#try-it-frame {
+  background-color: transparent;
+  border: 0px none transparent;
+  overflow: visible;
+  height: 750px;
+  width: 100%;
+  overflow: scroll;
+}
+
+#try-it-content {
+  position: relative;
+}
+
+#whose-news-app {
+  position: absolute;
+  background-color: transparent;
+  border: 0px none transparent;
+  top: 50px;
+  right: 50px;
+  height: 500px;
+  width: 400px;
+  background: #fff;
+  z-index: 10000000000000000;
+}
