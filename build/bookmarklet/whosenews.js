@@ -95,6 +95,10 @@
 	    return delete window.closeWhoseNews;
 	  };
 	  window.whoseNewsLoading = false;
+	  window.postMessage({
+	    title: "WhoseNews-Installed",
+	    platform: "bookmarklet"
+	  }, "*");
 	}
 
 
@@ -1846,7 +1850,7 @@
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "index-db95cc2ec1f10b17d8e069b72a402f9e.slim.html";
+	module.exports = __webpack_require__.p + "index-37af4e567cf5dc1aca8945fdefeee477.slim.html";
 
 /***/ },
 /* 19 */

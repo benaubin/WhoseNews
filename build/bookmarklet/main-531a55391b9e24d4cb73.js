@@ -63,7 +63,13 @@
 	  main = window.location.origin + relPathToAbs(main);
 	  context = window.location.origin + relPathToAbs('');
 	  bookmarkletScript += "addScript('" + main + "', '" + context + "');";
-	  $('.whose-news-bookmarklet').attr('href', 'javascript:' + bookmarkletScript).removeClass('hide');
+	  $('.whose-news-bookmarklet').attr('href', 'javascript:' + bookmarkletScript).on('dragend', function() {
+	    var ref;
+	    return (ref = window.parent) != null ? ref.postMessage({
+	      title: "WhoseNews-Installed",
+	      platform: "bookmarklet"
+	    }, "*") : void 0;
+	  }).removeClass('hide');
 	  return $('.spinner').hide();
 	});
 
