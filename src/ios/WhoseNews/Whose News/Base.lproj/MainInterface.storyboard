@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ObA-dk-sSI">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Image-->
+        <scene sceneID="7MM-of-jgj">
+            <objects>
+                <viewController title="Image" id="ObA-dk-sSI" customClass="ActionViewController" customModule="Whose_News" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qkL-Od-lgU"/>
+                        <viewControllerLayoutGuide type="bottom" id="n38-gi-rB5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zMn-AG-sqS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="528"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="NOA-Dm-cuz">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="EtG-NM-kHS"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="ic0-Eh-RT1"/>
+                                    <constraint firstAttribute="height" constant="44" id="nUX-IK-RGs"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="uEb-We-L4c"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem id="3HJ-uW-3hn">
+                                        <barButtonItem key="leftBarButtonItem" title="Done" style="done" id="WYi-yp-eM6">
+                                            <connections>
+                                                <action selector="done" destination="ObA-dk-sSI" id="Qdu-qn-U6V"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cqw-bU-edu" customClass="WKWebView">
+                                <rect key="frame" x="0.0" y="64" width="400" height="500"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cqw-bU-edu" secondAttribute="height" multiplier="4:5" id="ZYs-wW-6Vx"/>
+                                </constraints>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NOA-Dm-cuz" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="0v3-YK-AOq"/>
+                            <constraint firstItem="NOA-Dm-cuz" firstAttribute="top" secondItem="qkL-Od-lgU" secondAttribute="bottom" id="G1k-39-3V3"/>
+                            <constraint firstItem="cqw-bU-edu" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="PZx-YE-MeX"/>
+                            <constraint firstItem="cqw-bU-edu" firstAttribute="top" secondItem="NOA-Dm-cuz" secondAttribute="bottom" id="pm1-XZ-MDX"/>
+                            <constraint firstAttribute="trailing" secondItem="NOA-Dm-cuz" secondAttribute="trailing" id="weE-Jq-NIc"/>
+                            <constraint firstAttribute="trailing" secondItem="cqw-bU-edu" secondAttribute="trailing" id="xWf-Cd-pnQ"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="528"/>
+                    <connections>
+                        <outlet property="view" destination="zMn-AG-sqS" id="Qma-de-2ek"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X47-rx-isc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="252" y="-124"/>
+        </scene>
+    </scenes>
+</document>
