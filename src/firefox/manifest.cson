@@ -17,7 +17,7 @@ browser_action:
   default_icon:
     19: "{{../shared/img/Whose-News-Icon-Small19.png}}"
     38: "{{../shared/img/Whose-News-Icon38.png}}"
-  default_popup: "{{./views/popup/index}}"
+  default_popup: "{{../chrome/views/popup/index}}"
   default_title: "Whose News: No news detected"
 
 permissions: []
@@ -29,13 +29,16 @@ sandbox:
 
 background:
   scripts: [
-    "{{entry?name=background.js!./background}}"
+    "{{entry?name=background.js!../chrome/background}}"
   ]
-  persistent: false
 
 content_scripts: [
   {
     matches: ["<all_urls>"],
-    js: ["{{entry?name=content.js!./content}}"]
+    js: ["{{entry?name=content.js!../chrome/content}}"]
   }
 ]
+
+applications:
+  gecko:
+    id: "whosenews@bensites.com"
