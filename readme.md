@@ -2,7 +2,7 @@
 
 Where does your news come from? Find out!
 
-##Table Of Contents
+## Table Of Contents
 
 - [Description](#description)
 - [Progress](#progress)
@@ -41,6 +41,13 @@ add it in under the MIT license. Best of all, along with our data, all of our
 code is open source, so, if you have a great idea that we haven't thought of,
 you can use it however you'd like under the MIT license. With all of this data,
 we're excited to see what happens.
+
+
+-------
+
+# Build instructions
+
+Just `gulp`. Builds all platforms.
 
 -------
 
