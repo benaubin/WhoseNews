@@ -5,7 +5,8 @@
   "main": "src/node/node.js",
   "scripts": {
     "build": "gulp",
-    "test": "mocha --compilers coffee:coffee-script/register"
+    "test": "mocha --compilers coffee:coffee-script/register",
+    "gh-deploy": "git gh-deploy build/homepage"
   },
   "repository": {
     "type": "git",
