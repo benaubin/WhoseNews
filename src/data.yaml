@@ -1,4 +1,5 @@
 corporations:
+  # Accel Partners must be at the top of the list of tests to work.
   Accel Partners:
     shortname: Accl
     type: Private

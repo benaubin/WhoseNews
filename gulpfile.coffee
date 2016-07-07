@@ -9,6 +9,7 @@ plumber = require 'gulp-plumber'
 zip = require 'gulp-vinyl-zip'
 objectAssign = require 'object-assign'
 xpi = require 'gulp-cfx-xpi'
+mocha = require 'gulp-mocha'
 
 {
   fileLoader,
@@ -113,3 +114,8 @@ gulp.task 'watch-homepage', ['clean-homepage'], (callback) ->
     .pipe plumber()
     .pipe gulpWebpack webpackWatch homepageWebpackConfig
     .pipe gulp.dest 'build/homepage'
+
+gulp.task 'mocha-node', ->
+  gulp.src(['test/nodeTest.coffee'], { read: false })
+    .pipe(plumber())
+    .pipe(mocha({ reporter: 'list' }))
