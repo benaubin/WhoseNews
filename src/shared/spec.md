@@ -4,37 +4,8 @@ When adding support for a platform to Whose News, it's important that it
 has similar functionality in order to create a constant user experience,
 maximize code reuse, and minimize bugs that could be hard to track down.
 
-## Whose News Branding
-
-Let's go over branding. Yeah. The thing where I tell you how to write a series
-of 10 or so characters or how to use an image. Although seriously, it's pretty
-important to have a consistent user experience.
-
-### Name
-
-When you type Whose News, please use one of these options (in order
-of preference).
-
-1. Type Whose News with capitals and a space.
-2. Can't use a space? Then type WhoseNews without a space (and capitals).
-3. Can't use a beginning capital? Then type whoseNews with camel case.
-4. Can't use 9 characters? Then type WN & make sure Whose News is inferred from
-   context. If possible, link to the homepage of Whose News every time this
-   acronym is used.
-
-## Dictionary
-
-Here are some words/phrases that might be referred to:
-
-### Currently Active Page
-
-The active page the user is looking at, to be determined in any of the following ways, in order of preference:
-
-- The currently selected tab in the currently selected window.
-- The window Whose News was run on
-
-## Implementation: Web Platform
-A Whose News web platform at minimum should do the following:
+## Web Platform
+A Whose News platform at minimum should do the following:
 
 When toggled, create or add to an html document (parent document) visible to the
 user with the following items:
@@ -80,48 +51,34 @@ Example code for generating an id:
 
 Messages include:
 
-##### Brand Request (sent from sandboxed frame)
+| `title`           | description                   | `data`                   |
+|-------------------|-------------------------------|--------------------------|
+| `"brand-request"` | A brand request message is    | ```json                  |
+|                   | used for the sandboxed frame  | {                        |
+|                   | to have access to the brand   |   title: "brand-request",|
+|                   | from the parent document's    |   id: see above          |
+|                   | url, even without access to   | }                        |
+|                   | parent document.              | ```                      |
+|                   |                               |                          |
+|-------------------|-------------------------------|--------------------------|
 
-A brand request message is used for the sandboxed frame to have access to the brand from the parent document's url, **without** access to the parent document. Brand requests are sent from the sandboxed frame to the parent window.
 
-###### Data:
+# To implement a sandboxed popup for angular, listen for messages
 
-| attribute | type   | description                                 | example   |
-|:---------:|:------:|---------------------------------------------|:---------:|
-|`title`    | string | Title of the message, always `"brand-request"` | `"brand-request"` |
-|`id`       | string | A unique id for the message                 | see above |
-
-###### Expected Action:
-
-When the parent window receives a brand request, it should asynchronously get the brand from the currently active page, or the url the user entered, and return a brand message.
-
-##### Brand (sent from parent window)
-
-A brand message is used to send the brand from the parent window to the sandboxed frame, used especially in response to a brand request.
-
-If this message is a response to a brand-request, the message should contain an id. The id must match the the brand-request's id.
-
-Messages include:
-
-###### Data:
-
-| attribute | type   | description                                 | example   |
-|:---------:|:------:|---------------------------------------------|:---------:|
-|`title`    | string | Title of the message, always `"brand"`      | `"brand"` |
-|`id`|string|`id` of the message this is in response to (optional) | see above |
-|`brand`    | object | A json serialized brand.             | `brand.toJSON()` |
-
-##### Open URL (sent from sandboxed frame)
-
-A brand request message is used for the sandboxed frame to have access to the brand from the parent document's url, **without** access to the parent document. Brand requests are sent from the sandboxed frame to the parent window.
-
-###### Data:
-
-| attribute | type   | description                                 | example   |
-|:---------:|:------:|---------------------------------------------|:---------:|
-|`title`    | string | Title of the message, always `"open-url"` | `"open-url"`|
-|`url` | string | A url of the page to open | `"http://bensites.com/WhoseNews"`|
-
-###### Expected Action:
-
-When the parent window receives an open-url message, it should immediately open the url given in a new tab.
+window.addEventListener "message", (message) ->
+  {data} = message
+  console.log "got message", data
+  # On messages with the title brand-request
+  if data?.title == "brand-request"
+    # Get the id (and save it to a local variable)
+    console.log "id", id = data.id
+    # Get the brand
+    chrome.runtime.sendMessage title: "brand-request", (data) ->
+      # Set the id of the request to the id of the response
+      data.id = id
+      console.log("sending message", data)
+      # And send back the response, example: {title: "brand", id, brand}
+      document.getElementById("app").contentWindow.postMessage data, '*'
+  if data?.title == "open-url"
+    console.log "Opening url"
+    chrome.tabs.create url: data.url

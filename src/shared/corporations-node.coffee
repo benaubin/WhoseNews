@@ -1,6 +1,7 @@
 yaml = require 'js-yaml'
 fs = require 'fs'
 Corporation = require './corporation.coffee'
+path = require 'path'
 
 data = yaml.safeLoad fs.readFileSync path.resolve(__dirname, '../data.yaml'), 'utf8'
 

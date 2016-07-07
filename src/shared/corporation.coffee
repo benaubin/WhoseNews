@@ -42,6 +42,12 @@ module.exports = class Corporation
     @subsidiaries = Corporation.extractFromObject subsidiaries, @, "subsidiary" if subsidiaries
     @divisions = Corporation.extractFromObject divisions, @, "division" if divisions
     @brands = require('./brand').extractFromObject @, brands if brands
+  investors: (corporationsList) ->
+    @data.investors && CorporationList(
+      @data.investors.map (investor) ->
+        corporationsList.get investor
+      .filter (investor) ->
+        investor?)
   getShortName: ->
     @shortName || @parent.getShortName()
   children: ->
