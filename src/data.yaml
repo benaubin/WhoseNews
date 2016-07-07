@@ -29,6 +29,38 @@ corporations:
   #       wikipedia: wikipedia link
   #       domains: A list of domains the news outlet runs:
   #         - domainname.tld
+  khosla ventures:
+    shortname: KV
+    type: Private
+    headquarters: Menlo Park, California, U.S.
+    description: >
+      Khosla Ventures provides venture assistance and strategic advice to entrepreneurs working on breakthrough
+      technologies. The firm was founded in 2004 by Vinod Khosla, co-founder of Sun Microsystems. With over four billion
+      dollars under management, the firm focuses on a broad range of areas including consumer, enterprise, education,
+      advertising, financial services, semiconductors, health, big data, agriculture/food, sustainable energy and
+      robotics. Khosla Ventures is headquartered in Menlo Park, Calif.
+    wikipedia: https://en.wikipedia.org/wiki/Khosla_Ventures
+    commercial: true
+    url: http://www.khoslaventures.com
+    crunchbase: https://www.crunchbase.com/organization/khosla-ventures
+  General Atlantic:
+    shortname: GA
+    type: Private
+    headquarters: New York City, U.S.
+    description: >
+      General Atlantic was founded in 1980 as a private investment firm to invest the funds of the Atlantic
+      Philanthropies established by Charles Feeney, a global entrepreneur and one of the world's most notable
+      philanthropists. Since then, we have added capital partners who share Mr. Feeney's philosophy of investing for the
+      long-term, building value over time.
+
+      It is from this heritage that GA has grown into a leading global growth investment firm. Our employees, portfolio
+      companies and capital partners all share a common vision for building industry leaders and providing value-added
+      support. We measure our achievements in terms of long-term growth, not immediate returns. We partner to build
+      something bigger and stronger, connecting patient capital with business leaders and adding value over time.
+    wikipedia: https://en.wikipedia.org/wiki/General_Atlantic
+    commercial: true
+    url: http://www.generalatlantic.com/
+    crunchbase: https://www.crunchbase.com/organization/general-atlantic
   Comcast Corporation:
     shortName: Com
     type: Public
@@ -50,8 +82,8 @@ corporations:
           NBC Broadcasting:
             type: division
             wikipedia: https://en.wikipedia.org/wiki/NBCUniversal_Television_Group#NBC_Broadcasting
-            divisions:
-              NBC Owned TV Stations:
+            subsidiaries:
+              NBCUniversal Television Stations:
                 subsidiaries:
                   NBC Owned Television Stations:
                     wikipedia: https://en.wikipedia.org/wiki/NBC_Owned_Television_Stations
@@ -120,20 +152,25 @@ corporations:
       subsidiaries:
         Comcast Ventures:
           description: >
-            We invest in innovative technologies with big business potential
-            At Comcast Ventures, we love working with entrepreneurs who have ideas that will shift industries and impact the way people interact with their worlds. And we thrive on helping take those ideas big.
+            We invest in innovative technologies with big business potential.
+            
+            At Comcast Ventures, we love working with entrepreneurs who have ideas that will shift industries and impact
+            the way people interact with their worlds. And we thrive on helping take those ideas big.
 
-            By combining the best characteristics of traditional venture funds with the technical insight, scale and experience of a strategic investor, CV offers a best-in-class value proposition for entrepreneurs, portfolio companies, partnering investors, and the Comcast family of companies.
+            By combining the best characteristics of traditional venture funds with the technical insight, scale and
+            experience of a strategic investor, CV offers a best-in-class value proposition for entrepreneurs, portfolio
+            companies, partnering investors, and the Comcast family of companies.
           headquarters: San Francisco, CA
           wikipedia: https://en.wikipedia.org/wiki/Comcast#Venture_capital
           url: http://www.comcastventures.com/
-    subsidiaries:
   Vox Media:
     shortName: Vox
     description: >
       Smart Media Brands for a New Generation
 
-      Vox Media builds smart brands that people love in big categories they’re passionate about. We create products to empower the most talented voices and engage hundreds of millions of people with high quality content and experiences.
+      Vox Media builds smart brands that people love in big categories they’re passionate about. We create products to
+      empower the most talented voices and engage hundreds of millions of people with high quality content
+      and experiences.
     type: Private
     url: http://www.voxmedia.com/
     wikipedia: https://en.wikipedia.org/wiki/Vox_Media
@@ -148,7 +185,8 @@ corporations:
     brands:
       Vox:
         description: >
-          Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is where you go to understand the news and the world around you.
+          Vox is a general interest news site for the 21st century. Its mission is simple: Explain the News. Vox is
+          where you go to understand the news and the world around you.
         url: http://www.vox.com/
         wikipedia: https://en.wikipedia.org/wiki/Vox_(website)
         domains:
