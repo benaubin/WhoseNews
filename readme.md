@@ -1,5 +1,7 @@
 # WhoseNews
 
+[![Build Status](https://travis-ci.org/penne12/WhoseNews.svg?branch=master)](https://travis-ci.org/penne12/WhoseNews)
+
 Where does your news come from? Find out!
 
 ## Table Of Contents
