@@ -4,10 +4,9 @@
   "description": "An extension to tell you where your news comes from",
   "main": "src/node/node.js",
   "scripts": {
-    "node-dev": "webpack -d && node debug build/app.js",
-    "build-dev": "webpack -d",
-    "watch-dev": "webpack --watch -d",
-    "build": "webpack -p && coffee buildyaml.coffee && cd build && zip -r -X -1 -q chrome.zip chrome && echo zipped || echo not zipped"
+    "build": "gulp",
+    "test": "mocha --compilers coffee:coffee-script/register",
+    "gh-deploy": "git gh-deploy build/homepage"
   },
   "repository": {
     "type": "git",
@@ -23,6 +22,7 @@
   },
   "homepage": "https://github.com/penne12/WhoseNews",
   "devDependencies": {
+    "chai": "^3.5.0",
     "coffee-loader": "^0.7.2",
     "coffee-script": "^1.10.0",
     "cson-loader": "git://github.com/bleech/cson-loader#3a62ea4",
@@ -33,6 +33,7 @@
     "extricate-loader": "0.0.2",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-run-seq": "^1.2.4",
@@ -43,6 +44,7 @@
     "image-webpack-loader": "^1.8.0",
     "imports-loader": "^0.6.5",
     "interpolate-loader": "0.0.6",
+    "jasmine": "^2.4.1",
     "jpm": "^1.0.7",
     "json-loader": "^0.5.4",
     "markdown-loader": "^0.1.7",

@@ -11,7 +11,6 @@ objectAssign = require 'object-assign'
 xpi = require 'gulp-cfx-xpi'
 
 {
-  fileLoader,
   rawSlimLoader,
   resolve,
   loaders
@@ -113,3 +112,4 @@ gulp.task 'watch-homepage', ['clean-homepage'], (callback) ->
     .pipe plumber()
     .pipe gulpWebpack webpackWatch homepageWebpackConfig
     .pipe gulp.dest 'build/homepage'
+

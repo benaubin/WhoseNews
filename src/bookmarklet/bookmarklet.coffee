@@ -8,3 +8,4 @@ addScript = (url, origin) ->
   el.id = "whose-news-script"
   el.setAttribute 'data-context', origin
   document.body.appendChild el
+  
