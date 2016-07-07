@@ -6,7 +6,7 @@ theVergeJSON = require './support/theVergeJSON'
 chai.should()
 expect = chai.expect
 
-describe "WhoseNews for Node", ->
+describe "WhoseNews", ->
   describe "#corporations", ->
     corporations = WhoseNews.corporations
     it "Accel Partners is at top of list", ->
@@ -14,8 +14,25 @@ describe "WhoseNews for Node", ->
     describe "#get()", ->
       it "can get corporations by name", ->
         corporations.get("Accel Partners").should.equal corporations[0]
+    describe "#withChildren()", ->
+      it "creates a list with children", ->
+        expect(corporations.withChildren().get("NBCUniversal")).to.exist
+      it "keeps parents in the list", ->
+        corporations.withChildren().get("Accel Partners").should.equal corporations[0]
+      it "returns a corporation list", ->
+        corporations.withChildren().corporationList.should.be.true
+      describe "#withChildren()", ->
+        it "returns itself", ->
+          list = corporations.withChildren()
+          list.withChildren().should.deep.equal list
     it "contains corporations", ->
+      it "keeps parents in the list", ->
+        corporations.get("Accel Partners").should.equal corporations[0]
       corporations[0].should.be.an.instanceOf WhoseNews.Corporation
+      it "keeps parents in the list", ->
+        corporations.get("Accel Partners").should.equal corporations[0]
+    it "is marked as a corporationsList", ->
+      corporations.corporationList.should.be.true
     describe "#brands()", ->
       brands = corporations.brands()
       it "exists", ->
@@ -38,6 +55,18 @@ describe "WhoseNews for Node", ->
       accelPartners.should.eql WhoseNews.Corporation.fromJSON accelPartnersJSON
     it "has brands", ->
       voxMedia.brands.should.not.be.empty
+    describe "#investors()", ->
+      it "returns a non-empty list", ->
+        voxMedia.investors(WhoseNews.corporations).should.not.be.empty
+      it "returns a CorporationList", ->
+        voxMedia.investors(WhoseNews.corporations).corporationList.should.be.true
+      it "returns a list of Corporations", ->
+        voxMedia.investors(WhoseNews.corporations)[0].should.be.an.instanceOf WhoseNews.Corporation
+      describe "Vox Media", ->
+        it "is invested in by NBCUniversal", ->
+          voxMedia.investors(WhoseNews.corporations.withChildren()).get("NBCUniversal").should.exist
+        it "is invested in by Accel Partners", ->
+          voxMedia.investors(WhoseNews.corporations.withChildren()).get("Accel Partners").should.exist
     describe '#allBrands()', ->
       it "returns brands of children, even without brands of it's own", ->
         comcast.allBrands().should.not.be.empty
