@@ -298,6 +298,14 @@
 	    }
 	  }
 
+	  Corporation.prototype.investors = function(corporationsList) {
+	    return this.data.investors && CorporationList(this.data.investors.map(function(investor) {
+	      return corporationsList.get(investor);
+	    }).filter(function(investor) {
+	      return investor != null;
+	    }));
+	  };
+
 	  Corporation.prototype.getShortName = function() {
 	    return this.shortName || this.parent.getShortName();
 	  };
@@ -1681,20 +1689,41 @@
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var BrandsList;
+	var BrandsList, arrayFind, corporationList;
 
 	BrandsList = __webpack_require__(12);
 
-	module.exports = function(list) {
+	arrayFind = __webpack_require__(3);
+
+	corporationList = function(list, withChildrenList) {
+	  if (withChildrenList == null) {
+	    withChildrenList = false;
+	  }
 	  (function() {
-	    return this.brands = function() {
+	    this.withChildren = function() {
+	      if (withChildrenList) {
+	        return this;
+	      }
+	      return corporationList(this.reduce((function(a, corp) {
+	        return a.concat(corp.allChildren());
+	      }), this), true);
+	    };
+	    this.brands = function() {
 	      return BrandsList(this.reduce((function(a, corp) {
 	        return a.concat(corp.allBrands());
 	      }), []));
 	    };
+	    this.get = function(name) {
+	      return arrayFind(this, function(corporation) {
+	        return corporation.name === name;
+	      });
+	    };
+	    return this.corporationList = true;
 	  }).call(list);
 	  return list;
 	};
+
+	module.exports = corporationList;
 
 
 /***/ },
@@ -1707,9 +1736,14 @@
 
 	module.exports = function(list) {
 	  (function() {
-	    return this.fromHostname = function(hostname) {
+	    this.fromHostname = function(hostname) {
 	      return arrayFind(this, function(brand) {
 	        return brand.ownsHostname(hostname);
+	      });
+	    };
+	    return this.get = function(name) {
+	      return arrayFind(this, function(brand) {
+	        return brand.name === name;
 	      });
 	    };
 	  }).call(list);

@@ -7,6 +7,6 @@ then
 fi
 
 git add -A .
-git commit -c user.name='Whose News Auto Deploy' -c user.email=whosenews@bensites.com -m "GitHub Pages deploy @${git rev-parse --short HEAD}"
+git -c user.name='Whose News Auto Deploy' -c user.email=whosenews@bensites.com commit -m "GitHub Pages deploy @$(git rev-parse --short HEAD)"
 git push origin master
 git subtree push --prefix build/homepage origin gh-pages
