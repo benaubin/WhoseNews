@@ -9,10 +9,7 @@ script:
   - npm run build
 deploy:
   provider: script
-  script:
-    - git config credential.helper "store --file=.git/credentials"
-    - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-    - npm run gh-deploy
+  script: travisci-deploy.sh
   on:
     branch: master
   skip_cleanup: true
