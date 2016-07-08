@@ -7,7 +7,7 @@ then
   exit 0
 fi
 
-$commit = `git rev-parse --short HEAD`
+$commit=`git rev-parse --short HEAD`
 
 cd build/homepage
 git init
