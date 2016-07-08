@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node ./node_modules/.bin/gulp",
     "test": "node ./node_modules/.bin/mocha --compilers coffee:coffee-script/register",
-    "gh-deploy": "./deploy.sh"
+    "gh-deploy": "scripts/deploy.sh"
   },
   "repository": {
     "type": "git",
