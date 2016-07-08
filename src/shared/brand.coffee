@@ -1,4 +1,4 @@
-regExpEscape = require('./regexpEscape')
+regExpEscape = require('./regexpescape')
 arrayFind = require('./arrayFind')
 Corporation = require('./corporation')
 BrandsList = require('./brandsList')

@@ -1,6 +1,10 @@
 # WhoseNews
 
+[![Build Status](https://travis-ci.org/penne12/WhoseNews.svg?branch=master)](https://travis-ci.org/penne12/WhoseNews)
+
 Where does your news come from? Find out!
+
+Online at http://bensites.com/WhoseNews
 
 ## Table Of Contents
 
@@ -64,13 +68,10 @@ Just `gulp`. Builds all platforms.
 
 # Contributing
 
-WhoseNews is built with webpack:
+WhoseNews is built with a cool combination of gulp and webpack:
 
-Make sure to run `npm run build` before releasing, not just `webpack`
-
-**To Build:** `npm run build`, runs `webpack && coffee buildyaml.coffee`
-**To Debug:** `npm run debug`, runs `webpack --debug && node debug build/app.js`
-**To Run:** `npm run run`, runs `webpack && node build/app.js`
+**To Build: ** `gulp`
+**To Release: ** Merge into master, Travis CI will take care of the rest.
 
 -------
 

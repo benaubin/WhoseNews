@@ -1,9 +1,20 @@
 language: node_js
 node_js:
-  - "6"
-  - "6.1"
-before_script:
+  - '6.1'
+install:
   - npm install
-  - npm install -g jasmine
-  - npm install -g gulp
-script: gulp
+script:
+  - npm run test
+  - npm run build
+deploy:
+  provider: script
+  script: scripts/deploy.sh
+  on:
+    branch: master
+  skip_cleanup: true
+env:
+  global:
+    secure: HrKx5YjJJ/murClfvjMvfX0X87s/mUvbtQWwkknLkH0nIMbKBRq4bl26zLPV54TOZpCpQkxTtULcmMUlUTztRQWxmNSA4gc3zxaSADDakTVlXi3aoZxNbtkKRnQi8QS+ngzAlYxyKyCRqAWeUxRsZU6OmxvzNxjQiHbkNNAr7A6DbEwZXD0Lyb7xoP1vhexHnQZh51jt3bITGfmoHtPJP7nGx3htpyaycB3msogWnNEonsKyvEieToW/+3pFaDfC1JHUyQVpBjatm2qPci76cRoKPwo76KLirj52QaT2YZ+8Gsqwb0oCzjHQjbILiNHj86qdSivPH/sIglPRxz1IU+lex+Kaxb6GY9KhhPpaIdR6BsY0nSq+8zgJxXzGwJxQjz3W2Hv4jjKEw5wYFeawCzUa3onrekZdnocRGbpQNTLT+8RYP7j/IgmyKSfo8cCC3IQhX+9jjjz6a6KHx7kH5731veYcA5Z2czqXSMY3a1gfJbdCURWyaeyMLnb537IAVZ4Lv7soDQs2Z6rFJQcwmcMsW2yqwDzGIOITr8AhlkYrrLzxejfuEJvjTkF7GcAeXfGzd7xCh0ScyTqw2Lp5XmQloZm9fsTHCp9PtA373paNl6I0IGMHQDA3/zsPU7YGkFn6mThTNpwTDF0g/FMr5vLKxG0MyawTk30Jnw7wROI=
+cache:
+  directories:
+    - node_modules
