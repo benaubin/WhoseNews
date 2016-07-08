@@ -2,7 +2,7 @@
 
 if [ "$(git symbolic-ref --short HEAD)" != "master" ]
 then
-  echo "This commit was made against the $(git symbolic-ref --short HEAD) and not the master! No deploy!"
+  echo "You can only deploy from master, not $(git symbolic-ref --short HEAD)."
   exit 0
 fi
 
