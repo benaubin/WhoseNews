@@ -8,7 +8,7 @@ script:
   - npm run build
 deploy:
   provider: script
-  script: scripts/travisci-deploy.sh
+  script: scripts/deploy.sh
   on:
     branch: master
   skip_cleanup: true
