@@ -1,22 +1,18 @@
 language: node_js
 node_js:
-- '6'
-- '6.1'
-before_install:
-- npm set progress=false
+  - '6'
+  - '6.1'
 install:
-- npm install -g mocha
-- npm install -g gulp
-- npm install
+  - npm install
 script:
-- npm run test
-- gulp
+  - npm run test
+  - npm run build
 deploy:
   provider: script
   script:
-  - git config credential.helper "store --file=.git/credentials"
-  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - npm run gh-deploy
+    - git config credential.helper "store --file=.git/credentials"
+    - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+    - npm run gh-deploy
   on:
     branch: master
   skip_cleanup: true

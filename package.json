@@ -4,8 +4,8 @@
   "description": "An extension to tell you where your news comes from",
   "main": "src/node/node.js",
   "scripts": {
-    "build": "gulp",
-    "test": "mocha --compilers coffee:coffee-script/register",
+    "build": "node ./node_modules/.bin/gulp",
+    "test": "node ./node_modules/.bin/mocha --compilers coffee:coffee-script/register",
     "gh-deploy": "./deploy.sh"
   },
   "repository": {
